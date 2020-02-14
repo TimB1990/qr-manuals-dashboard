@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <div class="columns">
-      <extended-search></extended-search>
-    </div>
+    <extended-search></extended-search>
     <div class="columns">
       <div class="column">
         <div class="message">
@@ -19,8 +17,7 @@
 </template>
 
 <script>
-
-import ExtendedSearch from '../components/ExtendedSearch'
+import ExtendedSearch from "../components/ExtendedSearch";
 
 export default {
   components: { ExtendedSearch }

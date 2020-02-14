@@ -1,0 +1,6 @@
+// bulma
+https://bulma.io/documentation/form/file/
+https://bulma.io/documentation/components/dropdown/
+
+// font awesome 4
+https://fontawesome.com/v4.7.0/icons/

@@ -1923,6 +1923,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {// TODO
@@ -2021,8 +2027,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ExtendedSearch__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ExtendedSearch */ "./resources/assets/js/components/ExtendedSearch.vue");
-//
-//
 //
 //
 //
@@ -20145,18 +20149,31 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "column" }, [
-      _c("form", [
-        _c("div", { staticClass: "field is-grouped" }, [
-          _c("p", { staticClass: "control is-expanded" }, [
-            _c("input", {
-              staticClass: "input",
-              attrs: { type: "text", placeholder: "Find a Manual" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("p", { staticClass: "control" }, [
-            _c("a", { staticClass: "button is-info" }, [_vm._v("Search")])
+    return _c("div", { staticClass: "columns" }, [
+      _c("div", { staticClass: "column" }, [
+        _c("form", [
+          _c("div", { staticClass: "field is-grouped" }, [
+            _c("p", { staticClass: "control has-icons-left is-expanded" }, [
+              _c("input", {
+                staticClass: "input",
+                attrs: { type: "text", placeholder: "Find a Manual" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "icon is-medium is-left" }, [
+                _c("i", {
+                  staticClass: "fa fa-search",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "control" }, [
+              _c("a", { staticClass: "button is-info" }, [_vm._v("Search")]),
+              _vm._v(" "),
+              _c("a", { staticClass: "button is-info" }, [
+                _vm._v("Scan QR Code")
+              ])
+            ])
           ])
         ])
       ])
@@ -20274,11 +20291,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "columns" }, [_c("extended-search")], 1),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [_c("extended-search"), _vm._v(" "), _vm._m(0)],
+    1
+  )
 }
 var staticRenderFns = [
   function() {

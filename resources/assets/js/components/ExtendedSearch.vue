@@ -11,24 +11,30 @@
           </p>
           <p class="control">
             <a class="button is-info">Search</a>
-            <a class="button is-info">Scan QR Code</a>
+            <button class="button is-info" @click="toggleScanner">Scan QR Code</button>
           </p>
         </div>
       </form>
     </div>
+    <scanner v-if="openScanner" @close="toggleScanner"></scanner>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      // TODO
-    };
-  },
+import Scanner from "../components/Scanner.vue";
 
+export default {
+  name: "extendedSearch",
+  components: { Scanner },
+  data(){
+    return {
+      openScanner : false
+    }
+  },
   methods: {
-    // TODO
+    toggleScanner(){
+      this.openScanner = !this.openScanner;
+    }
   }
 };
 </script>  

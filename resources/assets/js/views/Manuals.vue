@@ -20,6 +20,7 @@
 import ExtendedSearch from "../components/ExtendedSearch";
 
 export default {
+  name: "manuals",
   components: { ExtendedSearch }
 };
 </script>  

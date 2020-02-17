@@ -4,3 +4,7 @@ https://bulma.io/documentation/components/dropdown/
 
 // font awesome 4
 https://fontawesome.com/v4.7.0/icons/
+
+// QR scanner
+https://github.com/gruhn/vue-qrcode-reader
+https://gruhn.github.io/vue-qrcode-reader/demos/Simple.html

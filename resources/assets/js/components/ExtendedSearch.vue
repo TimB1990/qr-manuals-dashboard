@@ -16,7 +16,10 @@
         </div>
       </form>
     </div>
+    <!-- only show if openScanner = true, on close event sended from Scanner call toggleScanner -->
     <scanner v-if="openScanner" @close="toggleScanner"></scanner>
+    <p> QR code drop zone </p> 
+    <qrcode-drop-zone></qrcode-drop-zone>
   </div>
 </template>
 

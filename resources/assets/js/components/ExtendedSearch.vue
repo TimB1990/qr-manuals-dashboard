@@ -4,13 +4,14 @@
       <form>
         <div class="field is-grouped">
           <p class="control has-icons-left is-expanded">
-            <input class="input" type="text" placeholder="Find a Manual" />
+            <input class="input" type="text" placeholder="Enter product code" />
             <span class="icon is-medium is-left">
               <i class="fa fa-search" aria-hidden="true"></i>
             </span>
           </p>
           <p class="control">
-            <a class="button is-info">Search</a>
+            <button class="button is-info">Search</button>
+            <button class="button is-info">Extended Search</button>
             <button class="button is-info" @click="toggleScanner">Scan QR Code</button>
           </p>
         </div>
@@ -18,8 +19,6 @@
     </div>
     <!-- only show if openScanner = true, on close event sended from Scanner call toggleScanner -->
     <scanner v-if="openScanner" @close="toggleScanner"></scanner>
-    <p> QR code drop zone </p> 
-    <qrcode-drop-zone></qrcode-drop-zone>
   </div>
 </template>
 
@@ -29,13 +28,13 @@ import Scanner from "../components/Scanner.vue";
 export default {
   name: "extendedSearch",
   components: { Scanner },
-  data(){
+  data() {
     return {
-      openScanner : false
-    }
+      openScanner: false
+    };
   },
   methods: {
-    toggleScanner(){
+    toggleScanner() {
       this.openScanner = !this.openScanner;
     }
   }

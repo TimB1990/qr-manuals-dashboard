@@ -1945,7 +1945,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "extendedSearch",
@@ -21679,7 +21678,13 @@ var render = function() {
             _vm._m(0),
             _vm._v(" "),
             _c("p", { staticClass: "control" }, [
-              _c("a", { staticClass: "button is-info" }, [_vm._v("Search")]),
+              _c("button", { staticClass: "button is-info" }, [
+                _vm._v("Search")
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "button is-info" }, [
+                _vm._v("Extended Search")
+              ]),
               _vm._v(" "),
               _c(
                 "button",
@@ -21696,11 +21701,7 @@ var render = function() {
       _vm._v(" "),
       _vm.openScanner
         ? _c("scanner", { on: { close: _vm.toggleScanner } })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("p", [_vm._v(" QR code drop zone ")]),
-      _vm._v(" "),
-      _c("qrcode-drop-zone")
+        : _vm._e()
     ],
     1
   )
@@ -21713,7 +21714,7 @@ var staticRenderFns = [
     return _c("p", { staticClass: "control has-icons-left is-expanded" }, [
       _c("input", {
         staticClass: "input",
-        attrs: { type: "text", placeholder: "Find a Manual" }
+        attrs: { type: "text", placeholder: "Enter product code" }
       }),
       _vm._v(" "),
       _c("span", { staticClass: "icon is-medium is-left" }, [

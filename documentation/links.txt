@@ -8,3 +8,9 @@ https://fontawesome.com/v4.7.0/icons/
 // QR scanner
 https://github.com/gruhn/vue-qrcode-reader
 https://gruhn.github.io/vue-qrcode-reader/demos/Simple.html
+
+// upload components
+https://vuejsexamples.com/file-upload-component-for-vue-js/
+
+// upload logic
+https://serversideup.net/uploading-files-vuejs-axios/

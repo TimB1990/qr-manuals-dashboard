@@ -14,3 +14,4 @@ https://vuejsexamples.com/file-upload-component-for-vue-js/
 
 // upload logic
 https://serversideup.net/uploading-files-vuejs-axios/
+https://blog.usejournal.com/file-upload-with-laravel-and-vuejs-a70ae85e34a1

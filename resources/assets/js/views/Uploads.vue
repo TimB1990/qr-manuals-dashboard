@@ -4,7 +4,6 @@
       <div class="column">
         <!-- upload elements -->
         <upload></upload>
-        <p>recently uploaded:</p>
       </div>
     </div>
   </div>

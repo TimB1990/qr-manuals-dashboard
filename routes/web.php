@@ -15,9 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/pdf-uploads', 'PdfUploadsController@index');
-Route::post('/pdf-uploads', 'PdfUploadsController@store');
+Route::post('/pdf-files', 'PdfUploadsController@store');
+Route::get('/pdf-files', 'PdfUploadsController@index');
 
 // Route::get('/statuses', 'StatusesController@index');
 
 // Route::post('/statuses','StatusesController@store');
+
+/*Route::group(['middleware' => 'auth'], function () {
+    Route::get('files', 'FileEntriesController@index');
+});*/

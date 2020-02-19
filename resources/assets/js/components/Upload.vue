@@ -1,24 +1,58 @@
 <template>
   <div class="container">
-    <div class="large-12 medium-12 small-12 cell">
+    <div class="columns">
       <label>
-        Files
-        <input type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()" />
+        <input
+          class="file-input"
+          type="file"
+          id="files"
+          ref="files"
+          multiple
+          v-on:change="handleFilesUpload()"
+        />
       </label>
     </div>
-    <div class="large-12 medium-12 small-12 cell">
-      <div v-for="(file, key) in files" class="file-listing" :key="key">
-        {{ file.name }}
-        <span class="remove-file" v-on:click="removeFile( key )">Remove</span>
+
+    <div class="columns box">
+      <button
+        class="button is-medium is-fullwidth is-info is-outlined"
+        v-on:click="addFiles()"
+      >Add Files</button>
+    </div>
+
+    <div class="columns box">
+      <div class="column">
+        <div v-for="(file, key) in files" class="notification" :key="key">
+          <button class="delete" v-on:click="removeFile( key )"></button>
+          <div class>{{ file.name }}</div>
+        </div>
       </div>
     </div>
-    <br />
-    <div class="large-12 medium-12 small-12 cell">
-      <button v-on:click="addFiles()">Add Files</button>
-    </div>
-    <br />
-    <div class="large-12 medium-12 small-12 cell">
-      <button v-on:click="submitFiles()">Submit</button>
+
+    <div class="columns box">
+      <div class="column is-four-fifths">
+        <strong class="content is-medium">files:</strong>
+        {{ this.files.length }}
+      </div>
+      <div class="column">
+        <button class="button is-medium is-info" v-on:click="submitFiles()">
+          <span class="file-icon">
+            <i class="fa fa-upload"></i>
+          </span>
+          Upload Files
+        </button>
+      </div>
+
+      <!-- confirmation -->
+      <div v-if="this.notification.show" class="column">
+        <transition name="fade">
+          <span class="icon is-large">
+            <span class="fa-stack fa-lg">
+              <i :class="this.notification.iconClass" aria-hidden="true"></i>
+            </span>
+          </span>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -28,7 +62,12 @@ export default {
   name: "upload",
   data() {
     return {
-      files: []
+      files: [],
+      notification: {
+        message: "",
+        iconClass: "",
+        show: false
+      }
     };
   },
 
@@ -36,6 +75,9 @@ export default {
       Defines the method used by the component
     */
   methods: {
+    afterLeave() {
+      this.notification.show = false;
+    },
     /*
         Adds a file
       */
@@ -71,11 +113,17 @@ export default {
             "Content-Type": "multipart/form-data"
           }
         })
-        .then(function() {
+        .then(response => {
           console.log("SUCCESS!!");
+          this.notification.show = true;
+          this.notification.message = "OK";
+          this.notification.iconClass = "fa fa-check has-text-success";
         })
-        .catch(function() {
+        .catch(error => {
           console.log("FAILURE!!");
+          this.notification.show = true;
+          this.notification.message = "FAIL";
+          this.notification.iconClass = "fa fa-times has-text-danger";
         });
     },
 
@@ -102,3 +150,19 @@ export default {
   }
 };
 </script>
+
+<style>
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  transition: opacity 1s;
+}
+.fade-leave {
+  opacity: 1;
+}
+.fade-leave-active {
+  transition: opacity 1s;
+  opacity: 0;
+}
+</style> 

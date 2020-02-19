@@ -1,26 +1,30 @@
 <template>
   <div class="container">
     <div class="columns">
-      <label>
-        <input
-          class="file-input"
-          type="file"
-          id="files"
-          ref="files"
-          multiple
-          v-on:change="handleFilesUpload()"
-        />
-      </label>
+      <input
+        class="file-input"
+        type="file"
+        id="files"
+        ref="files"
+        multiple
+        v-on:change="handleFilesUpload()"
+      />
     </div>
 
-    <div class="columns box">
-      <button
-        class="button is-medium is-fullwidth is-info is-outlined"
-        v-on:click="addFiles()"
-      >Add Files</button>
+    <div class="columns">
+      <div class="column">
+        <button class="button is-medium is-info is-outlined" v-on:click="addFiles()">Add Files</button>
+      </div>
     </div>
 
-    <div class="columns box">
+    <div class="columns">
+      <div class="column">
+        <strong class="content is-medium">files:</strong>
+        {{ this.files.length }}
+      </div>
+    </div>
+
+    <div class="columns">
       <div class="column">
         <div v-for="(file, key) in files" class="notification" :key="key">
           <button class="delete" v-on:click="removeFile( key )"></button>
@@ -29,12 +33,8 @@
       </div>
     </div>
 
-    <div class="columns box">
-      <div class="column is-four-fifths">
-        <strong class="content is-medium">files:</strong>
-        {{ this.files.length }}
-      </div>
-      <div class="column">
+    <div class="columns">
+      <div class="column is-11">
         <button class="button is-medium is-info" v-on:click="submitFiles()">
           <span class="file-icon">
             <i class="fa fa-upload"></i>
@@ -118,6 +118,7 @@ export default {
           this.notification.show = true;
           this.notification.message = "OK";
           this.notification.iconClass = "fa fa-check has-text-success";
+          // this.files = [];
         })
         .catch(error => {
           console.log("FAILURE!!");

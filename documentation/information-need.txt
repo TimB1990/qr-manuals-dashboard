@@ -1,9 +1,144 @@
-INFORMATION NEED
-
 +------------------+
 | App description: |
 +------------------+
 
-The application has roles 'user' and 'admin'. The user should be able to scan an QR-code that references the user a view that shows the productid, producttype (screenwiper), productname. In this view the user can download the the usermanual (PDF), the technical documentation (PDF). In the same view the user can also request a quote (offerte) or can order the product directly online.
+The application has roles 'user' and 'admin'. The user should be able to scan an QR-code that references the user a view that shows the productid, producttype (screenwiper), productname. If the user has no camera for qr-scanning he can also search the product by a given productID
 
-The dashboard-module is designed to allow a administrator to upload multiple manuals to a product 
+In this view the user can see if the product is in stock, or can download the the usermanual (PDF), the technical documentation (PDF). In the same view the user can also request a quote (offerte) or can order the product directly online. Either way the user can also choose to scan a different product. 
+
++-----------------+
+| Admin Dashboard |
++-----------------+
+
+The dashboard-module is designed to allow a administrator to upload multiple manuals to a product by searching for productID or productName. Also when the user has requested a quote for the product, or has ordered the product, the administrator must see them in an overview. Meanwhile an email has been sended to user with the confirmation.
+
++--------+
+| MoSCoW |
++--------+
+
+SCOPE: 
+- QR-SCANNING FOR USER, 
+- QR-GENERATING FOR ADMIN, 
+- CRUD ATTACHMENTS FOR ADMIN
+
+APPLICATION:
+
+# - The user must be notified if looked up product is in stock
+# - The admin should link a manual to product
+
+USER:
+# - The user can fill in productID manually if no camera is present.
+# - The user is redirected to the product overview on submit or after scan
+- After QR-code have been scanned or productID has been submitted the application references the user to overview.
+# - The user can directely download the user manual or technical documentation from overview of product.
+# - The user can request a quote (offerte) for the searched product
+# - The user can directely order the searched product online.
+# - The user can scan a new product anytime.
+
+ADMIN:
+# - The admin must authenticate to access the dashboard
+# - The admin can upload serveral pdf attachements to the product
+# - The admin can search any product by id, category and productname. 
+# - The admin can CRUD attachments
+
+
++------+-----------+
+| MUST | role user |
++------+-----------+
+
+# it is required that:
+
+- The user is referenced to a product overview on submit or after scan
+- The user is notified about the product-id, product-name and product-(sub)categorie
+
++------+------------+
+| MUST | role admin |
++------+------------+
+
+# it is required that:
+
+- The admin authenticates to access the dashboard
+- The admin links a manual, if present, to product
+
++--------+-----------+
+| SHOULD | role user |
++--------+-----------+
+
+# It should be recommended that: 
+
+- The user can scan a QR-code with any device.
+- The user can fill in productID manually if no camera is present to scan QR-code.
+- The user can directely download the user manual or technical documentation from overview of product.
+- The user is notified that looked up product is in stock
+
++--------+------------+
+| SHOULD | role admin |
++--------+------------+
+
+# It should be recommended that:
+
+- The admin can search any product by id, category and productname. 
+- The admin can upload serveral pdf attachements to a product
+- The admin can CRUD attachments
+
++--------+-----------+
+| COULD  | role user |
++--------+-----------+
+
+# It could be usefull if: 
+
+- The user is notified about the amount of current product in stock
+- The user can request a quote (offerte) for the searched product
+- The user can directely order the searched product online.
+
++--------+------------+
+| COULD  | role admin |
++--------+------------+
+
+# It could be usefull if: 
+
+- On attachment by admin a QR-Code will be generated. 
+- The admin can generate a sheet with QR-codes to be printed afterwards, these qr-codes are generated from uri of uploaded file.
+
++--------+-----------+
+| WOULD  | role user |
++--------+-----------+
+
+# It would be nice if: 
+
+- After the user has scanned a QR-code, the user is automatically redirected to overview of product
+- The user can scan a new product anytime.
+
++--------+------------+
+| WOULD  | role admin |
++--------+------------+
+
+
++-----------+
+| USE CASES |
++-----------+
+
++------------------------------+
+| Adding attachment to product |
++------------------------------+
+
+If the admin opens the 'Attachments' dashboard he can search for productID, product-name or product-category. After the search criteria is submitted the results will be listed. When the admin clicks a single item the product details and current attachments are shown in a side-view. Once product details are shown in the side-view the admin can go to the upload section to upload one or more PDF files, related to the product and to be shown to the user. 
+
++----------------------+
+| Generating QR-scheet |
++----------------------+
+
+If the admin is being displayed a list with search results, each result can be checked. Once one or more results are checked the admin can click the option 'generate QR-sheet' in a top-bar that generates a tile-sheet of generated QR-codes from urls. 
+
+
+
+
+
+
+
+
+
+
+
+
+

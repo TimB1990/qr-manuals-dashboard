@@ -11,16 +11,12 @@
                 <router-link tag="li" to="/manuals" exact>
                     <a>Manuals</a>
                 </router-link>
-            </ul>
-        </div>
-        <div class="navbar-end">
-            <ul>
                 <router-link tag="li" to="/uploads" exact>
                     <a> 
                         <span class="icon is-medium is-left">
                             <i class="fa fa-upload" aria-hidden="true"></i>
                         </span>
-                        Upload
+                        Attachments
                     </a>
                 </router-link>
             </ul>

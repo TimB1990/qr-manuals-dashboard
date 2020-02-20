@@ -11985,6 +11985,8 @@ label.panel-block:hover {
 }
 
 body {
-  padding-top: 40px;
+  font-family: "Work Sans", sans-serif, sans-serif;
+  font-size: 14px;
+  color: #666;
 }
 

@@ -1,3 +1,18 @@
+// 1. Import the initial variables
+
+// 2. Set your own initial variables
+$exaltoRed: #CC0033;
+
+// 3. Set the derived variables
+$primary: $exaltoRed;
+
+// 4. Setup your Custom Colors
+
+// 5. Add new color variables to the color map.
+
+@import "bulma";
+@import "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css";
+
 body{
     padding-top: 40px;
 }

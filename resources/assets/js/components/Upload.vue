@@ -13,7 +13,7 @@
 
     <div class="columns">
       <div class="column">
-        <button class="button is-medium is-info is-outlined" v-on:click="addFiles()">Add Files</button>
+        <button class="button is-medium is-primary is-outlined" v-on:click="addFiles()">Add Files</button>
       </div>
     </div>
 
@@ -35,7 +35,7 @@
 
     <div class="columns">
       <div class="column is-11">
-        <button class="button is-medium is-info" v-on:click="submitFiles()">
+        <button class="button is-medium is-primary" v-on:click="submitFiles()">
           <span class="file-icon">
             <i class="fa fa-upload"></i>
           </span>

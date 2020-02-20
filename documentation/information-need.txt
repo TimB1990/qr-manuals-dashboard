@@ -1,0 +1,9 @@
+INFORMATION NEED
+
++------------------+
+| App description: |
++------------------+
+
+The application has roles 'user' and 'admin'. The user should be able to scan an QR-code that references the user a view that shows the productid, producttype (screenwiper), productname. In this view the user can download the the usermanual (PDF), the technical documentation (PDF). In the same view the user can also request a quote (offerte) or can order the product directly online.
+
+The dashboard-module is designed to allow a administrator to upload multiple manuals to a product 

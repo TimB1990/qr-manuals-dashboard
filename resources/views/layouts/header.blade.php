@@ -1,4 +1,4 @@
-<section class="hero is-info is-medium">
+<section class="hero is-primary is-small">
     <div class="hero-head">
       <nav class="navbar">
         <div class="container">

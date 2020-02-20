@@ -10,9 +10,9 @@
             </span>
           </p>
           <p class="control">
-            <button class="button is-info">Search</button>
-            <button class="button is-info">Extended Search</button>
-            <button class="button is-info" @click="toggleScanner">Scan QR Code</button>
+            <button class="button is-primary">Search</button>
+            <button class="button is-primary">Extended Search</button>
+            <button class="button is-primary" @click="toggleScanner">Scan QR Code</button>
           </p>
         </div>
       </form>

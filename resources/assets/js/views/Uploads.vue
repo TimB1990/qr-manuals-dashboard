@@ -1,15 +1,7 @@
 <template>
   <div class="tile is-ancestor">
     <div class="tile is-parent">
-      <article class="tile is-child box">
-        <p class="title">Product List</p>
-        <!--<p class="subtitle">12345</p>-->
-        <div class="content">
-          <div class="notification box" v-for="(item, index) in items" :key="index">
-            {{item.productid}} | {{item.productname}} | {{item.description}}
-          </div>
-        </div>
-      </article>
+      <productlist></productlist>
     </div>
     <div class="tile is-parent is-6">
       <article class="tile is-child box">
@@ -21,9 +13,10 @@
 
 <script>
 import Upload from "../components/Upload";
+import Productlist from "../components/productlist/Productlist"
 
 export default {
-  components: { Upload },
+  components: { Upload, Productlist },
   data(){
 
     return{

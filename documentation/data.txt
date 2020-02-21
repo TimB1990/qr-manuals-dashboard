@@ -1,12 +1,127 @@
+public function phone(){
+        # return $this->hasOne(App\Phone)
+        # return $this->belongsTo('App\User'); 
+    }
+
+/**
+ * Get the user that owns the phone. in case reference is not phone_id
+ */
+public function user()
+{
+    return $this->belongsTo('App\User', 'foreign_key');
+}
+
+-----------------------------------------
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Post extends Model
+{
+    /**
+     * Get the comments for the blog post.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+}
+
+$comments = App\Post::find(1)->comments;
+
+foreach ($comments as $comment) {
+    //
+}
+
+----------------------------------------
+$comment = App\Post::find(1)->comments()->where('title', 'foo')->first();
+----------------------------------------
+
++--------------+
+| MANY TO MANY |
++--------------+
+
+class User extends Model
+{
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+}
+
+$user = App\User::find(1);
+
+foreach ($user->roles as $role) {
+    //
+}
+
+# specify convention
+return $this->belongsToMany('App\Role', 'role_user');
+
+# The third argument is the foreign key name of the model on which you are defining the relationship, while the fourth argument is the foreign key name of the model that you are joining to:
+
+return $this->belongsToMany('App\Role', 'role_user', 'user_id', 'role_id');
+
+# ROLE model
+
+class Role extends Model
+{
+    /**
+     * The users that belong to the role.
+     */
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
+}
+
+# For example, let's assume our User object has many Role objects that it is related to. After accessing this relationship, we may access the intermediate table using the pivot attribute on the models:
+
+$user = App\User::find(1);
+
+foreach ($user->roles as $role) {
+    echo $role->pivot->created_at;
+}
+
+# If you want your pivot table to have automatically maintained created_at and updated_at timestamps, use the withTimestamps method on the relationship definition:
+
+return $this->belongsToMany('App\Role')->withTimestamps();
+
+#
+        // $product = App\Product::find(1)
+        // foreach ($product->categories as $category) {...}
+        // return $this->belongsToMany('App\Category', 'category_product', 'id', 'product_id');
+
+        // retrieving intermiate columns
+        /*
+        $user = App\User::find(1);
+
+foreach ($user->roles as $role) {
+    echo $role->pivot->created_at;
+}
+        */
+
+
+
++------------------------------+
+| APP SPECIFIC DATA STRUCTURES |
++------------------------------+
+
 products (
-    id : int,
+    id : string,
     name: string,
-    model: string,
+    kind: string,
     category_id: int
     stock: boolean 
 )
 
-products__categories (
+categories_products (
     id : int,
     product_id: int,
     category_id: int
@@ -24,21 +139,23 @@ manuals(
     manual_type: string,
 )
 
-product_details(
-    nr: int,
+productdetails(
+    product_id: string,
     recommended_fuse: int,
     driven_shafts: int,
     centre_distance_mm: int,
     arm_type: string,
     brand: string,
     model_type: string
-    d_driveshaft_mm: int,
-    d_idler_spindle: int,
+    diameter_driveshaft_mm: int,
+    diameter_idler_spindle: int,
     range: string,
     voltage_dc: int,
     bulkhead_thickness: int,
     kind: string
 )
+
+
 
 #
 
@@ -49,3 +166,87 @@ product_details(
 SELECT ALL CATEGORIES FOR CURRENT PRODUCT: 
 
 mysql> select c.name from categories c, products__categories pc, products p where p.id in (select product_id from products__categories) and p.category_id = pc.id;
+
++-------------------+
+| ELOQUENT EXAMPLES |
++-------------------+
+
+$flight = App\Flight::create(['name' => 'Flight 10']);
+
+# when you already have a model instance
+$flight->fill(['name' => 'Flight 22']);
+
+# mass assignment
+protected $fillable = ['name'];
+
+# anti mass assignment
+protected $guarded = ['price'];
+
+// Retrieve flight by name, or create it if it doesn't exist...
+$flight = App\Flight::firstOrCreate(['name' => 'Flight 10']);
+
+// Retrieve flight by name, or create it with the name, delayed, and arrival_time attributes...
+$flight = App\Flight::firstOrCreate(
+    ['name' => 'Flight 10'],
+    ['delayed' => 1, 'arrival_time' => '11:30']
+);
+
+// Retrieve by name, or instantiate...
+$flight = App\Flight::firstOrNew(['name' => 'Flight 10']);
+
+// Retrieve by name, or instantiate with the name, delayed, and arrival_time attributes...
+$flight = App\Flight::firstOrNew(
+    ['name' => 'Flight 10'],
+    ['delayed' => 1, 'arrival_time' => '11:30']
+);
+
+// If there's a flight from Oakland to San Diego, set the price to $99.
+// If no matching model exists, create one.
+$flight = App\Flight::updateOrCreate(
+    ['departure' => 'Oakland', 'destination' => 'San Diego'],
+    ['price' => 99, 'discounted' => 1]
+);
+
+# deleting
+$flight = App\Flight::find(1);
+
+$flight->delete();
+
+$deletedRows = App\Flight::where('active', 0)->delete();
+
+# soft deleting
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Flight extends Model
+{
+    use SoftDeletes;
+}
+
+# add deleted at
+Schema::table('flights', function (Blueprint $table) {
+    $table->softDeletes();
+});
+
+# determine if soft deleted
+if ($flight->trashed()) {
+    //
+}
+
+# retrieving soft deleted models
+$flights = App\Flight::onlyTrashed()
+                ->where('airline_id', 1)
+                ->get();
+
+
+# foreign key
+$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+
+
+
+
+
+

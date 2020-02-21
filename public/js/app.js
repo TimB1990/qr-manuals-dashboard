@@ -2310,45 +2310,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "productlist",
   data: function data() {
     return {
       items: [{
-        productid: 12345,
-        productname: "wiper model-260",
-        description: "some description"
+        id: "211240.30",
+        name: "EXALTO RW 240BS 12V ..° 40NM WD 30 MM",
+        model: "240 BS",
+        categories: ["Ruitenwissers", "motorunits"]
       }, {
-        productid: 23456,
-        productname: "wiper model-270",
-        description: "some description"
+        id: "211255.35",
+        name: "EXALTO RUITENWISSER 255BS 12V ..° 55NM WD 35 MM",
+        model: "255 BS",
+        categories: ["Ruitenwissers", "motorunits"]
       }, {
-        productid: 345678,
-        productname: "wiper model-280",
-        description: "some description"
+        id: "212430.25",
+        name: "EXALTO RUITENWISSER XP2 24V 30NM WD25",
+        model: "MD1 - 230XP",
+        categories: ["Ruitenwissers", "motorunits"]
       }]
     };
   },
@@ -23534,28 +23514,53 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("article", { staticClass: "tile is-child box" }, [
-      _c("p", { staticClass: "title" }, [_vm._v("Product List")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "content" },
+    _c(
+      "article",
+      { staticClass: "panel is-primary" },
+      [
+        _c("p", { staticClass: "panel-heading" }, [_vm._v("Product-list")]),
+        _vm._v(" "),
+        _vm._m(0),
+        _vm._v(" "),
         _vm._l(_vm.items, function(item, index) {
-          return _c("div", { key: index, staticClass: "notification box" }, [
-            _vm._v(
-              _vm._s(item.productid) +
-                " | " +
-                _vm._s(item.productname) +
-                " | " +
-                _vm._s(item.description)
-            )
+          return _c("a", { key: index, staticClass: "panel-block" }, [
+            _c("span", { staticClass: "is-active" }, [
+              _c("ul", [
+                _c("li", [
+                  _c("b", { domProps: { textContent: _vm._s(item.name) } })
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _vm._v(_vm._s(item.id) + " | " + _vm._s(item.model))
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "nav",
+                    {
+                      staticClass: "breadcrumb is-small",
+                      attrs: { "aria-label": "breadcrumbs" }
+                    },
+                    [
+                      _c(
+                        "ul",
+                        _vm._l(item.categories, function(cat, i) {
+                          return _c("li", { key: i }, [
+                            _c("a", [_vm._v(_vm._s(item.categories[i]))])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
           ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = [
@@ -23563,75 +23568,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("article", { staticClass: "panel is-primary" }, [
-      _c("p", { staticClass: "panel-heading" }, [_vm._v("Primary")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "panel-tabs" }, [
-        _c("a", { staticClass: "is-active" }, [_vm._v("All")]),
+    return _c("div", { staticClass: "panel-block" }, [
+      _c("p", { staticClass: "control has-icons-left" }, [
+        _c("input", {
+          staticClass: "input is-primary",
+          attrs: { type: "text", placeholder: "Search" }
+        }),
         _vm._v(" "),
-        _c("a", [_vm._v("Public")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Private")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Sources")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Forks")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "panel-block" }, [
-        _c("p", { staticClass: "control has-icons-left" }, [
-          _c("input", {
-            staticClass: "input is-primary",
-            attrs: { type: "text", placeholder: "Search" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "icon is-left" }, [
-            _c("i", {
-              staticClass: "fa fa-search",
-              attrs: { "aria-hidden": "true" }
-            })
-          ])
+        _c("span", { staticClass: "icon is-left" }, [
+          _c("i", {
+            staticClass: "fa fa-search",
+            attrs: { "aria-hidden": "true" }
+          })
         ])
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "panel-block is-active" }, [
-        _c("span", { staticClass: "panel-icon" }, [
-          _c("i", {
-            staticClass: "fas fa-book",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v("\n      bulma\n    ")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "panel-block" }, [
-        _c("span", { staticClass: "panel-icon" }, [
-          _c("i", {
-            staticClass: "fas fa-book",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v("\n      marksheet\n    ")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "panel-block" }, [
-        _c("span", { staticClass: "panel-icon" }, [
-          _c("i", {
-            staticClass: "fas fa-book",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v("\n      minireset.css\n    ")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "panel-block" }, [
-        _c("span", { staticClass: "panel-icon" }, [
-          _c("i", {
-            staticClass: "fas fa-book",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]),
-        _vm._v("\n      jgthms.github.io\n    ")
       ])
     ])
   }

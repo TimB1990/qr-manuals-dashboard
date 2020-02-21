@@ -10,11 +10,26 @@
           </span>
         </p>
       </div>
-      <a
-        class="panel-block is-active"
-        v-for="(item, index) in items"
-        :key="index"
-      >{{item.productid}} | {{item.productname}} | {{item.description}}</a>
+      <a class="panel-block" v-for="(item, index) in items" :key="index">
+        <span class="is-active">
+          <ul>
+            <li>
+              <b v-text="item.name"></b>
+            </li>
+            <li>{{ item.nr }} | {{ item.kind }}</li>
+            <li>
+                
+              <nav class="breadcrumb is-small" aria-label="breadcrumbs">
+                <ul>
+                  <li v-for="(cat,i) in item.categories" :key="i">
+                      <a>{{ item.categories[i] }}</a>
+                  </li>
+                </ul>
+              </nav>
+            </li>
+          </ul>
+        </span>
+      </a>
     </article>
   </div>
 </template>
@@ -26,19 +41,22 @@ export default {
     return {
       items: [
         {
-          productid: 12345,
-          productname: "wiper model-260",
-          description: "some description"
+          nr: "211240.30",
+          name: "EXALTO RW 240BS 12V ..° 40NM WD 30 MM",
+          kind: "240 BS",
+          categories: ["Ruitenwissers", "motorunits"]
         },
         {
-          productid: 23456,
-          productname: "wiper model-270",
-          description: "some description"
+          nr: "211255.35",
+          name: "EXALTO RUITENWISSER 255BS 12V ..° 55NM WD 35 MM",
+          kind: "255 BS",
+          categories: ["Ruitenwissers", "motorunits"]
         },
         {
-          productid: 345678,
-          productname: "wiper model-280",
-          description: "some description"
+          nr: "212430.25",
+          name: "EXALTO RUITENWISSER XP2 24V 30NM WD25",
+          kind: "MD1 - 230XP",
+          categories: ["Ruitenwissers", "motorunits"]
         }
       ]
     };

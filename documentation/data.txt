@@ -1,0 +1,51 @@
+products (
+    id : int,
+    name: string,
+    model: string,
+    category_id: int
+    stock: boolean 
+)
+
+products__categories (
+    id : int,
+    product_id: int,
+    category_id: int
+)
+
+categories (
+    id : int,
+    name: string,
+)
+
+manuals(
+    file_name : string,
+    file_url: string,
+    FK product_id
+    manual_type: string,
+)
+
+product_details(
+    nr: int,
+    recommended_fuse: int,
+    driven_shafts: int,
+    centre_distance_mm: int,
+    arm_type: string,
+    brand: string,
+    model_type: string
+    d_driveshaft_mm: int,
+    d_idler_spindle: int,
+    range: string,
+    voltage_dc: int,
+    bulkhead_thickness: int,
+    kind: string
+)
+
+#
+
++-----------+
+| test data |
++-----------+
+
+SELECT ALL CATEGORIES FOR CURRENT PRODUCT: 
+
+mysql> select c.name from categories c, products__categories pc, products p where p.id in (select product_id from products__categories) and p.category_id = pc.id;

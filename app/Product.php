@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable = [];
     // set incrementing to false
     public $incrementing = false;
 
@@ -26,5 +27,4 @@ class Product extends Model
     public function productDetails(){
         return $this->hasOne('App\ProductDetails');
     }
-
 }

@@ -166,6 +166,26 @@ productdetails(
 SELECT ALL CATEGORIES FOR CURRENT PRODUCT: 
 
 mysql> select c.name from categories c, products__categories pc, products p where p.id in (select product_id from products__categories) and p.category_id = pc.id;
+-------------------------------------------------
+
+-------------------------------------------------
+$product = App\Product::create([
+    'id' => '211240.30',
+    'name' => 'EXALTO RW 240BS 12V ..° 40NM WD 30 MM',
+    'kind' => '240 BS',
+    'category_id' => 1,
+]);
+
+$product->save();
+    
+--------------------------------------------------
+$cat = App\Category::create([
+    'id' => 1,
+    'name' => 'motorunit'
+]);
+
+$cat->save();
+
 
 +-------------------+
 | ELOQUENT EXAMPLES |
@@ -175,6 +195,10 @@ $flight = App\Flight::create(['name' => 'Flight 10']);
 
 # when you already have a model instance
 $flight->fill(['name' => 'Flight 22']);
+
+$flight = App\Flight::updateOrCreate(
+    ['departure' => 'Oakland', 'destination' => 'San Diego'],
+    ['price' => 99, 'discounted' => 1]
 
 # mass assignment
 protected $fillable = ['name'];

@@ -18,6 +18,9 @@ Route::get('/', function () {
 Route::post('/pdf-files', 'PdfUploadsController@store');
 Route::get('/pdf-files', 'PdfUploadsController@index');
 
+Route::get('/products', 'ProductController@index');
+
+
 // Route::get('/statuses', 'StatusesController@index');
 
 // Route::post('/statuses','StatusesController@store');

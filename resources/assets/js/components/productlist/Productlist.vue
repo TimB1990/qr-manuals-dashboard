@@ -1,7 +1,7 @@
 <template>
   <div>
     <article class="panel is-primary">
-      <p class="panel-heading">Product-list</p>
+      <p class="panel-heading level">Product-list<button v-if="this.loading" class="button is-primary is-loading"></button></p>
       <div class="panel-block">
         <p class="control has-icons-left">
           <input class="input is-primary" type="text" placeholder="Search" />
@@ -10,23 +10,13 @@
           </span>
         </p>
       </div>
-      <a class="panel-block" v-for="(item, index) in items" :key="index">
+      <a class="panel-block" v-for="(product, index) in productslist" :key="index">
         <span class="is-active">
           <ul>
             <li>
-              <b v-text="item.name"></b>
+              <b v-text="product.productname"></b>
             </li>
-            <li>{{ item.nr }} | {{ item.kind }}</li>
-            <li>
-                
-              <nav class="breadcrumb is-small" aria-label="breadcrumbs">
-                <ul>
-                  <li v-for="(cat,i) in item.categories" :key="i">
-                      <a>{{ item.categories[i] }}</a>
-                  </li>
-                </ul>
-              </nav>
-            </li>
+            <li>{{ product.id }} | {{ product.kind }}</li>
           </ul>
         </span>
       </a>
@@ -39,7 +29,9 @@ export default {
   name: "productlist",
   data() {
     return {
-      items: [
+      productslist: null,
+      loading: true,
+      /*items: [
         {
           nr: "211240.30",
           name: "EXALTO RW 240BS 12V ..° 40NM WD 30 MM",
@@ -58,12 +50,19 @@ export default {
           kind: "MD1 - 230XP",
           categories: ["Ruitenwissers", "motorunits"]
         }
-      ]
+      ]*/
     };
   },
 
-  methods: {
-    
+  mounted() {
+    axios
+      .get("/products")
+      .then(response => {
+        this.productslist = response.data;
+        this.loading = false;
+        console.log(this.productslist);
+      })
+      .catch(error => console.log(error));
   }
 };
 </script>

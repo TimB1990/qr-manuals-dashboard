@@ -2301,38 +2301,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "productlist",
   data: function data() {
     return {
+      productslist: null,
+      loading: true,
       items: [{
-        id: "211240.30",
+        nr: "211240.30",
         name: "EXALTO RW 240BS 12V ..° 40NM WD 30 MM",
-        model: "240 BS",
+        kind: "240 BS",
         categories: ["Ruitenwissers", "motorunits"]
       }, {
-        id: "211255.35",
+        nr: "211255.35",
         name: "EXALTO RUITENWISSER 255BS 12V ..° 55NM WD 35 MM",
-        model: "255 BS",
+        kind: "255 BS",
         categories: ["Ruitenwissers", "motorunits"]
       }, {
-        id: "212430.25",
+        nr: "212430.25",
         name: "EXALTO RUITENWISSER XP2 24V 30NM WD25",
-        model: "MD1 - 230XP",
+        kind: "MD1 - 230XP",
         categories: ["Ruitenwissers", "motorunits"]
       }]
     };
   },
-  methods: {}
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/products").then(function (response) {
+      _this.productslist = response.data;
+      _this.loading = false;
+      console.log(_this.productslist);
+    })["catch"](function (error) {
+      return console.log(error);
+    });
+  }
 });
 
 /***/ }),
@@ -23530,37 +23533,16 @@ var render = function() {
                   _c("b", { domProps: { textContent: _vm._s(item.name) } })
                 ]),
                 _vm._v(" "),
-                _c("li", [
-                  _vm._v(_vm._s(item.id) + " | " + _vm._s(item.model))
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "nav",
-                    {
-                      staticClass: "breadcrumb is-small",
-                      attrs: { "aria-label": "breadcrumbs" }
-                    },
-                    [
-                      _c(
-                        "ul",
-                        _vm._l(item.categories, function(cat, i) {
-                          return _c("li", { key: i }, [
-                            _c("a", [_vm._v(_vm._s(item.categories[i]))])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ])
+                _c("li", [_vm._v(_vm._s(item.nr) + " | " + _vm._s(item.kind))])
               ])
             ])
           ])
         })
       ],
       2
-    )
+    ),
+    _vm._v(" "),
+    _c("div", [_vm._v(_vm._s(this.productslist))])
   ])
 }
 var staticRenderFns = [

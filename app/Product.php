@@ -13,9 +13,6 @@ class Product extends Model
     // set keytype of model to be a string
     protected $keyType = 'string';
 
-    // mass assignment
-    // protected $fillable = ['name'];
-
     public function categories(){
         return $this->belongsToMany('App\Category');
     }

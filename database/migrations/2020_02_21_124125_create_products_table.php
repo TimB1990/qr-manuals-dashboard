@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->string('id');
-            $table->string('name');
+            $table->string('productname');
             $table->string('kind');
             $table->integer('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();

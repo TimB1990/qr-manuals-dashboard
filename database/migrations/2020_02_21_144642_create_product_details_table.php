@@ -14,7 +14,7 @@ class CreateProductDetailsTable extends Migration
     public function up()
     {
         Schema::create('product_details', function (Blueprint $table) {
-            $table->string('product_id');
+            $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('recommended_fuse');
             $table->integer('driven_shafts');
             $table->integer('centre_distance_mm');
@@ -26,8 +26,10 @@ class CreateProductDetailsTable extends Migration
             $table->string('range');
             $table->integer('voltage_dc');
             $table->integer('bulkhead_thickness');
-            $table->string('kind');
+            $table->string('kind')->references('kind')->on('products')->onDelete('cascade');
             $table->timestamps();
+
+            // $table->integer('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

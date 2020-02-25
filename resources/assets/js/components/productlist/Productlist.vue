@@ -1,7 +1,10 @@
 <template>
-  <div>
+  <div class="container">
     <article class="panel is-primary">
-      <p class="panel-heading level">Product-list<button v-if="this.loading" class="button is-primary is-loading"></button></p>
+      <p class="panel-heading level">
+        Product-list
+        <button v-if="this.loading" class="button is-primary is-loading"></button>
+      </p>
       <div class="panel-block">
         <p class="control has-icons-left">
           <input class="input is-primary" type="text" placeholder="Search" />
@@ -14,10 +17,17 @@
         <span class="is-active">
           <ul>
             <li>
-              <b v-text="product.productname"></b>
+              <b v-text="product.name"></b>
             </li>
-            <li>{{ product.id }} | {{ product.kind }}</li>
+            <li>{{ product.artnr }} | {{ product.kind }}</li>
           </ul>
+          <nav class="breadcrumb is-small">
+            <ul>
+              <li v-for="(category,index) in product.categories" :key="index">
+                <a href="#">{{ category.name }}</a>
+              </li>
+            </ul>
+          </nav>
         </span>
       </a>
     </article>
@@ -30,7 +40,7 @@ export default {
   data() {
     return {
       productslist: null,
-      loading: true,
+      loading: true
       /*items: [
         {
           nr: "211240.30",

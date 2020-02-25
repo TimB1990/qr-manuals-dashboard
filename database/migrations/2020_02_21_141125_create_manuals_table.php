@@ -16,7 +16,7 @@ class CreateManualsTable extends Migration
         Schema::create('manuals', function (Blueprint $table) {
             $table->string('file_name');
             $table->string('file_url');
-            $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

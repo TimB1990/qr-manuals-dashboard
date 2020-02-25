@@ -13,32 +13,12 @@
 
 <script>
 import Upload from "../components/Upload";
-import Productlist from "../components/productlist/Productlist"
+import Productlist from "../components/productlist/Productlist";
 
 export default {
   components: { Upload, Productlist },
-  data(){
-
-    return{
-      items:[
-        {
-          productid: 12345,
-          productname: "wiper model-260", 
-          description: "some description"
-        },
-                {
-          productid: 23456,
-          productname: "wiper model-270", 
-          description: "some description"
-        },
-                {
-          productid: 345678,
-          productname: "wiper model-280", 
-          description: "some description"
-        }
-      ]
-    }
-
+  data() {
+    return {};
   }
 };
 </script>  

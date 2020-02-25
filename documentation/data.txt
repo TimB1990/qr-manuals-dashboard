@@ -170,31 +170,51 @@ mysql> select c.name from categories c, products__categories pc, products p wher
 
 -------------------------------------------------
 $product = App\Product::create([
-    'id' => '211240.30',
-    'productname' => 'EXALTO RW 240BS 12V 40NM WD 30 MM',
+    'artnr' => '211240.30',
+    'name' => 'EXALTO RW 240BS 12V 40NM WD 30 MM',
     'kind' => '240 BS',
-    'category_id' => 1,
 ])->save();
 
 $product = App\Product::create([
-    'id' => '211255.35',
-    'productname' => 'EXALTO RW 255BS 12V 55NM WD 35MM',
+    'artnr' => '211255.35',
+    'name' => 'EXALTO RW 255BS 12V 55NM WD 35MM',
     'kind' => '255 BS',
-    'category_id' => 1,
 ])->save();
 
 $product = App\Product::create([
-    'id' => '212430.25',
-    'productname' => 'EXALTO RUITENWISSER XP2 24V 30NM WD25',
+    'artnr' => '212430.25',
+    'name' => 'EXALTO RUITENWISSER XP2 24V 30NM WD25',
     'kind' => 'MD1 - 230XP',
-    'category_id' => 1,
 ])->save();
 
 --------------------------------------------------
 $cat = App\Category::create([
     'name' => 'motorunit'
 ])->save();
+$cat = App\Category::create([
+    'name' => 'ruitenwisser'
+])->save();
+-------------------------------------------------
+DB::table('category_product')->insert([
 
+    'category_id' => 1,
+    'product_id' => 1
+
+],[
+    'category_id' => 1,
+    'product_id' => 2
+
+],[
+    'category_id' => 1,
+    'product_id' => 3
+
+],[
+    'category_id' => 2,
+    'product_id' => 1
+],[
+    'category_id' => 2,
+    'product_id' => 2
+]);
 
 +-------------------+
 | ELOQUENT EXAMPLES |

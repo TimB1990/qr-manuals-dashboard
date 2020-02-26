@@ -1,30 +1,23 @@
 <template>
   <div class="container">
-    <p class="content is-medium has-text-centered">product details:</p>
+    <p>details</p>
     <div>
       <table class="table is-fullwidth">
-        <tr>
-          <td>art nr</td>
-          <td>content</td>
-        </tr>
-        <tr>
-          <td>fuse</td>
-          <td>content</td>
-        </tr>
-        <tr>
-          <td>driven shafts</td>
-          <td>content</td>
+        <tr v-for="(detail, index) in this.details" :key="index">
+          <td>{{detail.key}}</td>
+          <td>{{detail.value}}</td>
         </tr>
       </table>
     </div>
-    <br />
+    <hr />
+    <p>Product page</p>
     <div>
-      <table class="table is-bordered">
+      <table class="table is-fullwidth">
         <tr>
           <td>artnr:</td>
-          <td>content</td>
-          <td id="qrcode-canvas" rowspan="2">
-            <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+          <td>211240.30</td>
+          <td id="qrcode-canvas" class="has-text-centered" rowspan="2">
+            <qrcode-vue :value="QrValue" :size="QrSize" level="H"></qrcode-vue>
           </td>
         </tr>
         <tr>
@@ -33,23 +26,33 @@
         </tr>
       </table>
     </div>
-    <br>
+    <hr />
+    <p>Manuals</p>
     <div>
-        <table class="table is-bordered">
-            <tr>
-                <td>art nr:</td>
-                <td>211240.30</td>
-            </tr>
-            <tr>
-                <td>file name:</td>
-                <td>Manual.pdf</td>
-            </tr>
-            <tr>
-                <td>download url:</td>
-                <td>{{this.value}}/download?file=manual</td>
-            </tr>
-        </table>
-        
+      <table class="table is-fullwidth">
+        <tr>
+          <td>file:</td>
+          <td>UserManual.pdf</td>
+        </tr>
+        <tr>
+          <td>download url:</td>
+          <td>
+            <a>{{this.value}}/download?file=user-manual</a>
+          </td>
+        </tr>
+      </table>
+      <table class="table is-fullwidth">
+        <tr>
+          <td>file:</td>
+          <td>TechnicalDescription.pdf</td>
+        </tr>
+        <tr>
+          <td>download url:</td>
+          <td>
+            <a>{{this.value}}/download?file=technical-description</a>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -60,9 +63,41 @@ export default {
   components: { QrcodeVue },
   data() {
     return {
-      value: "https://example.com/products/12345",
-      size: 100
+      QrValue: "https://example.com/products/12345",
+      QrSize: 100,
+      details: null,
+      keys: null
     };
+  },
+  methods: {
+    getDetails(id) {
+      axios
+        .get(`/products/${id}/details`)
+        .then(response => {
+            // map object.keys from response data to 'key' : 'value'
+          this.details = Object.keys(response.data).map(key => {
+              return {
+                'key': key.replace(/_/g, " "),
+                'value': response.data[key]
+              }
+            });
+        })
+        .catch(error => console.log(error));
+    }
+  },
+
+  created(){
+      // on created this component listens to the event loadDetails send from productsList
+      this.$root.$on('loadDetails', (id) => {
+          console.log('id');
+          this.getDetails(id);
+      })
   }
 };
-</script>  
+</script>
+<style>
+p {
+  font-weight: bold;
+}
+</style>
+

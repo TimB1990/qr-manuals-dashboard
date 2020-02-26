@@ -13,7 +13,11 @@
           </span>
         </p>
       </div>
-      <a class="panel-block" v-for="(product, index) in productslist" :key="index">
+      <a class="panel-block" 
+        v-for="product in productslist" 
+        :key="product.id"
+        @click="loadDetails(product.id)"
+      >
         <span class="is-active">
           <ul>
             <li>
@@ -41,27 +45,15 @@ export default {
     return {
       productslist: null,
       loading: true
-      /*items: [
-        {
-          nr: "211240.30",
-          name: "EXALTO RW 240BS 12V ..° 40NM WD 30 MM",
-          kind: "240 BS",
-          categories: ["Ruitenwissers", "motorunits"]
-        },
-        {
-          nr: "211255.35",
-          name: "EXALTO RUITENWISSER 255BS 12V ..° 55NM WD 35 MM",
-          kind: "255 BS",
-          categories: ["Ruitenwissers", "motorunits"]
-        },
-        {
-          nr: "212430.25",
-          name: "EXALTO RUITENWISSER XP2 24V 30NM WD25",
-          kind: "MD1 - 230XP",
-          categories: ["Ruitenwissers", "motorunits"]
-        }
-      ]*/
     };
+  },
+
+  methods:{
+    loadDetails(id){
+      // do emit from root, to send id over along with event loadDetails
+      this.$root.$emit('loadDetails', id);
+    }
+
   },
 
   mounted() {

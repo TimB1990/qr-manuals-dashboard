@@ -44,9 +44,16 @@ class ProductDetailsController extends Controller
      * @param  \App\ProductDetails  $productDetails
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductDetails $productDetails)
+    public function show(Request $request, ProductDetails $productDetails)
     {
-        //
+        // retrieve path-parameter id from request
+        $id = $request->route('id');
+        $details = ProductDetails::findOrFail($id);
+
+        // return response()->json($details);
+
+        return response()->json($details);
+
     }
 
     /**

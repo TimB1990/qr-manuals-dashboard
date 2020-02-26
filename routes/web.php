@@ -16,14 +16,10 @@ Route::get('/', function () {
 });
 
 Route::post('/pdf-files', 'PdfUploadsController@store');
-Route::get('/pdf-files', 'PdfUploadsController@index');
+// Route::get('/pdf-files', 'PdfUploadsController@index');
 
 Route::get('/products', 'ProductController@index');
-
-
-// Route::get('/statuses', 'StatusesController@index');
-
-// Route::post('/statuses','StatusesController@store');
+Route::get('/products/{id}/details', 'ProductDetailsController@show');
 
 /*Route::group(['middleware' => 'auth'], function () {
     Route::get('files', 'FileEntriesController@index');

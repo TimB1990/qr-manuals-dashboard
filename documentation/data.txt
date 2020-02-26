@@ -231,7 +231,7 @@ ProductDetails::create([
     'voltage_dc' => 12,
     'bulkhead_thickness' => 30,
     'kind' => "240BS" 
-]);
+])->save();
 
 # note: productname in product is build dynamically from some details, hence:
 `${brand} RW ${kind} ${voltage_dc}V ${torque}NM WD ${bulkhead_thickness} MM `

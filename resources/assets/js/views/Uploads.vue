@@ -3,7 +3,10 @@
     <div class="tile is-parent">
       <productlist></productlist>
     </div>
-    <div class="tile is-parent is-6">
+    <div class="tile is-parent is-6 is-vertical">
+      <article class="tile is-child box">
+        <product-details></product-details>
+      </article>
       <article class="tile is-child box">
         <upload></upload>
       </article>
@@ -13,10 +16,11 @@
 
 <script>
 import Upload from "../components/Upload";
-import Productlist from "../components/productlist/Productlist";
+import Productlist from "../components/product/Productlist";
+import ProductDetails from "../components/product/ProductDetails";
 
 export default {
-  components: { Upload, Productlist },
+  components: { Upload, Productlist, ProductDetails },
   data() {
     return {};
   }

@@ -19,8 +19,9 @@ class CreateProductDetailsTable extends Migration
             $table->integer('driven_shafts');
             $table->integer('centre_distance_mm');
             $table->string('arm_type');
+            $table->integer('torque');
             $table->string('brand');
-            $table->string('modal_type');
+            $table->string('model_type'); // model_type
             $table->integer('diameter_driveshaft_mm');
             $table->integer('diameter_idler_spindle');
             $table->string('range');
@@ -28,8 +29,6 @@ class CreateProductDetailsTable extends Migration
             $table->integer('bulkhead_thickness');
             $table->string('kind')->references('kind')->on('products')->onDelete('cascade');
             $table->timestamps();
-
-            // $table->integer('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

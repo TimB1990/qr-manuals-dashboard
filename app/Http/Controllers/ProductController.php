@@ -26,7 +26,8 @@ class ProductController extends Controller
                 array_push($productCategories, $category->name); // ['cat1','cat2']
             }*/
 
-            $product_categories = ['categories' => $product->categories];
+            // $product_categories = ['categories' => $product->categories];
+            $product->categories;
             // array_push($responseData, $product_categories);
         }
 

@@ -215,6 +215,27 @@ DB::table('category_product')->insert([
     'category_id' => 2,
     'product_id' => 2
 ]);
+----------------------------------------------------
+ProductDetails::create([
+    'product_id' => 1,
+    'recommended_fuse' => 15,
+    'driven_shafts' => 2,
+    'centre_distance_mm' => 60,
+    'arm_type' => "PF MD2 PF HD1 P10",
+    'torque' => 40,
+    'brand' => "Exalto",
+    'model_type' => "Wipermotor",
+    'diameter_driveshaft_mm' => 20,
+    'diameter_idler_spindle' => 20,
+    'range' => "MD2",
+    'voltage_dc' => 12,
+    'bulkhead_thickness' => 30,
+    'kind' => "240BS" 
+]);
+
+# note: productname in product is build dynamically from some details, hence:
+`${brand} RW ${kind} ${voltage_dc}V ${torque}NM WD ${bulkhead_thickness} MM `
+
 
 +-------------------+
 | ELOQUENT EXAMPLES |

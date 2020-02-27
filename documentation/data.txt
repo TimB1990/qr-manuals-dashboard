@@ -215,10 +215,13 @@ DB::table('category_product')->insert([
     'category_id' => 2,
     'product_id' => 2
 ]);
+---------------------------------------------------
+php artisan migrate:refresh --path=/database/migrations/2020_02_21_144642_create_product_details_table.php
 ----------------------------------------------------
 ProductDetails::create([
     'product_id' => 1,
-    'recommended_fuse' => 15,
+    'artnr' => "211240.30",
+    'recommended_fuse' => "15",
     'driven_shafts' => 2,
     'centre_distance_mm' => 60,
     'arm_type' => "PF MD2 PF HD1 P10",
@@ -231,6 +234,42 @@ ProductDetails::create([
     'voltage_dc' => 12,
     'bulkhead_thickness' => 30,
     'kind' => "240BS" 
+])->save();
+
+ProductDetails::create([
+    'product_id' => 2,
+    'artnr' => "211255.35",
+    'recommended_fuse' => "15 / 10",
+    'driven_shafts' => 2,
+    'centre_distance_mm' => 60,
+    'arm_type' => "P10 HD1 P10",
+    'torque' => 55,
+    'brand' => "Exalto",
+    'model_type' => "Wipermotor",
+    'diameter_driveshaft_mm' => 20,
+    'diameter_idler_spindle' => 20,
+    'range' => "HD1",
+    'voltage_dc' => 12,
+    'bulkhead_thickness' => 35,
+    'kind' => "255BS" 
+])->save();
+
+ProductDetails::create([
+    'product_id' => 3,
+    'artnr' => "212430.25",
+    'recommended_fuse' => "4",
+    'driven_shafts' => 1,
+    'centre_distance_mm' => 50,
+    'arm_type' => "PU MD1",
+    'torque' => 30,
+    'brand' => "Exalto",
+    'model_type' => "Wipermotor",
+    'diameter_driveshaft_mm' => 20,
+    'diameter_idler_spindle' => 8,
+    'range' => "MD1",
+    'voltage_dc' => 24,
+    'bulkhead_thickness' => 25,
+    'kind' => "MD1-230XP" 
 ])->save();
 
 # note: productname in product is build dynamically from some details, hence:

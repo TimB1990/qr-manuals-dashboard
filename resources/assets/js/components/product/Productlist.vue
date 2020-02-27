@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <article class="panel is-primary">
-      <p class="panel-heading level">
+      <p class="panel-heading">
         Product-list
         <button v-if="this.loading" class="button is-primary is-loading"></button>
       </p>
@@ -21,7 +21,7 @@
         <span class="is-active">
           <ul>
             <li>
-              <b v-text="product.name"></b>
+              <b>{{ product.name }}</b>
             </li>
             <li>{{ product.artnr }} | {{ product.kind }}</li>
           </ul>
@@ -51,7 +51,7 @@ export default {
   methods:{
     loadDetails(id){
       // do emit from root, to send id over along with event loadDetails
-      this.$root.$emit('loadDetails', id);
+      this.$root.$emit('product', id);
     }
 
   },

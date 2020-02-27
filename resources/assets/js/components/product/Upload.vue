@@ -6,6 +6,7 @@
         type="file"
         id="files"
         ref="files"
+        accept=".pdf"
         multiple
         v-on:change="handleFilesUpload()"
       />
@@ -13,13 +14,13 @@
 
     <div class="columns">
       <div class="column">
-        <button class="button is-medium is-primary is-outlined" v-on:click="addFiles()">Add Files</button>
+        <button class="button is-small is-primary is-outlined" v-on:click="addFiles()">Add Files</button>
       </div>
     </div>
 
     <div class="columns">
       <div class="column">
-        <strong class="content is-medium">files:</strong>
+        <strong class="content is-small">files:</strong>
         {{ this.files.length }}
       </div>
     </div>
@@ -35,7 +36,7 @@
 
     <div class="columns">
       <div class="column is-11">
-        <button class="button is-medium is-primary" v-on:click="submitFiles()">
+        <button class="button is-small is-primary" v-on:click="submitFiles()">
           <span class="file-icon">
             <i class="fa fa-upload"></i>
           </span>
@@ -67,48 +68,35 @@ export default {
         message: "",
         iconClass: "",
         show: false
-      }
+      },
+      productId: null
     };
   },
 
-  /*
-      Defines the method used by the component
-    */
+  created() {
+    // on created this component listens to the event loadDetails send from productsList
+    this.$root.$on("product", id => {
+      this.productId = id;
+      // console.log("id reetrieved by upload.vue", id);
+    });
+  },
+
   methods: {
-    afterLeave() {
-      this.notification.show = false;
-    },
-    /*
-        Adds a file
-      */
     addFiles() {
-      this.$refs.files.click();
+      this.$refs.files.click(); // references to element with id of files
     },
 
-    /*
-        Submits files to the server
-      */
     submitFiles() {
-      /*
-          Initialize the form data
-        */
       let formData = new FormData();
 
-      /*
-          Iteate over any file sent over appending the files
-          to the form data.
-        */
       for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i];
 
-        formData.append(`files[${i}]`, file);
+        formData.append(`files[${i}]`, file); // formData.append(key, value)
       }
 
-      /*
-          Make the request to the POST /select-files URL
-        */
       axios
-        .post("/pdf-files", formData, {
+        .post(`/products/${this.productId}/uploads`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -128,23 +116,14 @@ export default {
         });
     },
 
-    /*
-        Handles the uploading of files
-      */
     handleFilesUpload() {
       let uploadedFiles = this.$refs.files.files;
 
-      /*
-          Adds the uploaded file to the files array
-        */
       for (var i = 0; i < uploadedFiles.length; i++) {
         this.files.push(uploadedFiles[i]);
       }
     },
 
-    /*
-        Removes a select file the user has uploaded
-      */
     removeFile(key) {
       this.files.splice(key, 1);
     }

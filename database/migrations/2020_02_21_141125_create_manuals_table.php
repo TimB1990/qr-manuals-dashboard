@@ -14,9 +14,12 @@ class CreateManualsTable extends Migration
     public function up()
     {
         Schema::create('manuals', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('file_name');
             $table->string('file_url');
-            $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
+            // $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('artnr')->references('artnr')->on('products')->onDelete('cascade');
             $table->timestamps();
         });
     }

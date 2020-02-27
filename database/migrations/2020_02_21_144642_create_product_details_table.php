@@ -15,7 +15,8 @@ class CreateProductDetailsTable extends Migration
     {
         Schema::create('product_details', function (Blueprint $table) {
             $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->integer('recommended_fuse');
+            $table->String('artnr');
+            $table->String('recommended_fuse');
             $table->integer('driven_shafts');
             $table->integer('centre_distance_mm');
             $table->string('arm_type');

@@ -31,23 +31,15 @@
     <hr />
     <p>Manuals</p>
     <div>
-      <table
-        class="table is-bordered is-fullwidth"
-        v-for="(manual, index) in this.manuals"
-        :key="index"
-      >
-        <tr>
-          <td>file:</td>
-          <td>{{ manual.file_name }}</td>
-        </tr>
-        <tr>
-          <td>file url:</td>
+      <table class="table is-fullwidth">
+        <tr v-for="(manual, index) in this.manuals" :key="index">
           <td>
-            {{ manual.file_url }}
+            <p>{{ manual.file_name }}</p>
+            <span class="has-text-weight-light">{{ manual.file_url }}</span>
           </td>
-        </tr>
-        <tr>
-            <td><a class="button is-primary" @click="downloadManual(manual.file_name)">Download Copy</a></td>
+          <td class="has-text-right">
+            <a :href="manual.file_url" class="button is-primary">Download Copy</a>
+          </td>
         </tr>
       </table>
     </div>
@@ -61,7 +53,7 @@ export default {
   data() {
     return {
       QrValue: "https://example.com/products/12345",
-      QrSize: 100,
+      QrSize: 150,
       details: [],
       manuals: null
     };
@@ -89,12 +81,6 @@ export default {
           this.manuals = response.data;
         })
         .catch(error => console.log(error));
-    },
-
-    downloadManual(filename){
-        axios.get(`/products/${filename}`).then(response => {
-            console.log(response)
-        }).catch(error => console.log(error));
     }
   },
 

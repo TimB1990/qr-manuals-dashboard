@@ -17,6 +17,7 @@ class CreateManualsTable extends Migration
             $table->bigIncrements('id');
             $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('file_name');
+            $table->string('file_path');
             $table->string('file_url');
             // $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('artnr')->references('artnr')->on('products')->onDelete('cascade');

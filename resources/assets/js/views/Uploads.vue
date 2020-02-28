@@ -5,7 +5,8 @@
     </div>
     <div class="tile is-parent is-8 is-vertical">
       <article class="tile is-child box">
-        <product-details></product-details>
+        <p>No selected products...</p>
+        <product-details v-if="productSelected"></product-details>
       </article>
       <article class="tile is-child box">
         <upload></upload>

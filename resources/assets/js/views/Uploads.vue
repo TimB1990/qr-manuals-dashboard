@@ -1,29 +1,37 @@
 <template>
   <div class="tile is-ancestor">
-    <div class="tile is-parent">
+    <div class="tile is-parent is-vertical">
       <productlist></productlist>
     </div>
     <div class="tile is-parent is-8 is-vertical">
-      <article class="tile is-child box">
-        <p>No selected products...</p>
-        <product-details v-if="productSelected"></product-details>
-      </article>
-      <article class="tile is-child box">
-        <upload></upload>
-      </article>
+      <product-details class="tile is-child box"></product-details>
+      <button @click="toggleUpload" style="float:right;" class="button is-small">
+        <span class="file-icon">
+          <i class="fa fa-upload"></i>
+        </span>
+        Upload New Manual
+      </button>
+      <upload class="tile is-child box" v-if="openUpload" @close="toggleUpload"></upload>
     </div>
   </div>
 </template>
 
 <script>
-import Upload from "../components/product/Upload";
 import Productlist from "../components/product/Productlist";
 import ProductDetails from "../components/product/ProductDetails";
+import Upload from "../components/product/Upload";
 
 export default {
-  components: { Upload, Productlist, ProductDetails },
+  components: { Productlist, ProductDetails, Upload },
   data() {
-    return {};
+    return {
+      openUpload: false
+    };
+  },
+  methods: {
+    toggleUpload() {
+      this.openUpload = !this.openUpload;
+    }
   }
 };
 </script>  

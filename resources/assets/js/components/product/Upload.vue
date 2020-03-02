@@ -18,6 +18,7 @@
         </div>
 
         <section class="modal-card-body">
+          <p>PRODUCTID: {{ productId }}</p>
           <strong class="content is-small">files:</strong>
           {{ this.files.length }}
           <div class="columns">
@@ -52,11 +53,17 @@
   </div>
 </template>
 
-
-
 <script>
 export default {
   name: "upload",
+
+  props:{
+    productId: {
+      type: Number,
+      required: true
+    }
+  },
+
   data() {
     return {
       files: [],
@@ -64,22 +71,13 @@ export default {
         message: "",
         iconClass: "",
         show: false
-      },
-      productId: null
+      }
     };
-  },
-
-  created() {
-    // on created this component listens to the event loadDetails send from productsList
-    this.$root.$on("product", id => {
-      this.productId = id;
-      // console.log("id reetrieved by upload.vue", id);
-    });
   },
 
   methods: {
     close() {
-      // emit close event to ExtendSearch.vue
+      // emit close event to productdetails
       this.$emit("close");
     },
 
@@ -97,7 +95,7 @@ export default {
       }
 
       axios
-        .post(`/products/${this.productId}/uploads`, formData, {
+        .post(`/products/${this.productId}/manuals`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -107,7 +105,12 @@ export default {
           this.notification.show = true;
           this.notification.message = "OK";
           this.notification.iconClass = "fa fa-check has-text-success";
-          // this.files = [];
+          this.files = [];
+
+          // not working
+          this.$emit('manual-update');
+
+          this.close();
         })
         .catch(error => {
           console.log("FAILURE!!");

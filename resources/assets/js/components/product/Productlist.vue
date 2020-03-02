@@ -56,7 +56,7 @@ export default {
 
   },
 
-  mounted() {
+  created() {
     axios
       .get("/products")
       .then(response => {

@@ -26,6 +26,7 @@ class ManualsController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->route('id'));
         $files = $request->file('files');
         $product = Product::find($request->route('id'));
 
@@ -53,7 +54,7 @@ class ManualsController extends Controller
 
     }
 
-    public function show($manual_id, Request $request)
+    public function show($id, $manual_id, Request $request)
     {
         $manual = Manual::find($manual_id);
 
@@ -71,8 +72,17 @@ class ManualsController extends Controller
         //
     }
 
-    public function destroy(Manual $manual)
+    public function destroy($id, $manual_id, Request $request)
     {
-        //
+        // dd('manual_id ' . $manual_id . ' productid ' . $id );
+        $manual = Manual::find($manual_id);
+
+        if($manual){
+
+            Storage::delete($manual->file_path);
+            $manual->delete();
+            return response()->json(['success' => 'deleted']);
+
+        }
     }
 }

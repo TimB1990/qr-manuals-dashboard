@@ -5,12 +5,15 @@ $exaltoRed: #CC0033;
 $modal-head-padding: 10px;
 $modal-title-size: 1.0rem;
 
-// 3. Set the derived variables
+// default color overrides
 $primary: $exaltoRed;
+
+// basic element overrides
 $modal-card-head-padding: $modal-head-padding;
 $modal-card-title-size: $modal-title-size;
 
-// 4. Setup your Custom Colors
+//menu element overrides
+$menu-item-active-background-color: $primary;
 
 // 5. Add new color variables to the color map.
 

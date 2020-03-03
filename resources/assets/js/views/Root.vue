@@ -12,7 +12,7 @@
         <div class="tile is-parent is-4">
           <div class="tile is-child">
             <code>side-view</code>
-            <router-link to="/">Home</router-link>
+            <side-root></side-root>
           </div>
         </div>
 
@@ -31,17 +31,19 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import HeaderRoot from './header/HeaderRoot'
+import HeaderRoot from "./header/HeaderRoot";
+import SideRoot from "./side/SideRoot";
 
 export default {
-  name: 'root',
-  components: { HeaderRoot }
-
-}
+  name: "root",
+  components: {
+    HeaderRoot,
+    SideRoot
+  }
+};
 </script>  

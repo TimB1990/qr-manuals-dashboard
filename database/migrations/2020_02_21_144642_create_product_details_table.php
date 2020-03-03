@@ -14,7 +14,7 @@ class CreateProductDetailsTable extends Migration
     public function up()
     {
         Schema::create('product_details', function (Blueprint $table) {
-            $table->string('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->String('artnr');
             $table->String('recommended_fuse');
             $table->integer('driven_shafts');

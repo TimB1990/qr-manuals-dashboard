@@ -81,6 +81,10 @@ export default {
       this.$emit("close");
     },
 
+    manualAttached(){
+      this.$emit('attached');
+    },
+
     addFiles() {
       this.$refs.files.click(); // references to element with id of files
     },
@@ -106,10 +110,7 @@ export default {
           this.notification.message = "OK";
           this.notification.iconClass = "fa fa-check has-text-success";
           this.files = [];
-
-          // not working
-          this.$emit('manual-update');
-
+          this.manualAttached();
           this.close();
         })
         .catch(error => {

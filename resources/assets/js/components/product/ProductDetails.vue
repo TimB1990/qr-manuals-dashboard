@@ -77,6 +77,7 @@ import Upload from "./Upload";
 export default {
   name: "productdetails",
   components: { QrcodeVue, Upload },
+
   data() {
     return {
       openUpload: false,
@@ -131,6 +132,13 @@ export default {
     qrValue(){
       return "https://example.com/products/" + this.details[1].value; 
     }
+  },
+
+  beforeMount(){
+    this.$on('attached', () => {
+      this.getManuals(this.details[0].value);
+
+    });
   },
 
   created() {

@@ -20,4 +20,9 @@ $modal-card-title-size: $modal-title-size;
 body{
     font-family: 'Work Sans',sans-serif,sans-serif;
     color: #666;
+    padding:20px;
+}
+
+div > div {
+    border: 1px dashed lightgrey;
 }

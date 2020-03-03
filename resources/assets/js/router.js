@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router';
-import Home from './views/Home';
+
+import Home from './views/main/Home';
 import Uploads from './views/Uploads';
 
 let routes = [
@@ -8,10 +9,10 @@ let routes = [
         component: Home
     },
 
-    {
+    /*{
         path: '/uploads',
         component: Uploads
-    }
+    }*/
 ];
 
 export default new VueRouter({

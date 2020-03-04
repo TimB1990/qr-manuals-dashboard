@@ -1,0 +1,16 @@
+{
+    "Root" : {
+        "headerRoot" : {
+            "HeaderDecoration" : {},
+            "HeaderNavigation" : {}
+        },
+        "SideRoot" : {
+            "SideMenu" : {
+                "SideMenuItem" : {}
+            }
+        },
+        "MainRoot" : {},
+        "FooterRoot": {}
+
+    }
+}

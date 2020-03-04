@@ -122,7 +122,7 @@ ADMIN:
 | Adding attachment to product |
 +------------------------------+
 
-If the admin opens the 'Attachments' dashboard he can search for productID, product-name or product-category. After the search criteria have been automatically submitted the results will be listed. When the admin clicks a single item the product details and current attachments are shown in a side-view. Once product details are shown in the side-view the admin can go to the upload section to upload one or more PDF files, related to the product and to be shown to the user. 
+If the admin opens the dashboard he can search for productID, product-name or product-category. After the search criteria have been automatically submitted the results will be listed. When the admin clicks a single item the product details and current attachments are shown in a centered-view. Once product details are shown in the side-view the admin can go to the upload section to upload one or more PDF files, related to the product and to be shown to the user. 
 
 +----------------------+
 | Generating QR-scheet |

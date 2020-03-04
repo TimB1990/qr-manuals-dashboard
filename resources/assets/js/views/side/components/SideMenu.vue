@@ -1,60 +1,29 @@
 <template>
   <div>
-    <aside class="menu">
-      <p class="menu-label">General</p>
-      <ul class="menu-list">
-          <li>
-              <router-link to="/">Dashboard Home</router-link>
-          </li>
-      </ul>
-      <p class="menu-label">Administration</p>
-      <ul class="menu-list">
-        <li>
-          <a>Team Settings</a>
-        </li>
-        <li>
-          <a>Manage Your Team</a>
-          <ul>
-            <li>
-              <a>Members</a>
-            </li>
-            <li>
-              <a>Plugins</a>
-            </li>
-            <li>
-              <a>Add a member</a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <a>Invitations</a>
-        </li>
-        <li>
-          <a>Cloud Storage Environment Settings</a>
-        </li>
-        <li>
-          <a>Authentication</a>
-        </li>
-      </ul>
-      <p class="menu-label">Transactions</p>
-      <ul class="menu-list">
-        <li>
-          <a>Payments</a>
-        </li>
-        <li>
-          <a>Transfers</a>
-        </li>
-        <li>
-          <a>Balance</a>
-        </li>
-      </ul>
+    <aside class="panel is-primary">
+      <div class="panel-block">
+        <p class="control has-icons-left">
+          <input class="input" type="text" placeholder="Search Products..." />
+          <span class="icon is-left">
+            <i class="fa fa-search" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div>
+
+      <p class="panel-block">Products</p>
+
+        <side-menu-item :product_name="'product A'"/>
+        <side-menu-item :product_name="'product B'"/>
+
+      <!-- other component -->
     </aside>
   </div>
 </template>
 
 <script>
+import SideMenuItem from './SideMenuItem'
 export default {
   name: "sideMenu",
-  components: {}
+  components: { SideMenuItem }
 };
 </script>

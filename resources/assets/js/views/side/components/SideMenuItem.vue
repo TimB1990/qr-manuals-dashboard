@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <a @click="select" class="level panel-block" ref="item">
-      <span class="level-left level-item">{{ product_name }}</span>
-      <span class="panel-icon is-large level-item has-text-right">
+    <a @click="select" class="panel-block" ref="item">
+      {{ product_name }}
+      <span class="panel-icon is-large level-item">
         <i class="fa fa-check" aria-hidden="true"></i>
       </span>
     </a>
-  </div>
 </template>
 
 <script>

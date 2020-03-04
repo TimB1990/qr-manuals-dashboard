@@ -10,20 +10,59 @@
         </p>
       </div>
 
-      <p class="panel-block">Products</p>
+      <div class="panel-block">
+        <span><button v-if="!loading" class="button is-loading"></button></span>
+        <span><strong>product</strong></span>
+      </div>
 
-        <side-menu-item :product_name="'product A'"/>
-        <side-menu-item :product_name="'product B'"/>
+      <div v-if="products && products.length">
+        <div v-for="product of products" :key="product.id">
+          <side-menu-item :product_name="product.name" />
+        </div>
+      </div>
 
-      <!-- other component -->
+      <!-- errors -->
+      <div v-if="error" class="notification is-danger">
+        <h3>Error!</h3>
+        <div>{{ errorList }}</div>
+      </div>
     </aside>
   </div>
 </template>
 
 <script>
-import SideMenuItem from './SideMenuItem'
+import SideMenuItem from "./SideMenuItem";
 export default {
   name: "sideMenu",
-  components: { SideMenuItem }
+  components: { SideMenuItem },
+
+  created() {
+    this.fetchProducts();
+  },
+
+  methods: {
+    fetchProducts() {
+      this.$store.dispatch("fetchProducts");
+    },
+    clearProducts() {
+      this.$store.dispatch("clearProducts");
+    }
+  },
+
+  computed: {
+    // no local data(), only computed properties
+    products() {
+      return this.$store.state.products;
+    },
+    loading() {
+      return this.$store.state.loadingStatus === "notloading";
+    },
+    error() {
+      return this.$store.state.errors.length > 0;
+    },
+    errorList() {
+      return this.$store.state.errors;
+    }
+  }
 };
 </script>

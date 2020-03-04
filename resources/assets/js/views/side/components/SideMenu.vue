@@ -10,17 +10,23 @@
         </p>
       </div>
 
-      <div class="panel-block">
-        <span><button v-if="!loading" class="button is-loading"></button></span>
-        <span><strong>product</strong></span>
+      <div class="custom-panel-block">
+        <strong>products</strong>
+        <button v-if="!loading" class="button is-loading is-small"></button>
       </div>
 
-      <div v-if="products && products.length">
-        <div v-for="product of products" :key="product.id">
-          <side-menu-item :product_name="product.name" />
-        </div>
-      </div>
-
+      <ul v-if="products && products.length">
+        <side-menu-item
+          class="side-menu-item"
+          v-for="product in products"
+          :key="product.id"
+          :product_name="product.name"
+          :product_artnr="product.artnr"
+          :product_kind="product.kind"
+          :categories="product.categories"
+        />
+        <hr />
+      </ul>
       <!-- errors -->
       <div v-if="error" class="notification is-danger">
         <h3>Error!</h3>
@@ -66,3 +72,30 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.side-menu-item {
+  /*background-color: hsl(0, 0%, 96%);*/
+  /*box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);*/
+  border: 1px solid hsl(0, 0%, 86%);
+  padding: 8px;
+  margin-bottom: 14px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 4px;
+}
+
+.side-menu-item:hover {
+  background-color: hsl(0, 0%, 96%);
+}
+
+.custom-panel-block {
+  display: flex;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

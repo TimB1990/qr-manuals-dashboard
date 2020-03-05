@@ -6,7 +6,8 @@
         },
         "SideRoot" : {
             "SideMenu" : {
-                "SideMenuItem" : {}
+                "SideMenuItem" : {},
+                "SideMenuPagination" : {}
             }
         },
         "MainRoot" : {},

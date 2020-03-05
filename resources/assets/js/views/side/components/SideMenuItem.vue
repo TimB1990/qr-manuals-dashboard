@@ -5,7 +5,7 @@
       <li>{{ product_artnr }} | {{ product_kind }}</li>
     </ul>
     <nav class="breadcrumb is-small">
-      <ul>
+      <ul v-if="categories">
         <li v-for="category of categories" :key="category.id">
           <a href="#">{{ category.name }}</a>
         </li>

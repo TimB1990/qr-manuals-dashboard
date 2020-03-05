@@ -14,21 +14,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $productslist = Product::all();
+        // $productslist = Product::paginate(2);
+        $productslist = Product::paginate(5);
 
         foreach ($productslist as $product){
 
-            // initialize empty array to push category->name
-            // $productCategories = array(); 
-
-            // loop over product->categories
-            /*foreach ($product->categories as $category){
-                array_push($productCategories, $category->name); // ['cat1','cat2']
-            }*/
-
-            // $product_categories = ['categories' => $product->categories];
             $product->categories;
-            // array_push($responseData, $product_categories);
         }
 
         return response()->json($productslist);

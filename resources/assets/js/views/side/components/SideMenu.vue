@@ -27,6 +27,15 @@
         />
         <hr />
       </ul>
+
+      <!-- paginator -->
+      <div>
+        <side-menu-paginator
+          :totalPages="2"
+          @select="fetchProducts"
+        ></side-menu-paginator>
+      </div>
+
       <!-- errors -->
       <div v-if="error" class="notification is-danger">
         <h3>Error!</h3>
@@ -38,16 +47,18 @@
 
 <script>
 import SideMenuItem from "./SideMenuItem";
+import SideMenuPaginator from "./SideMenuPaginator";
+
 export default {
   name: "sideMenu",
-  components: { SideMenuItem },
+  components: { SideMenuItem, SideMenuPagination },
 
-  created() {
+  mounted() {
     this.fetchProducts();
   },
 
   methods: {
-    fetchProducts() {
+    fetchProducts(page) {
       this.$store.dispatch("fetchProducts");
     },
     clearProducts() {

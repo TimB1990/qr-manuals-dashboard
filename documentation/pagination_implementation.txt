@@ -1,0 +1,59 @@
+// response data for pagination url: products?page=1
+
+{
+    "current_page":1,
+    "data":[{...},{...}],
+    "first_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "from":1,
+    "last_page":2,
+    "last_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "next_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "path":"http:\/\/localhost:8000\/products",
+    "per_page":5,
+    "prev_page_url":null,
+    "to":5,
+    "total":10
+ }
+ 
+ // response data for pagination url: products?page=2
+ {
+    "current_page":2,
+    "data":[{...},{...}],
+    "first_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "from":6,
+    "last_page":2,
+    "last_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "next_page_url":null,
+    "path":"http:\/\/localhost:8000\/products",
+    "per_page":5,
+    "prev_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "to":10,
+    "total":10
+ }
+ 
+the application renders first 4 pager blocks and next: [x] => disabled button
+[x][1][2][3][4][>>]
+[<<][5][6][7][8][>>]
+[<<][9][10][x]
+
+<div>
+	<button v-if="!products.prev_page_url">x</button>
+	<button v-else>prev</button>
+</div>
+
+<div>
+	<button>{{ page }}</button>
+</div>
+
+<div>
+	<button v-if="!products.next_page_url">x</button>
+	<button v-else>next</button
+</div>
+
+
+
+
+
+
+
+ 

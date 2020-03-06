@@ -15,10 +15,10 @@
         <button v-if="!loading" class="button is-loading is-small"></button>
       </div>
 
-      <ul v-if="products && products.length">
+      <ul v-if="products.data && products.data.length">
         <side-menu-item
           class="side-menu-item"
-          v-for="product in products"
+          v-for="product in products.data"
           :key="product.id"
           :product_name="product.name"
           :product_artnr="product.artnr"
@@ -30,10 +30,7 @@
 
       <!-- paginator -->
       <div>
-        <side-menu-paginator
-          :totalPages="2"
-          @select="fetchProducts"
-        ></side-menu-paginator>
+        <side-menu-paginator :pagination="products" :offset=1 @paginate="fetchProducts"></side-menu-paginator>
       </div>
 
       <!-- errors -->
@@ -51,16 +48,20 @@ import SideMenuPaginator from "./SideMenuPaginator";
 
 export default {
   name: "sideMenu",
-  components: { SideMenuItem, SideMenuPagination },
+  components: { SideMenuItem, SideMenuPaginator },
 
   mounted() {
-    this.fetchProducts();
+    this.fetchProducts(1);
   },
 
   methods: {
     fetchProducts(page) {
-      this.$store.dispatch("fetchProducts");
+      this.$store.dispatch("fetchProducts",{
+        page: page
+      });
+      
     },
+
     clearProducts() {
       this.$store.dispatch("clearProducts");
     }
@@ -88,12 +89,15 @@ export default {
 .side-menu-item {
   /*background-color: hsl(0, 0%, 96%);*/
   /*box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);*/
+  display: flex;
+  flex-direction: column;
   border: 1px solid hsl(0, 0%, 86%);
   padding: 8px;
   margin-bottom: 14px;
   margin-left: 14px;
   margin-right: 14px;
   border-radius: 4px;
+  height:100px;
 }
 
 .side-menu-item:hover {

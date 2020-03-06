@@ -1,12 +1,12 @@
 <template>
-  <li @click="select" ref="item">
+  <li ref="item">
     <ul>
       <li>{{ product_name }}</li>
       <li>{{ product_artnr }} | {{ product_kind }}</li>
     </ul>
     <nav class="breadcrumb is-small">
       <ul v-if="categories">
-        <li v-for="category of categories" :key="category.id">
+        <li v-for="(category,i) of categories" :key="i">
           <a href="#">{{ category.name }}</a>
         </li>
       </ul>
@@ -33,4 +33,10 @@ export default {
 </script>
 
 <style scoped>
+
+.is-selected{
+  background-color: #cc0033;
+  color:white;
+}
+
 </style>

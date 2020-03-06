@@ -32,23 +32,37 @@
  }
  
 the application renders first 4 pager blocks and next: [x] => disabled button
-[x][1][2][3][4][>>]
-[<<][5][6][7][8][>>]
-[<<][9][10][x]
+[x][1][2][3][>>]
+[<<][4][5][6][>>]
+[<<][7][8][9][>>]
+[<<][10][x]
 
-<div>
-	<button v-if="!products.prev_page_url">x</button>
-	<button v-else>prev</button>
-</div>
 
-<div>
-	<button>{{ page }}</button>
-</div>
+Onclick on a page button, pagenumber is send over
+to store to be included in querystring url 
 
-<div>
-	<button v-if="!products.next_page_url">x</button>
-	<button v-else>next</button
-</div>
+// example VUEX
+const store = new Vuex.Store({
+	state:{
+		count: 0
+	},
+	mutations:{
+		increment(state){
+			state.count++
+		}
+	},
+	actions:{
+		increment (context){
+			context.commit('increment');
+		}
+	}
+})
+
+// dispatch with a payload
+this.$store.dispatch('fetchProducts', {
+	page: page
+})
+
 
 
 

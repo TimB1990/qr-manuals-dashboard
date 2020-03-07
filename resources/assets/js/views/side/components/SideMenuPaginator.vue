@@ -52,7 +52,8 @@ export default {
 
 <style scoped>
 .paginator {
-  display: block;
+  display: flex;
+  /*justify-content: center;*/
   padding: 14px;
 }
 .paginator a.active {

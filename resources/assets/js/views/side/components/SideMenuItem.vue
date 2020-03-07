@@ -1,5 +1,5 @@
 <template>
-  <li ref="item">
+  <li ref="item" @click="fetchDetails(product_id)">
     <ul>
       <li>{{ product_name }}</li>
       <li>{{ product_artnr }} | {{ product_kind }}</li>
@@ -27,16 +27,24 @@ export default {
   methods: {
     select() {
       this.$refs["item"].classList.toggle("is-selected");
+    },
+
+    fetchDetails(id) {
+      console.log("navigate to details of:", id);
+      this.$router.replace({
+        name: "product_details",
+        params: {
+          id: id
+        }
+      }).catch(err => {});
     }
   }
 };
 </script>
 
 <style scoped>
-
-.is-selected{
+.is-selected {
   background-color: #cc0033;
-  color:white;
+  color: white;
 }
-
 </style>

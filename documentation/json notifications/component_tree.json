@@ -10,7 +10,13 @@
                 "SideMenuPagination" : {}
             }
         },
-        "MainRoot" : {},
+        "MainRoot" : {
+            "RouterView":{
+                "MainProductDetails":{}
+            },
+            "MainProductFilesManager": {}
+            
+        },
         "FooterRoot": {}
 
     }

@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
 
 import Home from './views/main/Home';
-import Uploads from './views/Uploads';
+import MainProductDetails from './views/main/components/MainProductDetails'
 
 let routes = [
     {
@@ -9,15 +9,16 @@ let routes = [
         component: Home
     },
 
-    /*{
-        path: '/uploads',
-        component: Uploads
-    }*/
+    {
+        path: '/products/:id/details',
+        name: 'product_details',
+        component: MainProductDetails
+    }
 ];
 
 export default new VueRouter({
 
-    // mode: 'history',
+    /*mode: 'history',*/
     routes: routes,
 
     linkActiveClass: 'is-active'

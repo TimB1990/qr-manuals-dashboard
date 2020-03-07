@@ -5,16 +5,16 @@ Route::get('/', function () {
 });
 
 // POST
-Route::post('/products/{id}/manuals', 'ManualsController@store');
+Route::post('api/products/{id}/manuals', 'ManualsController@store');
 
 // DELETE
-Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
+Route::delete('api/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
 
 // GET
-Route::get('/products', 'ProductController@index');
-Route::get('/products/{id}/details', 'ProductDetailsController@show');
-Route::get('/products/{id}/manuals', 'ManualsController@index');
-Route::get('/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
+Route::get('api/products', 'ProductController@index');
+Route::get('api/products/{id}/details', 'ProductDetailsController@show');
+Route::get('api/products/{id}/manuals', 'ManualsController@index');
+Route::get('api/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
 
 
 

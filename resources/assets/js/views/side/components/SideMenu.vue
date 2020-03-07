@@ -20,6 +20,7 @@
           class="side-menu-item"
           v-for="product in products.data"
           :key="product.id"
+          :product_id="product.id"
           :product_name="product.name"
           :product_artnr="product.artnr"
           :product_kind="product.kind"
@@ -50,7 +51,7 @@ export default {
   name: "sideMenu",
   components: { SideMenuItem, SideMenuPaginator },
 
-  mounted() {
+  created() {
     this.fetchProducts(1);
   },
 
@@ -58,8 +59,7 @@ export default {
     fetchProducts(page) {
       this.$store.dispatch("fetchProducts",{
         page: page
-      });
-      
+      }); 
     },
 
     clearProducts() {
@@ -92,12 +92,12 @@ export default {
   display: flex;
   flex-direction: column;
   border: 1px solid hsl(0, 0%, 86%);
+
   padding: 8px;
   margin-bottom: 14px;
   margin-left: 14px;
   margin-right: 14px;
   border-radius: 4px;
-  height:100px;
 }
 
 .side-menu-item:hover {

@@ -3,7 +3,7 @@
     <div class="tile is-ancestor is-vertical">
       <div class="tile is-parent">
         <div class="tile is-child">
-          <code>header-view</code>
+          <code>header-root</code>
           <header-root></header-root>
         </div>
       </div>
@@ -11,15 +11,15 @@
       <div class="tile">
         <div class="tile is-parent is-4">
           <div class="tile is-child">
-            <code>side-view</code>
+            <code>side-root</code>
             <side-root></side-root>
           </div>
         </div>
 
         <div class="tile is-parent">
           <div class="tile is-child">
-            <code>main-view</code>
-            <router-view></router-view>
+            <code>main-root</code>
+            <main-root></main-root>
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div class="tile">
         <div class="tile is-parent">
           <div class="tile is-child">
-            <code>footer-view</code>
+            <code>footer-root</code>
           </div>
         </div>
       </div>
@@ -38,12 +38,14 @@
 <script>
 import HeaderRoot from "./header/HeaderRoot";
 import SideRoot from "./side/SideRoot";
+import MainRoot from "./main/MainRoot";
 
 export default {
   name: "root",
   components: {
     HeaderRoot,
-    SideRoot
+    SideRoot,
+    MainRoot
   }
 };
 </script>  

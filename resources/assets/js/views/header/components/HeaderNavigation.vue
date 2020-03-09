@@ -3,7 +3,7 @@
     <nav class="navbar is-light" role="navigation" aria-label="main navigation">
       <!-- navbar brand -->
       <div class="navbar-brand">
-        <a class="navbar-item">
+        <a href="./" class="navbar-item">
           <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
         </a>
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">

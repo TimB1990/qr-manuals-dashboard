@@ -14,6 +14,7 @@ export default new Vuex.Store({
         loadingStatus: 'notloading',
         products: {},
         errors: [],
+        productManuals: {},
         productDetails: {}
     },
 
@@ -42,6 +43,10 @@ export default new Vuex.Store({
 
         SET_PRODUCT_DETAILS(state, payload) {
             state.productDetails = payload;
+        },
+
+        SET_PRODUCT_MANUALS(state,payload){
+            state.productManuals = payload;
         }
     },
 
@@ -76,17 +81,20 @@ export default new Vuex.Store({
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_DETAILS', {});
             });
+        },
+
+        fetchManuals({commit},{id}){
+            commit('SET_LOADING_STATUS','loading');
+            axios.get(`api/products/${id}/manuals`).then(result => {
+                commit('SET_LOADING_STATUS','notloading');
+                commit('SET_PRODUCT_MANUALS', result);
+
+            }).catch(err => {
+                commit('SET_LOADING_STATUS','notloading');
+                commit('SET_PRODUCT_MANUALS',{});
+            });
+            
         }
     },
-
-    getters: {
-
-        mappedDetails : state => {
-            // return Object.fromEntries(state.productDetails.data);
-            return state.productDetails.data;
-            // return Object.keys(state.productDetails.data);
-        }
-
-    }
 
 })

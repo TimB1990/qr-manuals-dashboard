@@ -1,7 +1,6 @@
 <template>
   <div>
     <router-view></router-view>
-    <code>main-product-files-manager</code>
   </div>
 </template>
 
@@ -9,6 +8,6 @@
 
 export default {
   name: "mainRoot",
-  components: {}
+  components: { }
 };
 </script>

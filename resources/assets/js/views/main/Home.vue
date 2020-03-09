@@ -1,18 +1,9 @@
 <template>
     <div class="container">
-        <div class="columns">
-            <div class="column">
-                <div class="message">
-                    <div class="message-header">
-                        <p>Home</p>
-                    </div>
-                    <div class="message-body">
-                        <p>Welcome to home page</p>
-                    </div>
-                </div>
-            </div>
+        <div class="flex-container">
+            Select a product to view details...
         </div>
-
+        
     </div>
 </template>
 
@@ -25,11 +16,9 @@ export default {
     components: { },
 
     data() {
-
         return{
 
-            // TODO
-            
+            // TODO     
         }
     },
 
@@ -39,10 +28,23 @@ export default {
 
             // date is being piped trough by status.created_at | ago
             // created_at is a date
-            return moment(date).fromNow();
+            // return moment(date).fromNow();
 
         }
-
     },
 }
-</script>  
+</script>
+
+<style scoped>
+.flex-container{
+    display: flex;
+    color: lightgrey;
+    border-radius:6px;
+    font-size: 28px;
+    border: 1px solid lightgrey;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>

@@ -8,7 +8,7 @@
 
     <table class="table is-fullwidth" v-if="productDetails">
       <tr v-for="detail in productDetails" :key="detail[0]">
-        <td>{{ detail[0].replace('_', " ") }}</td>
+        <td>{{ detail[0] }}</td>
         <td>{{ detail[1] }}</td>
       </tr>
     </table>
@@ -16,27 +16,66 @@
     <div v-else>
       <h2>no details present.</h2>
     </div>
+
+    <p>
+      <strong>Product Manuals</strong>
+    </p>
+    <table class="table is-fullwidth" v-if="productManuals">
+      <tr>
+        <th>manual id</th>
+        <th>product id</th>
+        <th>file name</th>
+        <!-- <th>file path</th> -->
+        <th>download</th>
+      </tr>
+      <tr v-for="manual in productManuals" :key="manual.id">
+        <td v-text="manual.id"></td>
+        <td v-text="manual.product_id"></td>
+        <td v-text="manual.file_name"></td>
+        <!-- <td v-text="manual.file_path"></td> -->
+        <td>
+          <a :href="manual.file_url" class="button">Download</a>
+        </td>
+      </tr>
+    </table>
+
+    <div v-else>
+      <p>No manuals present...</p>
+    </div>
+
+    <p v-if="error" style="color:red;">error: {{ error }}</p>
+
+    <main-product-manuals-manager></main-product-manuals-manager>
+
   </div>
 </template>
 
 <script>
+import MainProductManualsManager from "./MainProductManualsManager";
 export default {
   name: "mainProductDetails",
-  components: {},
+  components: { MainProductManualsManager },
 
   created() {
     this.fetchDetails();
+    this.fetchManuals();
   },
 
   watch: {
     $route(to, from) {
       this.fetchDetails();
+      this.fetchManuals();
     }
   },
 
   methods: {
     fetchDetails() {
       this.$store.dispatch("fetchDetails", {
+        id: this.$route.params.id
+      });
+    },
+    fetchManuals() {
+      this.$store.dispatch("fetchManuals", {
         id: this.$route.params.id
       });
     }
@@ -47,6 +86,12 @@ export default {
       if (this.$store.state.productDetails.data) {
         let data = this.$store.state.productDetails.data;
         return Object.entries(data);
+      }
+    },
+    productManuals() {
+      if (this.$store.state.productManuals.data) {
+        let data = this.$store.state.productManuals.data;
+        return data;
       }
     },
     loading() {

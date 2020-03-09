@@ -1,23 +1,24 @@
 {
-    "Root" : {
-        "headerRoot" : {
-            "HeaderDecoration" : {},
-            "HeaderNavigation" : {}
+    "Root": {
+        "headerRoot": {
+            "HeaderDecoration": {},
+            "HeaderNavigation": {}
         },
-        "SideRoot" : {
-            "SideMenu" : {
-                "SideMenuItem" : {},
-                "SideMenuPagination" : {}
+        "SideRoot": {
+            "SideMenu": {
+                "SideMenuItem": {},
+                "SideMenuPagination": {}
             }
         },
-        "MainRoot" : {
-            "RouterView":{
-                "MainProductDetails":{}
-            },
-            "MainProductFilesManager": {}
-            
+        "MainRoot": {
+            "RouterView": {
+                "MainProductDetails": {
+                    "MainProductManualsManager":{
+                        "MainProductManualsUpload":{}
+                    }
+                }
+            }
         },
         "FooterRoot": {}
-
     }
 }

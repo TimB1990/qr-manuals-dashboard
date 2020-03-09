@@ -13,9 +13,7 @@
         "MainRoot": {
             "RouterView": {
                 "MainProductDetails": {
-                    "MainProductManualsManager":{
-                        "MainProductManualsUpload":{}
-                    }
+                    "MainProductManualsUpload": {}
                 }
             }
         },

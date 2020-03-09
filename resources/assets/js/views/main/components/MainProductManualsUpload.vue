@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     addFiles() {
-      this.$refs.files.click(); // references to element with id of files
+      this.$refs.files.click();
     },
 
     submitFiles() {
@@ -65,7 +65,7 @@ export default {
       for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i];
 
-        formData.append(`files[${i}]`, file); // formData.append(key, value)
+        formData.append(`files[${i}]`, file);
       }
 
       axios
@@ -86,6 +86,11 @@ export default {
           this.notification.show = true;
           this.notification.message = "FAIL";
           this.notification.iconClass = "fa fa-times has-text-danger";
+        });
+
+        // reload manualslist
+        this.$store.dispatch('fetchManuals', {
+          id: this.id
         });
     },
 

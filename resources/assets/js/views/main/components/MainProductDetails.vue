@@ -27,6 +27,7 @@
         <th>file name</th>
         <!-- <th>file path</th> -->
         <th>download</th>
+        <th>delete</th>
       </tr>
       <tr v-for="manual in productManuals" :key="manual.id">
         <td v-text="manual.id"></td>
@@ -36,6 +37,7 @@
         <td>
           <a :href="manual.file_url" class="button">Download</a>
         </td>
+        <td><a class="button" @click="deleteManual(manual.id)">x</a></td>
       </tr>
     </table>
 
@@ -45,16 +47,16 @@
 
     <p v-if="error" style="color:red;">error: {{ error }}</p>
 
-    <main-product-manuals-manager></main-product-manuals-manager>
+    <main-product-manuals-upload :id="this.$route.params.id"/>
 
   </div>
 </template>
 
 <script>
-import MainProductManualsManager from "./MainProductManualsManager";
+import MainProductManualsUpload from './MainProductManualsUpload';
 export default {
   name: "mainProductDetails",
-  components: { MainProductManualsManager },
+  components: { MainProductManualsUpload },
 
   created() {
     this.fetchDetails();
@@ -74,9 +76,17 @@ export default {
         id: this.$route.params.id
       });
     },
+
     fetchManuals() {
       this.$store.dispatch("fetchManuals", {
         id: this.$route.params.id
+      });
+    },
+
+    deleteManual(manual_id){
+      this.$store.dispatch('deleteManual', {
+        id: this.$route.params.id,
+        manual_id: manual_id
       });
     }
   },

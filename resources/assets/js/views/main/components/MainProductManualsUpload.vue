@@ -24,11 +24,11 @@
           </span>
           Upload Files
         </button>
-        <div v-if="this.notification.show" class="column">
+        <div v-if="feedbackData.show" class="column">
           <transition name="fade">
             <span class="icon is-large">
               <span class="fa-stack fa-lg">
-                <i :class="this.notification.iconClass" aria-hidden="true"></i>
+                <i :class="feedbackData.iconClass" aria-hidden="true"></i>
               </span>
             </span>
           </transition>
@@ -48,10 +48,6 @@ export default {
   data() {
     return {
       files: [],
-      notification: {
-        message: "",
-        iconClass: ""
-      }
     };
   },
   methods: {
@@ -63,35 +59,17 @@ export default {
       let formData = new FormData();
 
       for (let i = 0; i < this.files.length; i++) {
-        let file = this.files[i];
 
+        let file = this.files[i];
         formData.append(`files[${i}]`, file);
       }
 
-      axios
-        .post(`api/products/${this.id}/manuals`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(response => {
-          console.log("SUCCESS!!");
-          this.notification.show = true;
-          this.notification.message = "OK";
-          this.notification.iconClass = "fa fa-check has-text-success";
-          this.files = [];
-        })
-        .catch(error => {
-          console.log("FAILURE!!");
-          this.notification.show = true;
-          this.notification.message = "FAIL";
-          this.notification.iconClass = "fa fa-times has-text-danger";
-        });
+      this.$store.dispatch('uploadManual',{
+        id: this.id,
+        formData : formData
+      });
 
-        // reload manualslist
-        this.$store.dispatch('fetchManuals', {
-          id: this.id
-        });
+
     },
 
     handleFilesUpload() {
@@ -104,6 +82,14 @@ export default {
 
     removeFile(key) {
       this.files.splice(key, 1);
+    }
+  },
+
+  computed: {
+    feedbackData(){
+      if(this.$store.state.feedbackData){
+        return this.$store.state.feedbackData;
+      }   
     }
   }
 };

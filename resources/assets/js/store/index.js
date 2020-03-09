@@ -33,7 +33,7 @@ export default new Vuex.Store({
         },
 
         CLEAR_MANUALS(state){
-            state.productManuals = {};
+            state.productManuals = [];
         },
 
         DELETE_MANUAL(state, { manual_id }){
@@ -41,9 +41,11 @@ export default new Vuex.Store({
             state.productManuals.splice(index, 1);
         },
 
-        UPLOAD_MANUAL(state, {formData}){
-            state.productManuals.push(formData);
-        },
+        /*
+        UPLOAD_MANUAL(state, payload){
+            // state.productManuals.push(payload);
+            state.productManuals 
+        },*/
 
         ADD_ERROR(state, payload) {
             state.errors = [...state.errors, payload];
@@ -125,29 +127,45 @@ export default new Vuex.Store({
         },
 
         uploadManual({ commit, dispatch}, {id,formData}){
+            
+            let feedbackData = {
+                show: true,
+                message: "",
+                iconClass: ""
+            };
+
             axios.post(`api/products/${id}/manuals`, formData, {
                 headers:{
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
-                let feedbackData = {
-                    show: true,
-                    message: response.statusText,
-                    iconClass: "fa fa-check has-text-success"
-                };
 
-                dispatch();
+                feedbackData.message = response.statusText;
+                feedbackData.iconClass = "fa fa-check has-text-success";
+
+                // commit upload manual and set feedback data
+                // commit('UPLOAD_MANUAL', formData);
+                commit('SET_FEEDBACK_DATA', feedbackData);
+
+                // reload manuals list
+                dispatch('fetchManuals',{ id: id });
 
 
             }).catch(err => {
 
+                // set feedbackData
+                feedbackData.message = `${error.response.data} ${err.message}`;
+                feedbackData.iconClass =  "fa fa-times has-text-danger";
+
+                // commit feedbackData
+                commit('SET_FEEDBACK_DATA', feedbackData);
+
+                // reload manuals list
+                dispatch('fetchManuals', {id:id});
+
             });
 
         },
-
-        setFeedbackData({commit},{ feedbackData: feedbackData }){
-            commit('SET_FEEDBACK_DATA', feedbackData);
-        }
 
     },
 })

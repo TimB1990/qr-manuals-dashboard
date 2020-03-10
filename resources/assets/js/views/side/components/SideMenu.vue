@@ -17,7 +17,6 @@
 
       <ul v-if="products.data && products.data.length">
         <side-menu-item
-          class="side-menu-item"
           v-for="product in products.data"
           :key="product.id"
           :product_id="product.id"
@@ -31,7 +30,7 @@
 
       <!-- paginator -->
       <div>
-        <side-menu-paginator :pagination="products" :offset=1 @paginate="fetchProducts"></side-menu-paginator>
+        <side-menu-paginator :pagination="products" :offset="1" @paginate="fetchProducts"></side-menu-paginator>
       </div>
 
       <!-- errors -->
@@ -57,14 +56,14 @@ export default {
 
   methods: {
     fetchProducts(page) {
-      this.$store.dispatch("fetchProducts",{
+      this.$store.dispatch("fetchProducts", {
         page: page
-      }); 
+      });
     },
 
     clearProducts() {
       this.$store.dispatch("clearProducts");
-    }
+    },
   },
 
   computed: {
@@ -80,30 +79,15 @@ export default {
     },
     errorList() {
       return this.$store.state.errors;
+    },
+    selectedProducts() {
+      return this.$store.state.selectedProducts;
     }
   }
 };
 </script>
 
 <style scoped>
-.side-menu-item {
-  /*background-color: hsl(0, 0%, 96%);*/
-  /*box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.19);*/
-  display: flex;
-  flex-direction: column;
-  border: 1px solid hsl(0, 0%, 86%);
-
-  padding: 8px;
-  margin-bottom: 14px;
-  margin-left: 14px;
-  margin-right: 14px;
-  border-radius: 4px;
-}
-
-.side-menu-item:hover {
-  background-color: hsl(0, 0%, 96%);
-}
-
 .custom-panel-block {
   display: flex;
   padding-left: 16px;

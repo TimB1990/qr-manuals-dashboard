@@ -1,12 +1,7 @@
 <template>
   <div class="container">
-    <h3>
-      <strong>Product Details:</strong>
-    </h3>
-
     <!-- <div>{{ productDetails }}</div> -->
-
-    <table class="table is-fullwidth" v-if="productDetails">
+    <table class="table is-fullwidth is-bordered" v-if="productDetails">
       <tr v-for="detail in productDetails" :key="detail[0]">
         <td>{{ detail[0] }}</td>
         <td>{{ detail[1] }}</td>
@@ -17,43 +12,48 @@
       <h2>no details present.</h2>
     </div>
 
-    <p>
-      <strong>Product Manuals</strong>
-    </p>
-    <table class="table is-fullwidth" v-if="productManuals">
-      <tr>
-        <th>manual id</th>
-        <th>product id</th>
-        <th>file name</th>
-        <!-- <th>file path</th> -->
-        <th>download</th>
-        <th>delete</th>
-      </tr>
-      <tr v-for="manual in productManuals" :key="manual.id">
-        <td v-text="manual.id"></td>
-        <td v-text="manual.product_id"></td>
-        <td v-text="manual.file_name"></td>
-        <!-- <td v-text="manual.file_path"></td> -->
-        <td>
-          <a :href="manual.file_url" class="button">Download</a>
-        </td>
-        <td><a class="button" @click="deleteManual(manual.id)">x</a></td>
-      </tr>
-    </table>
+    <table class="table is-fullwidth is-bordered">
 
-    <div v-else>
-      <p>No manuals present...</p>
-    </div>
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>artnr</th>
+          <th>filename</th>
+          <th>download</th>
+          <th>delete</th>
+        </tr>
+      </thead>
+
+      <tbody v-if="productManuals">
+        <tr v-for="manual in productManuals" :key="manual.id">
+          <td>{{manual.id}}</td>
+          <td>{{manual.artnr}}</td>
+          <td>{{manual.file_name}}</td>
+          <td>
+            <a :href="manual.file_url" class="button is-small">Download</a>
+          </td>
+          <td>
+            <a class="button is-small" @click="deleteManual(manual.id)">x</a>
+          </td>
+        </tr>
+      </tbody>
+
+      <tbody v-if="productManuals.length < 1">
+        <tr>
+          <td colspan="5">This product has no manuals assigned...</td>
+        </tr>
+      </tbody>
+      
+    </table>
 
     <p v-if="error" style="color:red;">error: {{ error }}</p>
 
-    <main-product-manuals-upload :id="this.$route.params.id"/>
-
+    <main-product-manuals-upload :id="this.$route.params.id" />
   </div>
 </template>
 
 <script>
-import MainProductManualsUpload from './MainProductManualsUpload';
+import MainProductManualsUpload from "./MainProductManualsUpload";
 export default {
   name: "mainProductDetails",
   components: { MainProductManualsUpload },
@@ -83,8 +83,8 @@ export default {
       });
     },
 
-    deleteManual(manual_id){
-      this.$store.dispatch('deleteManual', {
+    deleteManual(manual_id) {
+      this.$store.dispatch("deleteManual", {
         id: this.$route.params.id,
         manual_id: manual_id
       });

@@ -10,11 +10,17 @@
         multiple
         v-on:change="handleFilesUpload()"
       />
-      files: {{ this.files.length }}
-      <div v-for="(file, key) in files" class="notification" :key="key">
-        <button class="delete" v-on:click="removeFile( key )"></button>
-        <div class>{{ file.name }}</div>
-      </div>
+
+      <span>files: {{ this.files.length }}</span>
+
+      <table class="table is-bordered is-fullwidth">
+        <tr v-for="(file, key) in files" :key="key">
+          <td>{{ file.name }}</td>
+          <td style="text-align:right;">
+            <button v-on:click="removeFile( key )">x</button>
+          </td>
+        </tr>
+      </table>
 
       <div>
         <button class="button is-small is-primary is-outlined" v-on:click="addFiles()">Add Files</button>
@@ -24,15 +30,6 @@
           </span>
           Upload Files
         </button>
-        <div v-if="feedbackData.show" class="column">
-          <transition name="fade">
-            <span class="icon is-large">
-              <span class="fa-stack fa-lg">
-                <i :class="feedbackData.iconClass" aria-hidden="true"></i>
-              </span>
-            </span>
-          </transition>
-        </div>
       </div>
     </div>
   </div>
@@ -47,7 +44,7 @@ export default {
   },
   data() {
     return {
-      files: [],
+      files: []
     };
   },
   methods: {
@@ -59,17 +56,16 @@ export default {
       let formData = new FormData();
 
       for (let i = 0; i < this.files.length; i++) {
-
         let file = this.files[i];
         formData.append(`files[${i}]`, file);
       }
 
-      this.$store.dispatch('uploadManual',{
+      this.$store.dispatch("uploadManual", {
         id: this.id,
-        formData : formData
+        formData: formData
       });
 
-
+      this.files = [];
     },
 
     handleFilesUpload() {
@@ -86,26 +82,13 @@ export default {
   },
 
   computed: {
-    feedbackData(){
-      if(this.$store.state.feedbackData){
+    feedbackData() {
+      if (this.$store.state.feedbackData) {
         return this.$store.state.feedbackData;
-      }   
+      }
     }
   }
 };
 </script>
 <style>
-.fade-enter {
-  opacity: 0;
-}
-.fade-enter-active {
-  transition: opacity 1s;
-}
-.fade-leave {
-  opacity: 1;
-}
-.fade-leave-active {
-  transition: opacity 1s;
-  opacity: 0;
-}
 </style>

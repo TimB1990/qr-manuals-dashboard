@@ -2,7 +2,8 @@
     "Root": {
         "headerRoot": {
             "HeaderDecoration": {},
-            "HeaderNavigation": {}
+            "HeaderNavigation": {},
+            "HeaderActionbar" : {}
         },
         "SideRoot": {
             "SideMenu": {

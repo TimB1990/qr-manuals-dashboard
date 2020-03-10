@@ -14,7 +14,8 @@ export default new Vuex.Store({
         products: {},
         errors: [],
         productManuals: [],
-        productDetails: []
+        productDetails: [],
+        selectedProducts: []
     },
 
     mutations: {
@@ -32,27 +33,20 @@ export default new Vuex.Store({
             state.products = {};
         },
 
-        CLEAR_MANUALS(state){
+        CLEAR_MANUALS(state) {
             state.productManuals = [];
         },
 
-        DELETE_MANUAL(state, { manual_id }){
+        DELETE_MANUAL(state, { manual_id }) {
             index = state.productManuals.findIndex(manual => manual.id == manual_id)
             state.productManuals.splice(index, 1);
         },
-
-        /*
-        UPLOAD_MANUAL(state, payload){
-            // state.productManuals.push(payload);
-            state.productManuals 
-        },*/
 
         ADD_ERROR(state, payload) {
             state.errors = [...state.errors, payload];
         },
 
-        // confirmation
-        SET_FEEDBACK_DATA(state, payload){
+        SET_FEEDBACK_DATA(state, payload) {
             state.feedbackMsg = payload;
         },
 
@@ -64,12 +58,29 @@ export default new Vuex.Store({
             state.productDetails = payload;
         },
 
-        SET_PRODUCT_MANUALS(state,payload){
+        SET_PRODUCT_MANUALS(state, payload) {
             state.productManuals = payload;
+        },
+
+        SET_SELECTED_PRODUCT(state, id) {
+            state.selectedProducts.push(id);
+        },
+
+        REMOVE_SELECTED_PRODUCT(state, id) {
+            index = state.selectedProducts.findIndex(id);
+            state.selectedProducts.splice(index, 1);
         }
     },
 
     actions: {
+        addSelectedProduct({ commit }, { id }) {
+            commit('SET_SELECTED_PRODUCT', id);
+        },
+
+        removeSelectedProduct({ commit }, { id }) {
+            commit('REMOVE_SELECTED_PRODUCT', id);
+        },
+
         // for context.commit, and page parameter
         fetchProducts({ commit }, { page }) {
             commit('SET_LOADING_STATUS', 'loading');
@@ -87,7 +98,7 @@ export default new Vuex.Store({
             commit('CLEAR_PRODUCTS');
         },
 
-        clearManuals({ commit }){
+        clearManuals({ commit }) {
             commit('CLEAR_MANUALS');
         },
 
@@ -104,30 +115,30 @@ export default new Vuex.Store({
             });
         },
 
-        fetchManuals({commit},{id}){
-            commit('SET_LOADING_STATUS','loading');
+        fetchManuals({ commit }, { id }) {
+            commit('SET_LOADING_STATUS', 'loading');
             axios.get(`api/products/${id}/manuals`).then(result => {
-                commit('SET_LOADING_STATUS','notloading');
+                commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_MANUALS', result);
 
             }).catch(err => {
-                commit('SET_LOADING_STATUS','notloading');
-                commit('SET_PRODUCT_MANUALS',[]);
+                commit('SET_LOADING_STATUS', 'notloading');
+                commit('SET_PRODUCT_MANUALS', []);
             });
-            
+
         },
 
-        deleteManual({ commit, dispatch },{ id, manual_id }){
+        deleteManual({ commit, dispatch }, { id, manual_id }) {
             axios.delete(`api/products/${id}/manuals/${manual_id}`)
-            .then(() => {
-                commit('DELETE_MANUAL', manual_id)
-            }).catch(err => console.log(err));
+                .then(() => {
+                    commit('DELETE_MANUAL', manual_id)
+                }).catch(err => console.log(err));
 
-            dispatch('fetchManuals',{id:id});
+            dispatch('fetchManuals', { id: id });
         },
 
-        uploadManual({ commit, dispatch}, {id,formData}){
-            
+        uploadManual({ commit, dispatch }, { id, formData }) {
+
             let feedbackData = {
                 show: true,
                 message: "",
@@ -135,7 +146,7 @@ export default new Vuex.Store({
             };
 
             axios.post(`api/products/${id}/manuals`, formData, {
-                headers:{
+                headers: {
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
@@ -143,29 +154,33 @@ export default new Vuex.Store({
                 feedbackData.message = response.statusText;
                 feedbackData.iconClass = "fa fa-check has-text-success";
 
-                // commit upload manual and set feedback data
-                // commit('UPLOAD_MANUAL', formData);
                 commit('SET_FEEDBACK_DATA', feedbackData);
 
                 // reload manuals list
-                dispatch('fetchManuals',{ id: id });
+                dispatch('fetchManuals', { id: id });
 
 
             }).catch(err => {
 
                 // set feedbackData
                 feedbackData.message = `${error.response.data} ${err.message}`;
-                feedbackData.iconClass =  "fa fa-times has-text-danger";
+                feedbackData.iconClass = "fa fa-times has-text-danger";
 
                 // commit feedbackData
                 commit('SET_FEEDBACK_DATA', feedbackData);
 
                 // reload manuals list
-                dispatch('fetchManuals', {id:id});
+                dispatch('fetchManuals', { id: id });
 
             });
 
         },
 
     },
-})
+
+    getters: {
+        productIsSelected: (state) => (id) => {
+            return state.selectedProducts.includes(id);
+        }
+    }
+});

@@ -1,17 +1,18 @@
 <template>
-  <li ref="item" @click="fetchDetails(product_id)">
+  <div class="side-menu-item" ref="item" @click="fetchDetails(product_id)">
     <ul>
       <li>{{ product_name }}</li>
-      <li>{{ product_artnr }} | {{ product_kind }}</li>
+      <li>{{ product_artnr }} : {{ product_kind }}</li>
     </ul>
-    <nav class="breadcrumb is-small">
-      <ul v-if="categories">
-        <li v-for="(category,i) of categories" :key="i">
-          <a href="#">{{ category.name }}</a>
-        </li>
-      </ul>
+    <nav v-if="categories">
+      <span>
+        <i class="fa fa-check"></i>
+      </span>
+      <span v-for="(category,i) of categories" :key="i">
+        <a href="#">{{ category.name }}</a> |
+      </span>
     </nav>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -24,27 +25,79 @@ export default {
     product_kind: String,
     categories: Array
   },
-  methods: {
-    select() {
-      this.$refs["item"].classList.toggle("is-selected");
-    },
 
+  methods: {
     fetchDetails(id) {
       console.log("navigate to details of:", id);
-      this.$router.replace({
-        name: "product_details",
-        params: {
-          id: id
-        }
-      }).catch(err => {});
+      this.$router
+        .replace({
+          name: "product_details",
+          params: {
+            id: id
+          }
+        })
+        .catch(err => {});
+    },
+    addSelected(id) {
+      this.$store.dispatch("addSelectedProduct", id);
+    },
+
+    removeSelected(id) {
+      this.$store.dispatch("removeSelectedProduct", id);
+    },
+
+    toggleSelectedState(id) {
+      // first check if id is included in productIsSelected getters from store
+      if (this.$store.getters.productIsSelected(id)) {
+        this.$store.dispatch("removeSelectedProduct", id);
+      } else {
+        this.$store.dispatch("addSelectedProduct", id);
+      }
     }
+  },
+
+  computed: {
+    //
   }
 };
 </script>
 
 <style scoped>
-.is-selected {
-  background-color: #cc0033;
-  color: white;
+.side-menu-item {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid hsl(0, 0%, 86%);
+  padding: 8px;
+  margin-bottom: 14px;
+  margin-left: 14px;
+  margin-right: 14px;
+  border-radius: 4px;
+}
+
+.side-menu-item:hover {
+  /*border: 1px solid hsl(0, 0%, 25%);*/
+  border: 1px solid hsl(0, 0%, 50%);
+  background-color: hsl(0, 0%, 99%);
+}
+
+nav > span > a {
+  color: hsl(0, 0%, 50%);
+}
+
+span > i {
+  padding: 1px;
+  border: 1px solid hsl(0, 0%, 86%);
+  color: hsl(0, 0%, 86%);
+  font-size: 18px;
+  float: right;
+}
+
+span > i:hover {
+  border: 1px solid hsl(0, 0%, 50%);
+  color: hsl(0, 0%, 50%);
+}
+
+nav > span {
+  font-size: 12px;
 }
 </style>

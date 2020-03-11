@@ -1,41 +1,101 @@
 <template>
-<nav class="actionbar">
-
-    <span>actionbar</span>
-
-    <div class="actionbar-end">
-        <span class="actionbar-item">QR</span>
-        <span class="actionbar-item">QR</span>
+  <nav class="actionbar" role="actionbar" aria-label="actionbar">
+    <div class="actionbar-start">
+      <span>QR-codes Per Selected Product:</span>
+      <input class="action-input" type="number" value="1" onfocus="this.value=''" min="1" max="99" />
+      <button class="action-btn">
+        Generate Sheet
+        <!-- <i class="fa fa-qrcode"></i> -->
+      </button>
     </div>
-</nav>
-
+    <code>{{ selectedProducts }}</code>
+    <div class="actionbar-end">
+      <span class="tag-selected">selected: {{ selectedProductCount }}</span>
+      <button class="action-btn" @click.prevent="clearSelected">Clear</button>
+    </div>
+  </nav>
 </template>
 
 <script>
 export default {
   name: "headerActionbar",
-  components: {}
+  components: {},
+  methods: {
+    clearSelected() {
+      this.$store.dispatch("clearSelected");
+    }
+  },
+  computed: {
+    selectedProductCount() {
+      return this.$store.getters.selectedProductCount;
+    },
+    selectedProducts() {
+      return this.$store.state.selectedProducts;
+    }
+  }
 };
 </script>
 
 <style>
-.actionbar{
-    overflow: hidden;
-    padding:12px;
-    border: 1px solid black;
-}
-.actionbar-end{
-    float:right;
-    display:flex;
-    align-items: center;
+.actionbar {
+  display: flex;
+  justify-content: space-between;
+  border: 1px dashed black;
+  padding: 12px;
 }
 
-.actionbar-item{
-    border: 1px solid grey;
-    padding:3px;
-    margin-left:6px;
-    border-radius: 6px;
+.tag-selected {
+  padding: 8px 12px 8px 12px;
+  border: 1px solid hsl(0, 0%, 76%);
+  background-color: transparent;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
+.action-btn {
+  margin: 3px 3px 3px 3px;
+  background-color: transparent;
+  border: 1px solid hsl(0, 0%, 76%);
+  padding: 8px 12px 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  outline: none;
+}
 
+.action-btn > i{
+  vertical-align: center;
+  font-size: 16px;
+}
+
+.action-btn:hover {
+  border: 1px solid hsl(0, 0%, 76%);
+  background-color: hsl(0, 0%, 86%);
+}
+
+.action-input {
+  margin: 3px 6px 3px 6px;
+  border: 1px solid hsl(0, 0%, 76%);
+  text-align: center;
+  color: black;
+  border-radius: 6px;
+  padding: 6px 12px 6px 12px;
+  width: 42px;
+  font-size: 14px;
+  outline: none;
+}
+
+.action-input:focus {
+  /* when clicked inside element */
+  border: 1px solid hsl(0, 0%, 56%);
+  background-color: hsl(0, 0%, 96%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
 </style>

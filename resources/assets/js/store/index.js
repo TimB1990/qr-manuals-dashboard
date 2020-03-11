@@ -38,7 +38,7 @@ export default new Vuex.Store({
         },
 
         DELETE_MANUAL(state, { manual_id }) {
-            index = state.productManuals.findIndex(manual => manual.id == manual_id)
+            let index = state.productManuals.findIndex(manual => manual.id == manual_id);
             state.productManuals.splice(index, 1);
         },
 
@@ -62,23 +62,31 @@ export default new Vuex.Store({
             state.productManuals = payload;
         },
 
-        SET_SELECTED_PRODUCT(state, id) {
+        ADD_SELECTED_PRODUCT(state, id) {
             state.selectedProducts.push(id);
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
-            index = state.selectedProducts.findIndex(id);
+            let index = state.selectedProducts.findIndex(selected => selected == id);
             state.selectedProducts.splice(index, 1);
+        },
+
+        CLEAR_SELECTED(state){
+            state.selectedProducts = [];
         }
     },
 
     actions: {
         addSelectedProduct({ commit }, { id }) {
-            commit('SET_SELECTED_PRODUCT', id);
+            commit('ADD_SELECTED_PRODUCT', id);
         },
 
         removeSelectedProduct({ commit }, { id }) {
             commit('REMOVE_SELECTED_PRODUCT', id);
+        },
+
+        clearSelected({ commit }){
+            commit('CLEAR_SELECTED');
         },
 
         // for context.commit, and page parameter
@@ -180,7 +188,13 @@ export default new Vuex.Store({
 
     getters: {
         productIsSelected: (state) => (id) => {
+            // console.log('getter productIsSelected id: ', id);
             return state.selectedProducts.includes(id);
+
+        },
+
+        selectedProductCount: (state) => {
+            return state.selectedProducts.length;
         }
     }
 });

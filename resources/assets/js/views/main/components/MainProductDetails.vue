@@ -13,7 +13,6 @@
     </div>
 
     <table class="table is-fullwidth is-bordered">
-
       <thead>
         <tr>
           <th>id</th>
@@ -24,8 +23,8 @@
         </tr>
       </thead>
 
-      <tbody v-if="productManuals">
-        <tr v-for="manual in productManuals" :key="manual.id">
+      <tbody v-if="this.productManuals && this.productManuals.length > 0">
+        <tr v-for="manual in this.productManuals" :key="manual.id">
           <td>{{manual.id}}</td>
           <td>{{manual.artnr}}</td>
           <td>{{manual.file_name}}</td>
@@ -38,17 +37,16 @@
         </tr>
       </tbody>
 
-      <tbody v-if="productManuals.length < 1">
+      <tbody v-else>
         <tr>
           <td colspan="5">This product has no manuals assigned...</td>
         </tr>
       </tbody>
-      
     </table>
 
     <p v-if="error" style="color:red;">error: {{ error }}</p>
 
-    <main-product-manuals-upload :id="this.$route.params.id" />
+    <main-product-manuals-upload :id="parseInt(this.$route.params.id)" />
   </div>
 </template>
 
@@ -100,8 +98,7 @@ export default {
     },
     productManuals() {
       if (this.$store.state.productManuals.data) {
-        let data = this.$store.state.productManuals.data;
-        return data;
+        return this.$store.state.productManuals.data;
       }
     },
     loading() {

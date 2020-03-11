@@ -15,6 +15,11 @@
         <button v-if="!loading" class="button is-loading is-small"></button>
       </div>
 
+      <p v-if="this.selectedProducts">
+        {{ this.selectedProducts }}
+        <button @click.prevent="clearSelected">clear</button>
+        </p>
+
       <ul v-if="products.data && products.data.length">
         <side-menu-item
           v-for="product in products.data"
@@ -64,6 +69,10 @@ export default {
     clearProducts() {
       this.$store.dispatch("clearProducts");
     },
+
+    clearSelected(){
+      this.$store.dispatch('clearSelected');
+    }
   },
 
   computed: {

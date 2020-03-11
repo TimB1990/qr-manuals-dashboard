@@ -1,12 +1,12 @@
 <template>
-  <div class="side-menu-item" ref="item" @click="fetchDetails(product_id)">
-    <ul>
+  <div class="side-menu-item" ref="item">
+    <ul @click="fetchDetails(product_id)">
       <li>{{ product_name }}</li>
       <li>{{ product_artnr }} : {{ product_kind }}</li>
     </ul>
     <nav v-if="categories">
       <span>
-        <i class="fa fa-check"></i>
+        <i @click="addRemoveSelected(product_id)" :class="itemClassObject"></i>
       </span>
       <span v-for="(category,i) of categories" :key="i">
         <a href="#">{{ category.name }}</a> |
@@ -38,26 +38,26 @@ export default {
         })
         .catch(err => {});
     },
-    addSelected(id) {
-      this.$store.dispatch("addSelectedProduct", id);
-    },
 
-    removeSelected(id) {
-      this.$store.dispatch("removeSelectedProduct", id);
-    },
-
-    toggleSelectedState(id) {
+    addRemoveSelected(id) {
       // first check if id is included in productIsSelected getters from store
       if (this.$store.getters.productIsSelected(id)) {
-        this.$store.dispatch("removeSelectedProduct", id);
+        this.$store.dispatch("removeSelectedProduct", {id : id});
       } else {
-        this.$store.dispatch("addSelectedProduct", id);
+        this.$store.dispatch("addSelectedProduct", {id : id});
       }
     }
   },
 
   computed: {
-    //
+    itemClassObject() {
+      let selected = this.$store.getters.productIsSelected(this.product_id);
+      return {
+        fa: true,
+        "fa-check": true,
+        selected: selected
+      };
+    }
   }
 };
 </script>
@@ -93,6 +93,11 @@ span > i {
 }
 
 span > i:hover {
+  border: 1px solid hsl(0, 0%, 50%);
+  color: hsl(0, 0%, 50%);
+}
+
+.selected {
   border: 1px solid hsl(0, 0%, 50%);
   color: hsl(0, 0%, 50%);
 }

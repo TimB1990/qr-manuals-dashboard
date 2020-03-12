@@ -16,7 +16,10 @@ class CreateCategoryProductTable extends Migration
         Schema::create('category_product', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('category_id');
+
+            // TODO change to unsignedBigInteger and migrate
             $table->string('product_id');
+            
             // foreign keys
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');

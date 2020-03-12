@@ -12,10 +12,13 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $term = $request->query('q');
         // $productslist = Product::paginate(2);
-        $productslist = Product::paginate(5);
+        $productslist = Product::where(
+            'name','like','%'.$term.'%'
+            )->orWhere('artnr','like','%'.$term.'%')->paginate(5);
 
         foreach ($productslist as $product){
 

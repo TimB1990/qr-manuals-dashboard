@@ -1,9 +1,8 @@
 <template>
-  <section class="hero is-small is-primary is-bold">
-    <div class="hero-body">
-      <div class="container">
-        <h1 class="title">Exalto</h1>
-        <h2 class="subtitle">Dashboard - draft</h2>
+  <section>
+    <div class="container">
+      <div>
+        <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
       </div>
     </div>
   </section>
@@ -15,3 +14,6 @@ export default {
   components: {}
 };
 </script>
+
+<style>
+</style>

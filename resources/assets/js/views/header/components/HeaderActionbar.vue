@@ -1,7 +1,7 @@
 <template>
   <nav class="actionbar" role="actionbar" aria-label="actionbar">
     <div class="actionbar-start">
-      <span>QR-codes Per Selected Product:</span>
+      <span>QR-Codes / Product:</span>
       <input class="action-input" type="number" value="1" onfocus="this.value=''" min="1" max="99" />
       <button class="action-btn">
         Generate Sheet
@@ -41,6 +41,7 @@ export default {
   display: flex;
   justify-content: space-between;
   border: 1px dashed black;
+  border-top-color: white;
   padding: 12px;
 }
 
@@ -48,7 +49,7 @@ export default {
   padding: 8px 12px 8px 12px;
   border: 1px solid hsl(0, 0%, 76%);
   background-color: transparent;
-  border-radius: 6px;
+  /*border-radius: 6px;*/
   font-size: 14px;
 }
 
@@ -57,7 +58,7 @@ export default {
   background-color: transparent;
   border: 1px solid hsl(0, 0%, 76%);
   padding: 8px 12px 8px 12px;
-  border-radius: 6px;
+  /*border-radius: 6px;*/
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -80,7 +81,7 @@ export default {
   border: 1px solid hsl(0, 0%, 76%);
   text-align: center;
   color: black;
-  border-radius: 6px;
+  /*border-radius: 6px;*/
   padding: 6px 12px 6px 12px;
   width: 42px;
   font-size: 14px;

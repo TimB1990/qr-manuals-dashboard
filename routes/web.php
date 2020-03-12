@@ -20,3 +20,4 @@ Route::get('api/products/{id}/manuals/{manual_id}', 'ManualsController@show')->n
 
 // download uri
 // by: $manual->file_url = route('products.manuals.show', [$product->id, $manual->id]); values of {id} and {manual_id} are initialized
+

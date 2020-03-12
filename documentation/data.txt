@@ -370,6 +370,20 @@ $flights = App\Flight::onlyTrashed()
 $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
 
+// TESTS TO IMPLEMENT //
+
+// for project | note: SQLITE | for pivot table
+DB::table('category_product')->insert(
+    [
+        'category_id' => Category::select('id')->orderByRaw("random()")->first()->id,
+        'product_id' => Product::select('id')->orderByRaw("random()")->first()->id,
+    ]
+);
+
+// create
+factory(App\Product::class,7)->create();
+
+
 
 
 

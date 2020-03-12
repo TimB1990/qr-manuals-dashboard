@@ -90,9 +90,9 @@ export default new Vuex.Store({
         },
 
         // for context.commit, and page parameter
-        fetchProducts({ commit }, { page }) {
+        fetchProducts({ commit }, { page, query }) {
             commit('SET_LOADING_STATUS', 'loading');
-            axios.get(`api/products?page=${page}`).then(result => {
+            axios.get(`api/products?page=${page}&q=${query}`).then(result => {
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCTS', result);
             }).catch(err => {

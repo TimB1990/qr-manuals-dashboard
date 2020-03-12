@@ -71,7 +71,7 @@ export default {
   margin-bottom: 14px;
   margin-left: 14px;
   margin-right: 14px;
-  border-radius: 4px;
+  /*border-radius: 4px;*/
 }
 
 .side-menu-item:hover {
@@ -93,13 +93,17 @@ span > i {
 }
 
 span > i:hover {
-  border: 1px solid hsl(0, 0%, 50%);
-  color: hsl(0, 0%, 50%);
+  /*border: 1px solid hsl(0, 0%, 50%);*/
+  border: 1px solid #CC0033;
+  /*color: hsl(0, 0%, 50%);*/
+  color: #CC0033
 }
 
 .selected {
-  border: 1px solid hsl(0, 0%, 50%);
-  color: hsl(0, 0%, 50%);
+    /*border: 1px solid hsl(0, 0%, 50%);*/
+  border: 1px solid #CC0033;
+  /*color: hsl(0, 0%, 50%);*/
+  color: #CC0033
 }
 
 nav > span {

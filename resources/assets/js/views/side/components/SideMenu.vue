@@ -3,7 +3,14 @@
     <aside class="panel is-primary">
       <div class="panel-block">
         <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Search Products..." />
+          <input
+            v-model="query"
+            @input="doSearch"
+            class="input"
+            type="text"
+            placeholder="Search Products..."
+          />
+
           <span class="icon is-left">
             <i class="fa fa-search" aria-hidden="true"></i>
           </span>
@@ -45,19 +52,31 @@
 <script>
 import SideMenuItem from "./SideMenuItem";
 import SideMenuPaginator from "./SideMenuPaginator";
+import debounce from "debounce";
 
 export default {
   name: "sideMenu",
   components: { SideMenuItem, SideMenuPaginator },
 
+  data() {
+    return {
+      query: ""
+    };
+  },
+
   created() {
-    this.fetchProducts(1);
+    this.fetchProducts(1, this.query);
   },
 
   methods: {
-    fetchProducts(page) {
+    doSearch: debounce(e => {
+      this.fetchProducts(products.current_page, e.target.value);
+    }, 1000),
+
+    fetchProducts(page, query) {
       this.$store.dispatch("fetchProducts", {
-        page: page
+        page: page,
+        query: query
       });
     },
 

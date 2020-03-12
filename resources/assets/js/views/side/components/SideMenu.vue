@@ -4,8 +4,9 @@
       <div class="panel-block">
         <p class="control has-icons-left">
           <input
-            v-model="query"
-            @input="doSearch"
+            v-if="products"
+            v-model="search"
+            @input="updateProductFetch(1)"
             class="input"
             type="text"
             placeholder="Search Products..."
@@ -52,7 +53,7 @@
 <script>
 import SideMenuItem from "./SideMenuItem";
 import SideMenuPaginator from "./SideMenuPaginator";
-import debounce from "debounce";
+import _ from "lodash";
 
 export default {
   name: "sideMenu",
@@ -60,33 +61,37 @@ export default {
 
   data() {
     return {
-      query: ""
+      search: ""
     };
   },
 
   created() {
-    this.fetchProducts(1, this.query);
+    this.fetchProducts(1);
   },
 
   methods: {
-    doSearch: debounce(e => {
-      this.fetchProducts(products.current_page, e.target.value);
-    }, 1000),
-
-    fetchProducts(page, query) {
+    fetchProducts(page) {
       this.$store.dispatch("fetchProducts", {
         page: page,
-        query: query
+        query: this.search
       });
     },
 
-    clearProducts() {
-      this.$store.dispatch("clearProducts");
-    },
+    // use this to after user done typing the function is called. Keep notice that you must use function-syntax
+    // use _.throttle to fire event every timeinterval (this case 800ms)
+    
+    updateProductFetch: _.debounce(function(page) {
+      console.log('fetchProducts called')
+      this.fetchProducts(1);
+    }, 800)
+  },
 
-    clearSelected() {
-      this.$store.dispatch("clearSelected");
-    }
+  clearProducts() {
+    this.$store.dispatch("clearProducts");
+  },
+
+  clearSelected() {
+    this.$store.dispatch("clearSelected");
   },
 
   computed: {

@@ -62,12 +62,12 @@ export default new Vuex.Store({
             state.productManuals = payload;
         },
 
-        ADD_SELECTED_PRODUCT(state, id) {
-            state.selectedProducts.push(id);
+        ADD_SELECTED_PRODUCT(state, data) {
+            state.selectedProducts.push(data);
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
-            let index = state.selectedProducts.findIndex(selected => selected == id);
+            let index = state.selectedProducts.findIndex(index => index.id == id);
             state.selectedProducts.splice(index, 1);
         },
 
@@ -77,8 +77,8 @@ export default new Vuex.Store({
     },
 
     actions: {
-        addSelectedProduct({ commit }, { id }) {
-            commit('ADD_SELECTED_PRODUCT', id);
+        addSelectedProduct({ commit }, { data }) {
+            commit('ADD_SELECTED_PRODUCT', data);
         },
 
         removeSelectedProduct({ commit }, { id }) {
@@ -188,9 +188,15 @@ export default new Vuex.Store({
 
     getters: {
         productIsSelected: (state) => (id) => {
-            // console.log('getter productIsSelected id: ', id);
-            return state.selectedProducts.includes(id);
 
+            let selectedProducts = state.selectedProducts;
+            
+            for(var i = 0; i < selectedProducts.length; i+=1){
+                if(selectedProducts[i]['id'] === id){
+                    return true;
+                }
+            }
+            return false;
         },
 
         selectedProductCount: (state) => {

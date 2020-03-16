@@ -1,0 +1,20 @@
+The generated QR-code is 56 * 56 minimum size.
+
++---------+---+
+| 28 * 56 |   |
++---------+ 56 *28  |
+| 56 * 56 |   |
+|         |   |
++---------+---+
+
+The QR code has default padding of 28px
+
+Qr sheet takes in artnr and kind dynamically. These values must be added on selecting
+According to passed values the qr-codes and according information will be generated automically
+
+on adding selected product via store not only id, but also artnr and kind should be passed in
+
+There is no need for sending query string parameters
+when linking to sheet generator. The page itself accesses
+selected products and generates qr according to those.
+

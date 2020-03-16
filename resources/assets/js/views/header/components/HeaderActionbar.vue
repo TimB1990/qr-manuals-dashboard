@@ -1,14 +1,13 @@
 <template>
   <nav class="actionbar" role="actionbar" aria-label="actionbar">
     <div class="actionbar-start">
-      <span>QR-Codes / Product:</span>
-      <input class="action-input" type="number" value="1" onfocus="this.value=''" min="1" max="99" />
-      <button class="action-btn">
+      <!-- <span>QR-Codes / Product:</span>
+      <input class="action-input" type="number" value="1" onfocus="this.value=''" min="1" max="99" v-model="qrAmount" />-->
+      <button @click="linkToSheetConfiguration" class="action-btn">
         Generate Sheet
         <!-- <i class="fa fa-qrcode"></i> -->
       </button>
     </div>
-    <code>{{ selectedProducts }}</code>
     <div class="actionbar-end">
       <span class="tag-selected">selected: {{ selectedProductCount }}</span>
       <button class="action-btn" @click.prevent="clearSelected">Clear</button>
@@ -20,11 +19,23 @@
 export default {
   name: "headerActionbar",
   components: {},
+  data(){
+    return {
+      qrAmount: 1
+    }
+  },
   methods: {
     clearSelected() {
       this.$store.dispatch("clearSelected");
+    },
+
+    linkToSheetConfiguration(){
+      this.$router.push({
+        name: 'qr-config-panel',
+      });
     }
   },
+
   computed: {
     selectedProductCount() {
       return this.$store.getters.selectedProductCount;

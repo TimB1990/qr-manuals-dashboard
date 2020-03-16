@@ -128,7 +128,29 @@ If the admin opens the dashboard he can search for productID, product-name or pr
 | Generating QR-scheet |
 +----------------------+
 
-If the admin is being displayed a list with search results, each result can be checked. Once one or more results are checked the admin can click the option 'generate QR-sheet' in a top-bar that generates a tile-sheet of generated QR-codes from urls. 
+If the admin is being displayed a list with search results, each result can be checked. Once one or more results are checked the admin can click the option 'generate QR-sheet' in a top-bar that generates a tile-sheet of generated QR-codes from urls.
+
+- The urls point to the user-product page that holds information of:
+	- productName
+	- artnr
+	- a documentation header
+		- user manual.pdf download link
+		- technical manual.pdf download link (if present)
+	- a product header
+		- user can request a quote of product
+		- user can directely order product online (ref tot website of exalto)
+	- The ability for the user to scan another qr-code
+	
+- the product-page urls must be included in the database containing product
+- the generate sheet feature calculates how many of defined size for qr-code fit on A4, has treshold to make sure the codes get not too small. this threshold is about 56 x 56 px. Therefore for information of kind and artnr
+on top. 28px top + 28px padding default
+
+functionalities:
+
+- the user can choose margin between qr-code sticker elements over A4 format.
+- it is impossible to print qr-codes partly on sheet. The sheet can only be filed with full images.
+- each time a value is updated the layout is able to change dynamically. 
+
 
 
 

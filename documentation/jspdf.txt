@@ -1,0 +1,38 @@
+import jspdf from 'jspdf'
+
+methods: {
+	generatePdf(){
+		// logic
+	}
+}
+
+const options = {
+	orientation: 'p', // p - l
+	unit: 'mm',
+	format: 'a4', // a0 - a10
+	putOnlyUsedFonts: true,
+	floatPrecision: 16 // default = 16
+}
+
+const doc = new jsPDF(options);
+doc.text("hello India",15,15);
+doc.save("file.pdf");
+
+// transform
+
+var specialElementHandler = {
+	"#editor": function(element, render){
+		return true;
+	}
+};
+
+$("#cmd").click(function(){
+	var doc = new jsPdf();
+	doc.fromHTML($("#target").html(),15,15, {
+		"width": 170,
+		"elementHandelers": specialElementHandler
+	});
+	
+	doc.save("sample-file.pdf");
+})
+

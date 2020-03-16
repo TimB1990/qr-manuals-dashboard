@@ -50,6 +50,7 @@
   </div>
 </template>
 
+
 <script>
 import SideMenuItem from "./SideMenuItem";
 import SideMenuPaginator from "./SideMenuPaginator";
@@ -79,7 +80,7 @@ export default {
 
     // use this to after user done typing the function is called. Keep notice that you must use function-syntax
     // use _.throttle to fire event every timeinterval (this case 800ms)
-    
+
     updateProductFetch: _.debounce(function(page) {
       console.log('fetchProducts called')
       this.fetchProducts(1);

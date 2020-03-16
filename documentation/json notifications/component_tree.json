@@ -3,7 +3,7 @@
         "headerRoot": {
             "HeaderDecoration": {},
             "HeaderNavigation": {},
-            "HeaderActionbar" : {}
+            "HeaderActionbar": {}
         },
         "SideRoot": {
             "SideMenu": {
@@ -15,9 +15,13 @@
             "RouterView": {
                 "MainProductDetails": {
                     "MainProductManualsUpload": {}
-                }
+                },
+                "MainQrConfigPanel": {}
             }
         },
         "FooterRoot": {}
+    },
+    "sheet": {
+        "QrSticker": {}
     }
 }

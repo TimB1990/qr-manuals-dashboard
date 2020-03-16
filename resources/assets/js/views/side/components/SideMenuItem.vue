@@ -6,7 +6,10 @@
     </ul>
     <nav v-if="categories">
       <span>
-        <i @click="addRemoveSelected(product_id)" :class="itemClassObject"></i>
+        <i
+          @click="addRemoveSelected(product_id, product_artnr, product_kind)"
+          :class="itemClassObject"
+        ></i>
       </span>
       <span v-for="(category,i) of categories" :key="i">
         <a href="#">{{ category.name }}</a> |
@@ -39,18 +42,25 @@ export default {
         .catch(err => {});
     },
 
-    addRemoveSelected(id) {
+    addRemoveSelected(id, artnr, kind) {
       // first check if id is included in productIsSelected getters from store
+      let data = {
+        id: id,
+        artnr: artnr,
+        kind: kind
+      };
+
       if (this.$store.getters.productIsSelected(id)) {
-        this.$store.dispatch("removeSelectedProduct", {id : id});
+        this.$store.dispatch("removeSelectedProduct", { id: id });
       } else {
-        this.$store.dispatch("addSelectedProduct", {id : id});
+        this.$store.dispatch("addSelectedProduct", { data: data });
       }
     }
   },
 
   computed: {
     itemClassObject() {
+
       let selected = this.$store.getters.productIsSelected(this.product_id);
       return {
         fa: true,
@@ -94,16 +104,16 @@ span > i {
 
 span > i:hover {
   /*border: 1px solid hsl(0, 0%, 50%);*/
-  border: 1px solid #CC0033;
+  border: 1px solid #cc0033;
   /*color: hsl(0, 0%, 50%);*/
-  color: #CC0033
+  color: #cc0033;
 }
 
 .selected {
-    /*border: 1px solid hsl(0, 0%, 50%);*/
-  border: 1px solid #CC0033;
+  /*border: 1px solid hsl(0, 0%, 50%);*/
+  border: 1px solid #cc0033;
   /*color: hsl(0, 0%, 50%);*/
-  color: #CC0033
+  color: #cc0033;
 }
 
 nav > span {

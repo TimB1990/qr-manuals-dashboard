@@ -18,3 +18,4 @@ There is no need for sending query string parameters
 when linking to sheet generator. The page itself accesses
 selected products and generates qr according to those.
 
+A4 holds max 16 slots for qr codes

@@ -1,16 +1,10 @@
-The generated QR-code is 56 * 56 minimum size.
+The generated QR-code is 40 * 55 mm minimum size.
 
-+---------+---+
-| 28 * 56 |   |
-+---------+ 56 *28  |
-| 56 * 56 |   |
-|         |   |
-+---------+---+
+40x55mm
 
-The QR code has default padding of 28px
 
 Qr sheet takes in artnr and kind dynamically. These values must be added on selecting
-According to passed values the qr-codes and according information will be generated automically
+According to passed values the qr-codes and according information will be generated automatically
 
 on adding selected product via store not only id, but also artnr and kind should be passed in
 
@@ -18,4 +12,27 @@ There is no need for sending query string parameters
 when linking to sheet generator. The page itself accesses
 selected products and generates qr according to those.
 
-A4 holds max 16 slots for qr codes
+A4 holds max 16 slots for qr codes, if more products
+are selected pagination is performed.
+
+TODO:
+
+# Paginate selection
+
+if amount selected exceeds 16 items then
+sticker sheet will be paginated while sticker-sheet-underlay stays put. The user can click buttons NEXT and BACK and is able to see CURRENT_PAGE.
+
+Selected Items are aligned according to blueprint underlay
+
+When selected items exceeds 16, the items go paginated
+
+[
+    {
+        page: 1,
+        items: [ 
+            { "id": 1, "artnr": "211240.30", "kind": "240 BS" }, 
+            { "id": 2, "artnr": "211255.35", "kind": "255 BS" },
+            {...} 
+        ]  
+    }
+]

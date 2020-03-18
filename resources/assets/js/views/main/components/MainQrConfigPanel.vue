@@ -2,25 +2,24 @@
   <div>
     <strong>QR configuration panel</strong>
     <em>toggle one or more products to generate QR-codes on sheet</em>
-    <button>next</button><button>previous</button>
-
-    <p>
-      <code>{{ selectedProducts }}</code>
-    </p>
-    <br />
+    <button @click="prevPage">previous</button>
+    <button @click="nextPage">next</button>
 
     <!-- this element represents the background like blueprint -->
     <div class="sticker-sheet-underlay">
-      <div v-for="n in 16" :key="n" class="qr-item-blueprint"></div>
+      <div v-for="n in this.page_size" :key="n" class="qr-item-blueprint"></div>
     </div>
 
     <div class="sticker-sheet">
-      <span>paper format: A4, page: 1</span>
+      <span>paper format: A4, page: 
+          {{ this.selectedProducts.length >1 ? this.current_page : 1 }} of 
+          {{ this.max_pages ? this.max_pages : 1}}</span>
+
       <main-qr-item
-        v-for="selected in selectedProducts"
-        :key="selected.id"
-        :artnr="selected.artnr"
-        :kind="selected.kind"
+        v-for="item in paginated()"
+        :key="item.id"
+        :artnr="item.artnr"
+        :kind="item.kind"
       ></main-qr-item>
     </div>
   </div>
@@ -35,13 +34,21 @@ export default {
   data() {
     return {
       page_size: 16,
-      current_page: 1
+      current_page: 1,
+      max_pages: 1
     };
   },
 
   methods: {
     nextPage() {
-      const max_pages = Math.ceil(selectedProducts.length / this.page_size);
+      console.log("called next page");
+      let max_pages = this.max_pages;
+
+      if (this.selectedProducts.length == 0) {
+        this.current_page = 1;
+        this.max_pages = 1;
+      }
+
       if (this.current_page < max_pages) {
         this.current_page += 1;
       } else {
@@ -54,28 +61,21 @@ export default {
       } else {
         this.current_page = 1;
       }
+    },
+
+    paginated() {
+      let paginated = this.$store.getters.paginatedSelection(
+        this.current_page,
+        this.page_size
+      );
+      this.max_pages = Math.ceil(this.selectedProducts.length / this.page_size);
+      return paginated[0].items;
     }
   },
 
   computed: {
     selectedProducts() {
       return this.$store.state.selectedProducts;
-    },
-
-    paginated() {
-      const page_size = this.page_size;
-      let items = this.$store.state.selectedProducts;
-      let pages = Math.ceil(items.length / page_size);
-      let paginated = [];
-
-      for (var i = 0; i < pages; i++) {
-        paginated.push({
-          page: i + 1,
-          items: items.slice((i + 1 - 1) * page_size, (i + 1) * page_size)
-        });
-      }
-
-      return paginated;
     }
   }
 };
@@ -92,6 +92,7 @@ export default {
   width: 210mm;
   height: 297mm;
   padding: 11.5mm;
+  margin-top: 20px;
 }
 
 .sticker-sheet > span {
@@ -104,7 +105,7 @@ export default {
 }
 
 .sticker-sheet-underlay {
-  background-color: hsl(300, 50%, 90%);
+  /*background-color: hsl(300, 50%, 90%);*/
   opacity: 0.5;
   display: flex;
   flex-wrap: wrap;
@@ -114,6 +115,7 @@ export default {
   height: 297mm;
   padding: 11.5mm;
   z-index: -1;
+  margin-top: 20px;
 }
 
 .qr-item-blueprint {
@@ -124,4 +126,10 @@ export default {
   margin: 12px;
   z-index: -1;
 }
+
+button:disabled{
+    background-color:red;
+}
+
+
 </style>

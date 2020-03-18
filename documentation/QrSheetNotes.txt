@@ -26,7 +26,7 @@ Selected Items are aligned according to blueprint underlay
 
 When selected items exceeds 16, the items go paginated
 
-[
+paginated: [
     {
         page: 1,
         items: [ 
@@ -34,5 +34,25 @@ When selected items exceeds 16, the items go paginated
             { "id": 2, "artnr": "211255.35", "kind": "255 BS" },
             {...} 
         ]  
+    },
+    {
+        page: 2,
+        items: [ 
+            { "id": 3, "artnr": "211240.30", "kind": "240 BS" }, 
+            { "id": 4, "artnr": "211255.35", "kind": "255 BS" },
+            {...} 
+        ]  
     }
 ]
+
+# single pagination
+#[
+    {
+    page: 1,
+    items: [ 
+        { "id": 1, "artnr": "211240.30", "kind": "240 BS" }, 
+        { "id": 2, "artnr": "211255.35", "kind": "255 BS" },
+        {...} 
+    ]  
+}
+#]

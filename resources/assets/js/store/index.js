@@ -15,7 +15,8 @@ export default new Vuex.Store({
         errors: [],
         productManuals: [],
         productDetails: [],
-        selectedProducts: []
+        selectedProducts: [],
+        // max_pages: 1
     },
 
     mutations: {
@@ -71,9 +72,14 @@ export default new Vuex.Store({
             state.selectedProducts.splice(index, 1);
         },
 
-        CLEAR_SELECTED(state){
+        CLEAR_SELECTED(state) {
             state.selectedProducts = [];
-        }
+        },
+
+        /*SET_MAX_PAGES(state, page_size ){
+            state.max_pages = state.selectedProducts.length / page_size;
+
+        }*/
     },
 
     actions: {
@@ -81,11 +87,15 @@ export default new Vuex.Store({
             commit('ADD_SELECTED_PRODUCT', data);
         },
 
+        /*setMaxPages({commit},{page_size}){
+            commit('SET_MAX_PAGES', page_size)
+        },*/
+
         removeSelectedProduct({ commit }, { id }) {
             commit('REMOVE_SELECTED_PRODUCT', id);
         },
 
-        clearSelected({ commit }){
+        clearSelected({ commit }) {
             commit('CLEAR_SELECTED');
         },
 
@@ -190,9 +200,9 @@ export default new Vuex.Store({
         productIsSelected: (state) => (id) => {
 
             let selectedProducts = state.selectedProducts;
-            
-            for(var i = 0; i < selectedProducts.length; i+=1){
-                if(selectedProducts[i]['id'] === id){
+
+            for (var i = 0; i < selectedProducts.length; i += 1) {
+                if (selectedProducts[i]['id'] === id) {
                     return true;
                 }
             }
@@ -201,6 +211,17 @@ export default new Vuex.Store({
 
         selectedProductCount: (state) => {
             return state.selectedProducts.length;
+        },
+
+        paginatedSelection: (state) => (current_page, page_size) => {
+            let selectedProducts = state.selectedProducts;
+            let paginated = [];
+            paginated.push({
+                page: current_page,
+                items: selectedProducts.slice((current_page - 1) * page_size, current_page * page_size)
+            });
+
+            return paginated;
         }
     }
 });

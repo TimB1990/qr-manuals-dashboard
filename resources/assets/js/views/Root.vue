@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="root">
     <div class="tile is-ancestor is-vertical">
       <div class="tile is-parent">
         <div class="tile is-child">
@@ -44,4 +44,4 @@ export default {
     MainRoot
   }
 };
-</script>  
+</script>

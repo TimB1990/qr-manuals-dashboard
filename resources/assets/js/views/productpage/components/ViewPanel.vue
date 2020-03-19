@@ -1,78 +1,119 @@
 <template>
-<div class="container">
+  <div class="menu-root">
     <table>
-        <tr>
-            <td class="menu-info">
-                <p><strong>RUITENWISSER 255BS 24V</strong></p>
-                <p>Art nr. 212455.35</p>
-            </td>
-        </tr>
-        <tr>
-            <td class="menu-category">Documentation</td>
-        </tr>
-        <tr>
-            <td class="menu-item">
-                User manual (pdf)
-                <i class="fa fa-chevron-right"></i>
-            </td>
-        </tr>
-        <tr>
-            <td class="menu-item">Technical documentation (pdf)
-                <i class="fa fa-chevron-right"></i>
-            </td>
-        </tr>
-        <tr>
-            <td class="menu-category">Product</td>
-        </tr>
-        <tr>
-            <td class="menu-item">Request a quote
-                <i class="fa fa-chevron-right"></i>
-            </td>
-        </tr>
-        <tr>
-            <td class="menu-item">Order product online
-                <i class="fa fa-chevron-right"></i>
-            </td>
-        </tr>
+      <tr>
+        <td class="menu-header">
+          <p id="product">
+            RUITENWISSER 255BS 24V
+            <i id="stock" class="fa fa-check-circle"></i>
+          </p>
+          <p>Art nr. 212455.35</p>
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-category">
+          <i class="fa fa-book"></i>
+          Documentation
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-item">
+          User manual (pdf)
+          <i class="fa fa-chevron-right"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-item">
+          Technical documentation (pdf)
+          <i class="fa fa-chevron-right"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-category">
+          <i class="fa fa-dropbox"></i>
+          Product
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-item">
+          Request a quote
+          <i class="fa fa-chevron-right"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-item">
+          Order product online
+          <i class="fa fa-chevron-right"></i>
+        </td>
+      </tr>
+      <tr>
+        <td class="menu-footer"></td>
+      </tr>
     </table>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "viewpanel",
-}
+  name: "viewpanel"
+};
 </script>
 
 <style>
-table{
-    border: 1px solid hsl(0,0%,96%);
-    width:100%;
+table {
+  width: 100%;
 }
 
-.menu-category{
-    background-color: #CC0033;
-    color: white;
-    padding: 16px;
+.menu-category {
+  background-color: #cc0033;
+  word-spacing: 3px;
+  color: white;
+  padding: 12px;
+  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
 }
 
-.menu-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    background-color: white;
-    padding: 12px;
-    border: 1px solid hsl(0,0%,96%);
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  background-color: white;
+  padding: 14px;
+  border: 1px solid hsl(0, 0%, 96%);
+  box-shadow: 0 6px 1px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
 }
 
-.menu-item > i{
-    font-size: 10px;
+.menu-item > i {
+  font-size: 10px;
+  
 }
 
-.menu-info{
-    padding-left: 12px;
-    padding-bottom: 12px;
-    padding-top: 12px;
-    background-color: white;
+.menu-header {
+  border-radius: 16px 16px 0px 0px;
+  padding-left: 16px;
+  padding-bottom: 18px;
+  padding-top: 18px;
+  background-color: white;
+  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+}
+
+.menu-footer {
+  padding: 28px;
+  background-color: white;
+  border-radius: 0px 0px 16px 16px;
+  /*box-shadow: 12px 10px 16px rgba(0, 0, 0, 0.3);*/
+  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+}
+
+#stock {
+  font-size: 21px;
+  color: #29a329;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+#product{
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
 }
 </style>

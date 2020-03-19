@@ -1,10 +1,8 @@
 <template>
   <section>
-    <div class="container">
       <div>
         <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
       </div>
-    </div>
   </section>
 </template>
 
@@ -16,4 +14,7 @@ export default {
 </script>
 
 <style>
+section > div{
+  padding:16px;
+}
 </style>

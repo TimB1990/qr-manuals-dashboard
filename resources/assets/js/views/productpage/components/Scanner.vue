@@ -1,25 +1,20 @@
 <template>
-  <!-- shoud contain class is-active -->
-  <div class="modal is-active">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-      <div class="modal-card-head">
-        <p class="modal-card-title">QR code scream</p>
-        <button class="delete" aria-label="close" @click="close"></button>
+  <div>
+      <div>
+        <p>QR code scream</p>
       </div>
-      <section class="modal-card-body">
+      <section class="scanner">
         <qrcode-stream @decode="onDecode" @init = "onInit"></qrcode-stream>
       </section>
-      <footer class="modal-card-foot">
+      <div>
         <p class="error">
           <b>{{ error }}</b>
         </p>
         <p class="decode-result">
           <b>{{ result }}</b>
         </p>
-      </footer>
+      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -39,10 +34,6 @@ export default {
       this.result = result;
     },
 
-    close() {
-      // emit close event to ExtendSearch.vue
-      this.$emit("close");
-    },
     async onInit(promise) {
       try {
         await promise;
@@ -55,10 +46,12 @@ export default {
 </script>
 
 <style>
-.modal-cont > p {
-  color: white;
-}
 .error{
   color: red;
+}
+
+.scanner{
+  padding: 16px;
+  border: 1px solid black;
 }
 </style>

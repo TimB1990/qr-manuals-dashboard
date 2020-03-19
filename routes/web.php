@@ -16,6 +16,9 @@ Route::get('api/products/{id}/details', 'ProductDetailsController@show');
 Route::get('api/products/{id}/manuals', 'ManualsController@index');
 Route::get('api/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
 
+// VIEW
+Route::view('/views/product','productpage');
+
 
 
 // download uri

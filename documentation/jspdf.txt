@@ -36,5 +36,16 @@ $("#cmd").click(function(){
 	doc.save("sample-file.pdf");
 })
 
+function genPdf{
+	html2canvas(document.getElementById('id'){
+		onredered: function (canvas){
+			var img = canvas.toDataUrl("image/png");
+			var doc = new jsPDF();
+			doc.addImage(img, 'JPEG',20,20);
+			doc.save('test.pdf');
+		}
+	});
+}
+
 
 

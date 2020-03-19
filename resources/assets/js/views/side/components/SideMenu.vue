@@ -38,7 +38,7 @@
 
       <!-- paginator -->
       <div>
-        <side-menu-paginator :pagination="products" :offset="3" @paginate="fetchProducts"></side-menu-paginator>
+        <side-menu-paginator :pagination="products" :offset="2" @paginate="fetchProducts"></side-menu-paginator>
       </div>
 
       <!-- errors -->

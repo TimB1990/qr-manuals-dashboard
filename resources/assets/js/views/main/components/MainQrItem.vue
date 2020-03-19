@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     qrValue() {
-      return `https://example.com/products/${this.artnr}`;
+      return `https://example.com/views/products/${this.artnr}`;
     }
   }
 };

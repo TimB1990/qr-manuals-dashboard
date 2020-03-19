@@ -3,7 +3,6 @@
     <div class="tile is-ancestor is-vertical">
       <div class="tile is-parent">
         <div class="tile is-child">
-          <code>header-root</code>
           <header-root></header-root>
         </div>
       </div>
@@ -11,14 +10,12 @@
       <div class="tile">
         <div class="tile is-parent is-4">
           <div class="tile is-child">
-            <code>side-root</code>
             <side-root></side-root>
           </div>
         </div>
 
         <div class="tile is-parent">
           <div class="tile is-child">
-            <code>main-root</code>
             <main-root></main-root>
           </div>
         </div>
@@ -27,7 +24,6 @@
       <div class="tile">
         <div class="tile is-parent">
           <div class="tile is-child">
-            <code>footer-root</code>
           </div>
         </div>
       </div>

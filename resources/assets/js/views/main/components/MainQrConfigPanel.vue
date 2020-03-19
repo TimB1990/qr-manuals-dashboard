@@ -1,19 +1,23 @@
 <template>
   <div>
-    <strong>QR configuration panel</strong>
-    <em>toggle one or more products to generate QR-codes on sheet</em>
-    <button @click="prevPage">previous</button>
-    <button @click="nextPage">next</button>
+    <div class="config-panel">
+      <em>toggle one or more products to generate QR-codes on sheet</em>
+      <button @click="prevPage">&laquo;</button>
+      <button @click="nextPage">&raquo;</button>
+      <button @click="download">download pdf</button>
+    </div>
 
     <!-- this element represents the background like blueprint -->
     <div class="sticker-sheet-underlay">
       <div v-for="n in this.page_size" :key="n" class="qr-item-blueprint"></div>
     </div>
 
-    <div class="sticker-sheet">
-      <span>paper format: A4, page: 
-          {{ this.selectedProducts.length >1 ? this.current_page : 1 }} of 
-          {{ this.max_pages ? this.max_pages : 1}}</span>
+    <div id="sheet" class="sticker-sheet">
+      <span>
+        paper format: A4, page:
+        {{ this.selectedProducts.length >1 ? this.current_page : 1 }} of
+        {{ this.max_pages ? this.max_pages : 1}}
+      </span>
 
       <main-qr-item
         v-for="item in paginated()"
@@ -27,6 +31,9 @@
 
 <script>
 import MainQrItem from "./MainQrItem";
+import jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+
 export default {
   name: "mainQrConfigPanel",
   components: { MainQrItem },
@@ -70,6 +77,27 @@ export default {
       );
       this.max_pages = Math.ceil(this.selectedProducts.length / this.page_size);
       return paginated[0].items;
+    },
+
+    download() {
+      /*const doc = new jspdf();
+        const html = this.$refs.content.innerHTML;
+        doc.fromHTML(html, 15, 15, {
+            width:150
+        });
+        doc.save("sheet.pdf");*/
+
+      var canvas = document.getElementById("sheet");
+
+      html2canvas(canvas, {
+        // options
+        scale: 1
+      }).then(canvas => {
+        var imgData = canvas.toDataURL("image/png");
+        var doc = new jspdf();
+        doc.addImage(imgData, "PNG", -3, -3);
+        doc.save("sheet.pdf");
+      });
     }
   },
 
@@ -82,6 +110,14 @@ export default {
 </script>
 
 <style>
+.config-panel {
+  border: 1px solid grey;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 8px;
+  margin-bottom: 24px;
+}
+
 .sticker-sheet {
   display: flex;
   align-content: flex-start;
@@ -92,15 +128,14 @@ export default {
   width: 210mm;
   height: 297mm;
   padding: 11.5mm;
-  margin-top: 20px;
 }
 
 .sticker-sheet > span {
   position: absolute;
   margin-top: -58px;
   margin-left: 2px;
-  padding-left: 9px;
-  padding-right: 9px;
+  padding-left: 8px;
+  padding-right: 8px;
   background: white;
 }
 
@@ -115,7 +150,6 @@ export default {
   height: 297mm;
   padding: 11.5mm;
   z-index: -1;
-  margin-top: 20px;
 }
 
 .qr-item-blueprint {
@@ -127,9 +161,7 @@ export default {
   z-index: -1;
 }
 
-button:disabled{
-    background-color:red;
+button:disabled {
+  background-color: red;
 }
-
-
 </style>

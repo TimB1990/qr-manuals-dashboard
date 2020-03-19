@@ -2,8 +2,10 @@ import './bootstrap'
 import store from './store'
 import router from './router'
 import Root from './views/Root'
+import ProductPage from './views/ProductPage'
 
 Vue.component('root', Root);
+Vue.component('productpage', ProductPage);
 
 const app = new Vue({
     el: '#app',

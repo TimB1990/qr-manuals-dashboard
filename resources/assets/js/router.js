@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from './views/main/Home';
 import MainProductDetails from './views/main/components/MainProductDetails'
 import MainQrConfigPanel from './views/main/components/MainQrConfigPanel'
+import ViewPanel from './views/productpage/components/ViewPanel'
 
 let routes = [
     {

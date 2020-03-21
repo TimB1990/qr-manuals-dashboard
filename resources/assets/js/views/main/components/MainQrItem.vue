@@ -15,6 +15,7 @@ import QrcodeVue from "qrcode.vue";
 export default {
   name: "mainQrItem",
   props:{
+    id: Number,
     kind: String,
     artnr: String,
   },
@@ -26,7 +27,8 @@ export default {
   },
   computed: {
     qrValue() {
-      return `https://example.com/views/products/${this.artnr}`;
+      // return `${this.id}-${this.artnr}-${this.name}-${this.kind}`;
+      return `${this.artnr}`;
     }
   }
 };

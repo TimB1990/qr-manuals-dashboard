@@ -10,9 +10,6 @@
         <p class="error">
           <b>{{ error }}</b>
         </p>
-        <p class="decode-result">
-          <b>{{ result }}</b>
-        </p>
       </div>
     </div>
 </template>
@@ -31,10 +28,15 @@ export default {
   },
   methods: {
     onDecode(result) {
-      this.result = result;
+      // result = artnr
+      // this.result = result;
+      this.$store.dispatch("setProduct",{
+        artnr: result
+      });
     },
 
     async onInit(promise) {
+
       try {
         await promise;
       } catch (error) {

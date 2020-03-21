@@ -10,7 +10,7 @@
 
       <div class="navigation-right">
         <span>
-          <a href="./views/product" target="_blank">customer product page</a>
+          <a href="./scan" target="_blank">customer product page</a>
         </span>
         <span>
           <a>

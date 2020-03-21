@@ -11,6 +11,7 @@ export default new Vuex.Store({
     state: {
         loadingStatus: 'notloading',
         feedbackData: {},
+        product:[],
         products: {},
         errors: [],
         productManuals: [],
@@ -76,10 +77,14 @@ export default new Vuex.Store({
             state.selectedProducts = [];
         },
 
-        /*SET_MAX_PAGES(state, page_size ){
-            state.max_pages = state.selectedProducts.length / page_size;
+        SET_PRODUCT(state, payload){
+            state.product = payload;
+        },
 
-        }*/
+        EMPTY_PRODUCT(state, id){
+            let index = state.product.findIndex(index => index.id == id);
+            state.product.splice(index, 1);
+        }
     },
 
     actions: {
@@ -97,6 +102,18 @@ export default new Vuex.Store({
 
         clearSelected({ commit }) {
             commit('CLEAR_SELECTED');
+        },
+
+        emptyProduct({ commit }, {id}){
+            commit('EMPTY_PRODUCT', id);
+        },
+
+        setProduct({commit}, {artnr}){
+            axios.get(`api/products/${artnr}`).then(result => {
+                commit('SET_PRODUCT', result.data)
+            }).catch(err => {
+                commit('ADD_ERROR', err);
+            })
         },
 
         // for context.commit, and page parameter
@@ -222,6 +239,6 @@ export default new Vuex.Store({
             });
 
             return paginated;
-        }
+        },
     }
 });

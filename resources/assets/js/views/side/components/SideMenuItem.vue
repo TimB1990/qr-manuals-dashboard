@@ -7,7 +7,7 @@
     <nav v-if="categories">
       <span>
         <i
-          @click="addRemoveSelected(product_id, product_artnr, product_kind)"
+          @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind)"
           :class="itemClassObject"
         ></i>
       </span>
@@ -42,7 +42,7 @@ export default {
         .catch(err => {});
     },
 
-    addRemoveSelected(id, artnr, kind) {
+    addRemoveSelected(id, name, artnr, kind) {
       // first check if id is included in productIsSelected getters from store
       let data = {
         id: id,

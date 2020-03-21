@@ -4,10 +4,10 @@
       <tr>
         <td class="menu-header">
           <p id="product">
-            RUITENWISSER 255BS 24V
+            {{ product[0].name}}
             <i id="stock" class="fa fa-check-circle"></i>
           </p>
-          <p>Art nr. 212455.35</p>
+          <p>Art nr. {{ product[0].artnr }}</p>
         </td>
       </tr>
       <tr>
@@ -55,7 +55,10 @@
 
 <script>
 export default {
-  name: "viewpanel"
+  name: "viewpanel",
+  props:{
+    product: Array
+  }
 };
 </script>
 
@@ -82,9 +85,13 @@ table {
   box-shadow: 0 6px 1px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
 }
 
+.menu-item:hover{
+  background-color: hsl(0,0%,94%);
+  border: 1px solid hsl(0,0%,85%);
+}
+
 .menu-item > i {
   font-size: 10px;
-  
 }
 
 .menu-header {

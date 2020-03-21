@@ -5,12 +5,12 @@
     </div>
 
     <div class="page-content">
-      <!--<scanner></scanner>-->
-      <view-panel></view-panel>
+      <scanner v-if="!this.product.length"></scanner>
+      <view-panel v-else :product="this.product"></view-panel>
     </div>
 
     <div class="page-footer">
-      <button>Scan a different product</button>
+      <button v-if="this.product.length" @click="emptyProduct">Scan a product</button>
     </div>
   </div>
 </template>
@@ -21,7 +21,21 @@ import ViewPanel from "./components/ViewPanel";
 
 export default {
   name: "productpage",
-  components: { Scanner, ViewPanel }
+  components: { Scanner, ViewPanel },
+
+  methods: {
+    emptyProduct(){
+      this.$store.dispatch("emptyProduct",{
+        id: this.product[0].id
+      });
+    }
+  },
+
+  computed: {
+    product() {
+      return this.$store.state.product;
+    }
+  }
 };
 </script>
 
@@ -32,7 +46,7 @@ export default {
 }
 
 .page-header {
-  margin-top:18px;
+  margin-top: 18px;
   margin-bottom: 24px;
 }
 
@@ -46,7 +60,7 @@ export default {
 }
 
 .page-footer > button {
-  color: hsl(0,0%,40%);
+  color: hsl(0, 0%, 40%);
   background-color: transparent;
   border-radius: 6px;
   font-size: 18px;
@@ -55,8 +69,7 @@ export default {
   padding-left: 24px;
   padding-right: 24px;
   cursor: pointer;
-  border: 1px solid hsl(0,0%,40%);
+  border: 1px solid hsl(0, 0%, 40%);
   display: inline;
 }
-
 </style>

@@ -22,6 +22,7 @@
       <main-qr-item
         v-for="item in paginated()"
         :key="item.id"
+        :id="item.id"
         :artnr="item.artnr"
         :kind="item.kind"
       ></main-qr-item>

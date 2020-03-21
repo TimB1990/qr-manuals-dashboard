@@ -49,6 +49,11 @@ class ProductController extends Controller
         //
     }
 
+    public function showByArtnr($artnr){
+        $Product = Product::where('artnr',$artnr)->get();
+        return response()->json($Product);
+    }
+
     /**
      * Display the specified resource.
      *

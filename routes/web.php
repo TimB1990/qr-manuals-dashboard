@@ -12,12 +12,13 @@ Route::delete('api/products/{id}/manuals/{manual_id}', 'ManualsController@destro
 
 // GET
 Route::get('api/products', 'ProductController@index');
+Route::get('api/products/{artnr}', 'ProductController@showByArtnr');
 Route::get('api/products/{id}/details', 'ProductDetailsController@show');
 Route::get('api/products/{id}/manuals', 'ManualsController@index');
 Route::get('api/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
 
 // VIEW
-Route::view('/views/product','productpage');
+Route::view('/scan','productpage');
 
 
 

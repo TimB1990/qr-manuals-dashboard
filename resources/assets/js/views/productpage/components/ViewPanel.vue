@@ -16,18 +16,24 @@
           Documentation
         </td>
       </tr>
-      <tr>
+
+      <tbody v-if="this.productManuals && this.productManuals.length > 0">
+      <tr v-for="manual in this.productManuals" :key="manual.id">
         <td class="menu-item">
-          User manual (pdf)
+          <a :href="manual.file_url">{{ manual.file_name.substring(0, manual.file_name.length - 4) }} (pdf)</a>
           <i class="fa fa-chevron-right"></i>
         </td>
       </tr>
-      <tr>
-        <td class="menu-item">
-          Technical documentation (pdf)
-          <i class="fa fa-chevron-right"></i>
-        </td>
-      </tr>
+      </tbody>
+
+      <tbody v-else>
+        <tr>
+          <td class="menu-item">
+            This product has no manuals attached
+          </td>
+        </tr>
+      </tbody>
+
       <tr>
         <td class="menu-category">
           <i class="fa fa-dropbox"></i>
@@ -56,8 +62,26 @@
 <script>
 export default {
   name: "viewpanel",
-  props:{
+  props: {
     product: Array
+  },
+  created(){
+    this.fetchManuals(this.product[0].id);
+  },
+  methods: {
+    fetchManuals(id) {
+      this.$store.dispatch("fetchManuals", {
+        id: id
+      });
+    }
+  },
+  computed: {
+    productManuals() {
+      // this.$store.dispatch("");
+      if (this.$store.state.productManuals.data) {
+        return this.$store.state.productManuals.data;
+      }
+    }
   }
 };
 </script>
@@ -72,7 +96,7 @@ table {
   word-spacing: 3px;
   color: white;
   padding: 12px;
-  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
 }
 
 .menu-item {
@@ -82,16 +106,21 @@ table {
   background-color: white;
   padding: 14px;
   border: 1px solid hsl(0, 0%, 96%);
-  box-shadow: 0 6px 1px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+  box-shadow: 0 6px 1px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
 }
 
-.menu-item:hover{
-  background-color: hsl(0,0%,94%);
-  border: 1px solid hsl(0,0%,85%);
+.menu-item:hover {
+  background-color: hsl(0, 0%, 94%);
+  border: 1px solid hsl(0, 0%, 85%);
 }
 
 .menu-item > i {
   font-size: 10px;
+}
+
+/* unvisited link */
+a:link {
+  color: grey;
 }
 
 .menu-header {
@@ -100,7 +129,7 @@ table {
   padding-bottom: 18px;
   padding-top: 18px;
   background-color: white;
-  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
 }
 
 .menu-footer {
@@ -108,7 +137,7 @@ table {
   background-color: white;
   border-radius: 0px 0px 16px 16px;
   /*box-shadow: 12px 10px 16px rgba(0, 0, 0, 0.3);*/
-  box-shadow: 0 6px 8px 0 hsl(0,0%,70%), 0 12px 20px 0 hsl(0,0%,80%);
+  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
 }
 
 #stock {
@@ -118,7 +147,7 @@ table {
   padding-right: 6px;
 }
 
-#product{
+#product {
   font-weight: bold;
   font-size: 18px;
   color: black;

@@ -1,7 +1,11 @@
 <?php
 
+/*Route::get('/', function () {
+    return view('layouts.master');
+})->middleware('auth.basic');*/
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.master');
 });
 
 // POST

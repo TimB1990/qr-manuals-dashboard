@@ -6646,7 +6646,7 @@ a.list-item {
 }
 
 .menu-list a.is-active {
-  background-color: #3273dc;
+  background-color: #CC0033;
   color: #fff;
 }
 
@@ -6937,7 +6937,7 @@ a.list-item {
   display: flex;
   flex-shrink: 0;
   justify-content: flex-start;
-  padding: 20px;
+  padding: 10px;
   position: relative;
 }
 
@@ -6951,7 +6951,7 @@ a.list-item {
   color: #363636;
   flex-grow: 1;
   flex-shrink: 0;
-  font-size: 1.5rem;
+  font-size: 1rem;
   line-height: 1;
 }
 
@@ -11985,8 +11985,12 @@ label.panel-block:hover {
 }
 
 body {
-  font-family: "Work Sans", sans-serif, sans-serif;
-  font-size: 14px;
-  color: #666;
+  color: gray;
 }
+
+/*div {
+    border: 1px dashed lightgrey;
+}*/
+
+/*SideMenuItem- design*/
 

@@ -1,34 +1,25 @@
 import VueRouter from 'vue-router';
 
-import Home from './views/main/Home';
-import MainProductDetails from './views/main/components/MainProductDetails'
-import MainQrConfigPanel from './views/main/components/MainQrConfigPanel'
-import ViewPanel from './views/productpage/components/ViewPanel'
-
-let routes = [
-    {
-        path: '/',
-        component: Home
-    },
-
-    {
-        path: '/products/:id/details',
-        name: 'product_details',
-        component: MainProductDetails
-    },
-    {
-        path: '/sheets',
-        name: 'qr-config-panel',
-        component: MainQrConfigPanel
-        // params to pass: amount => QR-codes/product * selected
-
-    }
-];
+import Root from './views/dashboard/Root'
+import Home from './views/dashboard/main/Home';
+import MainProductDetails from './views/dashboard/main/components/MainProductDetails'
+import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel'
 
 export default new VueRouter({
 
     /*mode: 'history',*/
-    routes: routes,
+    routes: [{
+        path: '/admin',
+        component: Home
+    },{
+        path: '/admin/products/:id/details',
+        name: 'product-details',
+        component: MainProductDetails
+    },{
+        path: '/admin/sheets',
+        name: 'qr-config-panel',
+        component: MainQrConfigPanel
+    }],
 
     linkActiveClass: 'is-active'
 

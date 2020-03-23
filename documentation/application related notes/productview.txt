@@ -6,4 +6,8 @@
 
 - mokup design: done
 
-- implementing scanner functionality that pushes productpage to router when qr is scanned: 
+- implementing scanner functionality that gets productinformation: done
+
+# Request a quote (offerte)
+view?
+

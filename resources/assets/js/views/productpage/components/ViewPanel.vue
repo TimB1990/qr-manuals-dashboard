@@ -106,7 +106,7 @@ table {
   background-color: white;
   padding: 14px;
   border: 1px solid hsl(0, 0%, 96%);
-  box-shadow: 0 6px 1px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
+  /*box-shadow: 0 6px 1px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 .menu-item:hover {
@@ -124,20 +124,19 @@ a:link {
 }
 
 .menu-header {
-  border-radius: 16px 16px 0px 0px;
+  /*border-radius: 16px 16px 0px 0px;*/
   padding-left: 16px;
   padding-bottom: 18px;
   padding-top: 18px;
   background-color: white;
-  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
+  /*box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 .menu-footer {
   padding: 28px;
   background-color: white;
-  border-radius: 0px 0px 16px 16px;
-  /*box-shadow: 12px 10px 16px rgba(0, 0, 0, 0.3);*/
-  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
+  /*border-radius: 0px 0px 16px 16px;*/
+  /*box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 #stock {

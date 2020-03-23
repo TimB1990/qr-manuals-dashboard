@@ -16,7 +16,7 @@
 
         <div class="tile is-parent">
           <div class="tile is-child">
-            <main-root></main-root>
+            <router-view></router-view>
           </div>
         </div>
       </div>
@@ -24,6 +24,7 @@
       <div class="tile">
         <div class="tile is-parent">
           <div class="tile is-child">
+            <code>footer</code>
           </div>
         </div>
       </div>
@@ -34,14 +35,12 @@
 <script>
 import HeaderRoot from "./header/HeaderRoot";
 import SideRoot from "./side/SideRoot";
-import MainRoot from "./main/MainRoot";
 
 export default {
   name: "root",
   components: {
     HeaderRoot,
     SideRoot,
-    MainRoot
   }
 };
 </script>

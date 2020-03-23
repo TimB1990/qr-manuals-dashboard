@@ -1,7 +1,7 @@
 import './bootstrap'
 import store from './store'
 import router from './router'
-import Root from './views/Root'
+import Root from './views/dashboard/Root'
 import ProductPage from './views/productpage/ProductPage'
 
 Vue.component('root', Root);

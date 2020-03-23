@@ -1,0 +1,7 @@
+# authentication
+
+Only authenticated access on dashboard related url, and API except for 'api/products/{artnr}' and /scan.
+
+in router.js paths should be child components of path '/dashboard'
+
+# php only contains only api reference, no views

@@ -4,7 +4,6 @@ import Root from './views/dashboard/Root'
 import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
-import Auth from './views/authentication/Auth';
 import NotFound from './views/util/NotFound';
 
 export default new VueRouter({
@@ -16,21 +15,17 @@ export default new VueRouter({
             component: NotFound 
         },
         {
-            path: '/',
-            name: 'authentication',
-            component: Auth
-        },
-        {
-        path: '/admin',
+        path: '/dashboard',
+        name: 'home',
         component: Home
         },
         {
-            path: '/admin/products/:id/details',
+            path: '/dashboard/products/:id/details',
             name: 'product-details',
             component: MainProductDetails
         },
         {
-            path: '/admin/sheets',
+            path: '/dashboard/sheets',
             name: 'qr-config-panel',
             component: MainQrConfigPanel
         }],

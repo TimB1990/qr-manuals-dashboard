@@ -1,6 +1,7 @@
-@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);@charset "UTF-8";
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css);@charset "UTF-8";
 
 /*! bulma.io v0.8.0 | MIT License | github.com/jgthms/bulma */
+
 
 @-webkit-keyframes spinAround {
   from {
@@ -324,8 +325,6 @@ fieldset[disabled] .input,
 fieldset[disabled] .button {
   cursor: not-allowed;
 }
-
-/*! minireset.css v0.0.6 | MIT License | github.com/jgthms/minireset.css */
 
 html,
 body,

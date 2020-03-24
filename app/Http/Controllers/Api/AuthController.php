@@ -5,39 +5,42 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request){
+    public $successStatus = 200;
 
-        $validatedData = $request->validate([
-            'name' => 'required|max:55',
-            'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
-        ]);
-
-        $validatedData['password'] = bcrypt($request->password);
-
-        $user = User::create($validatedData);
-        $accessToken = $user->createToken('authToken')->accessToken;
-
-        return response(['user' => $user, 'access_token' => $accessToken]);
-
+    public function login(){
+        if(Auth::attempt(['email' => request('email'), 'password' => request('password')])){
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+            return response()->json(['success' => $success], $this->successStatus);
+        }
+        else{
+            return response()->json(['error' => 'Unauthorized']);
+        }
     }
-    public function login(Request $request){
 
-        $loginData = $request->validate([
-            'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
+    public function register(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'c_password' => 'required|same:password'
         ]);
 
-        if(auth()->attempt($loginData)){
-            return response(['message' => 'Invalid Credentials']);
+        if ($validator->fails()){
+            return response()->json(['error' =>$validator->errors()], 401);
         }
 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] = $user->createToken('exalto')->accessToken;
+        $success['name'] = $user->name;
 
-        return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+        return response()->json(['success' => $success], $this->successStatus);
     }
 
 }

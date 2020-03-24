@@ -1,14 +1,10 @@
 <?php
 
-/*Route::get('/', function () {
-    return view('layouts.master');
-})->middleware('auth.basic');*/
+// VIEW
+Route::view('/scan','productpage');
+Route::view('/dashboard','dashboard');
+Route::view('/', 'entry');
 
-Route::get('/', function () {
-    return view('layouts.master');
-});
-
-// POST
 Route::post('api/products/{id}/manuals', 'ManualsController@store');
 
 // DELETE
@@ -16,15 +12,12 @@ Route::delete('api/products/{id}/manuals/{manual_id}', 'ManualsController@destro
 
 // GET
 Route::get('api/products', 'ProductController@index');
+
 Route::get('api/products/{artnr}', 'ProductController@showByArtnr');
+
 Route::get('api/products/{id}/details', 'ProductDetailsController@show');
 Route::get('api/products/{id}/manuals', 'ManualsController@index');
 Route::get('api/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
-
-// VIEW
-Route::view('/scan','productpage');
-
-
 
 // download uri
 // by: $manual->file_url = route('products.manuals.show', [$product->id, $manual->id]); values of {id} and {manual_id} are initialized

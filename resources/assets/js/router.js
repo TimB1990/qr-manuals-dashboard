@@ -10,14 +10,14 @@ export default new VueRouter({
 
     /*mode: 'history',*/
     routes: [
-        {
+        /*{
             path: '*',
             component: NotFound 
-        },
+        },*/
         {
-        path: '/dashboard',
-        name: 'home',
-        component: Home
+            path: '/dashboard',
+            name: 'home',
+            component: Home
         },
         {
             path: '/dashboard/products/:id/details',

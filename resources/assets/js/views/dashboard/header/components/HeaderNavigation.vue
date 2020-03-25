@@ -14,14 +14,16 @@
         </span>
         <span>
           <a>
-            <i class="fa fa-user" />
             profile
+            <i class="fa fa-user" />
+            
           </a>
         </span>
         <span>
           <a>
-            <i class="fa fa-sign-out" />
-            signout
+            
+            sign out
+            <i class="fa fa-sign-out-alt"/> 
           </a>
         </span>
       </div>
@@ -41,8 +43,9 @@ export default {
 <style scoped>
 .navigationbar {
   border: 1px solid hsl(0, 0%, 60);
-  padding-left: 28px;
-  padding-right: 28px;
+  padding-left: 16px;
+  height:40px;
+  padding-right: 16px;
   display: flex;
   justify-content: space-between;
   background-color: rgb(204, 0, 51);
@@ -56,7 +59,7 @@ nav > div > span > a {
   display: inline;
   font-family: "Roboto Condensed", sans-serif, sans-serif;
   font-size: 16.8px;
-  line-height: 61px;
+  line-height: 40px;
   list-style-image: none;
   list-style-position: outside;
   list-style-type: none;

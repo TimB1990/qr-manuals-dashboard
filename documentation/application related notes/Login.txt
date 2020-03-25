@@ -56,3 +56,26 @@ Route::get('/orders', function () {
 
 # CSRF protection
 When using this method of authentication, you will need to ensure a valid CSRF token header is included in your requests. The default Laravel JavaScript scaffolding includes an Axios instance, which will automatically use the encrypted XSRF-TOKEN cookie value to send a X-XSRF-TOKEN header on same-origin requests.
+
+# JS header
+
+var params = {
+  paramName1: paramValue1,
+  paramName2: paramValue2
+}
+
+var headers = {
+  headerName1: headerValue1,
+  headerName2: headerValue2
+}
+
+ Axios.get(url, {params, headers} ).then(res =>{
+  console.log(res.data.representation);
+});
+
+# JS HEADEr 2
+axios.get('https://example.com/getSomething', {
+ headers: {
+   Authorization: 'Bearer ' + token //the token is a variable which holds the token
+ }
+})

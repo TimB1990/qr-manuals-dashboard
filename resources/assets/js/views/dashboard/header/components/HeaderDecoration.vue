@@ -1,8 +1,6 @@
 <template>
   <section>
-      <div>
-        <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
-      </div>
+    <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
   </section>
 </template>
 
@@ -14,7 +12,10 @@ export default {
 </script>
 
 <style>
-section > div{
-  padding:16px;
+#logo {
+  height:100px;
+  width: auto;
+  padding-top: 12px;
 }
+
 </style>

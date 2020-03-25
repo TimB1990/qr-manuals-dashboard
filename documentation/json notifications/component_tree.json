@@ -1,5 +1,6 @@
 {
-    "Root": {
+    "entry": {},
+    "dashboard": {
         "headerRoot": {
             "HeaderDecoration": {},
             "HeaderNavigation": {},
@@ -21,8 +22,5 @@
         },
         "FooterRoot": {}
     },
-
-    "ProductPage":{
-        
-    }
+    "productpage": {}
 }

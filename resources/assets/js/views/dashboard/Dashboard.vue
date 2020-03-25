@@ -37,10 +37,10 @@ import HeaderRoot from "./header/HeaderRoot";
 import SideRoot from "./side/SideRoot";
 
 export default {
-  name: "root",
+  name: "dashboard",
   components: {
     HeaderRoot,
-    SideRoot,
+    SideRoot
   }
 };
 </script>

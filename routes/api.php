@@ -20,9 +20,20 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
 
+Route::get('/products', 'ProductController@index');
+Route::get('/products', 'ProductController@index');
+
+Route::get('/products/{artnr}', 'ProductController@showByArtnr');
+
+Route::get('/products/{id}/details', 'ProductDetailsController@show');
+Route::get('/products/{id}/manuals', 'ManualsController@index');
+Route::get('/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
+
 Route::group(['middleware' => 'auth:api'], function(){
 
-    Route::get('/products', 'ProductController@index');
-
+    // UPLOAD
+    Route::post('/products/{id}/manuals', 'ManualsController@store');
+    // DELETE
+    Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
 
 });

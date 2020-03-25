@@ -8,7 +8,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 
+    // user: null
+    // store.user = this.username
+
     state: {
+        user: {},
         loadingStatus: 'notloading',
         feedbackData: {},
         product:[],
@@ -84,17 +88,29 @@ export default new Vuex.Store({
         EMPTY_PRODUCT(state, id){
             let index = state.product.findIndex(index => index.id == id);
             state.product.splice(index, 1);
+        },
+
+        SET_USER(state, data){
+            state.user = data;
+        },
+
+        LOGOUT_USER(state){
+            state.user = {}
         }
     },
 
     actions: {
+        setUser({commit},{data}){
+            commit('SET_USER', data);
+        },
+
+        logoutUser({commit}){
+            commit('LOGOUT_USER');
+        },
+
         addSelectedProduct({ commit }, { data }) {
             commit('ADD_SELECTED_PRODUCT', data);
         },
-
-        /*setMaxPages({commit},{page_size}){
-            commit('SET_MAX_PAGES', page_size)
-        },*/
 
         removeSelectedProduct({ commit }, { id }) {
             commit('REMOVE_SELECTED_PRODUCT', id);
@@ -214,6 +230,10 @@ export default new Vuex.Store({
     },
 
     getters: {
+        getUserEmail: (state) => {
+            return state.user.email;
+        },
+
         productIsSelected: (state) => (id) => {
 
             let selectedProducts = state.selectedProducts;

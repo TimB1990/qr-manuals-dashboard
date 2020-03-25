@@ -4,26 +4,18 @@
       <!-- navbar menu -->
       <div class="navigation-left">
         <span>
-          <a href="./">Home</a>
+          <a> {{ userEmail }} <i class="fas fa-user"></i></a>
         </span>
       </div>
 
       <div class="navigation-right">
         <span>
-          <a href="./scan" target="_blank">customer product page</a>
+          <router-link to="scan">Scanner</router-link>
         </span>
         <span>
-          <a>
-            profile
-            <i class="fa fa-user" />
-            
-          </a>
-        </span>
-        <span>
-          <a>
-            
+          <a @click="logOut">
             sign out
-            <i class="fa fa-sign-out-alt"/> 
+            <i class="fa fa-sign-out-alt" />
           </a>
         </span>
       </div>
@@ -31,12 +23,28 @@
   </section>
 </template>
 
-
-
 <script>
 export default {
   name: "headerNavigation",
-  components: {}
+  data() {
+    return {
+      user: this.$store.state.user
+    };
+  },
+  components: {},
+  methods: {
+    logOut() {
+      this.user = {};
+      this.$store.dispatch("logoutUser");
+      console.log("logout: ", this.$store.state.user);
+      this.$router.push("/");
+    }
+  },
+  computed: {
+    userEmail(){
+      return this.$store.getters.getUserEmail;
+    }
+  }
 };
 </script>
 
@@ -44,7 +52,7 @@ export default {
 .navigationbar {
   border: 1px solid hsl(0, 0%, 60);
   padding-left: 16px;
-  height:40px;
+  height: 40px;
   padding-right: 16px;
   display: flex;
   justify-content: space-between;

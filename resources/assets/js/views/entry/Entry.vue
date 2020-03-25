@@ -18,6 +18,7 @@
           <button @click="login" class="submit-button">Submit</button>
           <a>I forgot my password...</a>
         </div>
+        <p class="error-msg" v-if="loginError">Invalid Credentials!</p>
       </div>
     </div>
   </div>
@@ -29,9 +30,9 @@ export default {
   name: "entry",
   data() {
     return {
-      email: "",
-      password: "",
-      token: ""
+      email: null,
+      password: null,
+      loginError: false
     };
   },
   methods: {
@@ -42,11 +43,19 @@ export default {
           password: this.password
         })
         .then(res => {
-          console.log(res);
-          this.token = res.data.success.token;
+          let data = {
+            email: this.email,
+            token: res.data.success.token
+          };
+
+          this.$store.dispatch("setUser", {data});
+          this.loginError = false;
+          this.$router.push('dashboard');
+
+          // console.log('data in store: ', this.$store.state.user);
         })
         .catch(err => {
-          console.log(err);
+          this.loginError = true;
         });
     }
   }
@@ -67,6 +76,11 @@ export default {
   border-radius: 16px;
   background-image: linear-gradient(to bottom right, hsl(0, 0%, 98%), white);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.error-msg{
+   color: red;
+   font-size: 12px;
 }
 
 .field-container {

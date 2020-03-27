@@ -1,18 +1,19 @@
 <template>
-  <div class="side-menu-item" ref="item">
+  <div :class="{'side-menu-item' : true, 'selected' : this.selected}" ref="item">
     <ul @click="fetchDetails(product_id)">
       <li>{{ product_name }}</li>
-      <li>{{ product_artnr }} : {{ product_kind }}</li>
+      <li>{{ product_artnr }}</li>
+      <li>{{ product_kind }}</li>
     </ul>
     <nav v-if="categories">
       <span>
         <i
           @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind)"
-          :class="itemClassObject"
+          :class="{'fa' : true, 'fa-check' : true, 'selected' : this.selected}"
         ></i>
       </span>
       <span v-for="(category,i) of categories" :key="i">
-        <a href="#">{{ category.name }}</a> |
+        <a href="#">{{ category.name }}</a> /
       </span>
     </nav>
   </div>
@@ -59,14 +60,8 @@ export default {
   },
 
   computed: {
-    itemClassObject() {
-
-      let selected = this.$store.getters.productIsSelected(this.product_id);
-      return {
-        fa: true,
-        "fa-check": true,
-        selected: selected
-      };
+    selected() {
+      return this.$store.getters.productIsSelected(this.product_id);
     }
   }
 };
@@ -79,15 +74,14 @@ export default {
   border: 1px solid hsl(0, 0%, 86%);
   padding: 8px;
   margin-bottom: 14px;
-  margin-left: 14px;
-  margin-right: 14px;
+  font-size:14px;
   /*border-radius: 4px;*/
 }
 
 .side-menu-item:hover {
   /*border: 1px solid hsl(0, 0%, 25%);*/
-  border: 1px solid hsl(0, 0%, 50%);
-  background-color: hsl(0, 0%, 99%);
+  border: 1px solid black;
+  color: black;
 }
 
 nav > span > a {
@@ -103,17 +97,13 @@ span > i {
 }
 
 span > i:hover {
-  /*border: 1px solid hsl(0, 0%, 50%);*/
-  border: 1px solid #cc0033;
-  /*color: hsl(0, 0%, 50%);*/
-  color: #cc0033;
+  border: 1px solid black;
+  color: black;
 }
 
 .selected {
-  /*border: 1px solid hsl(0, 0%, 50%);*/
-  border: 1px solid #cc0033;
-  /*color: hsl(0, 0%, 50%);*/
-  color: #cc0033;
+  border: 1px solid black;
+  color: black;
 }
 
 nav > span {

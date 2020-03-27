@@ -20,9 +20,8 @@ use Illuminate\Http\Request;
 Route::post('/register', 'Api\AuthController@register');
 Route::post('/login', 'Api\AuthController@login');
 
-Route::get('/products', 'ProductController@index');
-Route::get('/products', 'ProductController@index');
 
+Route::get('/products', 'ProductController@index');
 Route::get('/products/{artnr}', 'ProductController@showByArtnr');
 
 Route::get('/products/{id}/details', 'ProductDetailsController@show');
@@ -36,4 +35,5 @@ Route::group(['middleware' => 'auth:api'], function(){
     // DELETE
     Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
 
+    
 });

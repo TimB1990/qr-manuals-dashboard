@@ -1,24 +1,18 @@
 <template>
   <div>
-    <aside class="panel is-primary">
-      <div class="panel-block">
-        <p class="control has-icons-left">
-          <input
+    <div class="side-menu-container">
+      <div class="side-menu-search">
+            <input
             v-if="products"
             v-model="search"
             @input="updateProductFetch(1)"
-            class="input"
             type="text"
             placeholder="Search Products..."
           />
-
-          <span class="icon is-left">
             <i class="fa fa-search" aria-hidden="true"></i>
-          </span>
-        </p>
       </div>
 
-      <div class="custom-panel-block">
+      <div class="side-menu-block">
         <strong>products</strong>
         <button v-if="!loading" class="button is-loading is-small"></button>
       </div>
@@ -33,7 +27,6 @@
           :product_kind="product.kind"
           :categories="product.categories"
         />
-        <hr />
       </ul>
 
       <!-- paginator -->
@@ -46,7 +39,7 @@
         <h3>Error!</h3>
         <div>{{ errorList }}</div>
       </div>
-    </aside>
+    </div>
   </div>
 </template>
 
@@ -117,13 +110,38 @@ export default {
 </script>
 
 <style scoped>
-.custom-panel-block {
+.side-menu-block {
   display: flex;
-  padding-left: 16px;
-  padding-right: 16px;
   padding-top: 8px;
   padding-bottom: 8px;
   justify-content: space-between;
   align-items: center;
+}
+
+.side-menu-search{
+  display: flex;
+  flex-direction: row-reverse;
+  border: 1px solid hsl(0,0%,80%);
+  align-items: baseline;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.side-menu-search > i {
+  padding: 6px;
+}
+
+.side-menu-container {
+  background-color: white;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.side-menu-search > input {
+  padding: 6px;
+  width: 100%;
+  border: none;
+  outline: transparent;
 }
 </style>

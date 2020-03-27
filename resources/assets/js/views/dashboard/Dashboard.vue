@@ -1,34 +1,12 @@
 <template>
   <div id="root">
-    <div class="tile is-ancestor is-vertical">
-      <div class="tile is-parent">
-        <div class="tile is-child">
-          <header-root></header-root>
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile is-parent is-4">
-          <div class="tile is-child">
-            <side-root></side-root>
-          </div>
-        </div>
-
-        <div class="tile is-parent">
-          <div class="tile is-child">
-            <router-view></router-view>
-          </div>
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile is-parent">
-          <div class="tile is-child">
-            <code>footer</code>
-          </div>
-        </div>
-      </div>
-    </div>
+    <header class="header">
+      <header-root></header-root>
+    </header>
+    <section class="side-and-main">
+      <side-root class="side"></side-root>
+      <router-view class="main"></router-view>
+    </section>
   </div>
 </template>
 
@@ -44,3 +22,24 @@ export default {
   }
 };
 </script>
+<style>
+.side-and-main {
+  display: flex;
+  margin-bottom: 18px;
+  margin-top: 18px;
+  align-items: stretch;
+}
+
+.main{
+  width: 100%;
+  margin-left: 18px;
+}
+
+.side{
+  width: 50%;
+}
+
+.header{
+  margin-top: 16px;
+}
+</style>

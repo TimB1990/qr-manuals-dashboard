@@ -9,8 +9,8 @@
       </button>
     </div>
     <div class="actionbar-end">
-      <span class="tag-selected">selected: {{ selectedProductCount }}</span>
-      <button class="action-btn" @click.prevent="clearSelected">Clear</button>
+      <button class="action-btn" @click.prevent="clearSelected">Clear Selection</button>
+      <button class="tag-selected">{{ selectedProductCount }}</button>
     </div>
   </nav>
 </template>
@@ -51,24 +51,40 @@ export default {
 .actionbar {
   display: flex;
   justify-content: space-between;
-  border: 1px dashed black;
   border-top-color: white;
-  padding: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+
 }
 
 .tag-selected {
-  padding: 8px 12px 8px 12px;
-  border: 1px solid hsl(0, 0%, 76%);
+  display: inline-block;
+  margin: 3px 3px 3px 3px;
+  width: 40px;
+  height: 35px;
   background-color: transparent;
+  border: 1px solid hsl(0, 0%, 76%);
+  padding: 6px;
   /*border-radius: 6px;*/
+  text-align: center;
+  text-decoration: none;
   font-size: 14px;
+  outline: none;
 }
 
 .action-btn {
+  display: inline-block;
   margin: 3px 3px 3px 3px;
+  width: 150px;
+  height: 35px;
   background-color: transparent;
   border: 1px solid hsl(0, 0%, 76%);
-  padding: 8px 12px 8px 12px;
+  padding: 6px;
   /*border-radius: 6px;*/
   text-align: center;
   text-decoration: none;
@@ -83,8 +99,7 @@ export default {
 }
 
 .action-btn:hover {
-  border: 1px solid hsl(0, 0%, 76%);
-  background-color: hsl(0, 0%, 86%);
+  border: 1px solid black;
 }
 
 .action-input {

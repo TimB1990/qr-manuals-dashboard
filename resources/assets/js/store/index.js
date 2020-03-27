@@ -44,7 +44,8 @@ export default new Vuex.Store({
         },
 
         DELETE_MANUAL(state, { manual_id }) {
-            let index = state.productManuals.findIndex(manual => manual.id == manual_id);
+            // let index = state.productManuals.findIndex(manual => manual.id == manual_id);
+            let index = state.productManuals.findIndex(manual_id);
             state.productManuals.splice(index, 1);
         },
 
@@ -179,8 +180,12 @@ export default new Vuex.Store({
 
         },
 
-        deleteManual({ commit, dispatch }, { id, manual_id }) {
-            axios.delete(`api/products/${id}/manuals/${manual_id}`)
+        deleteManual({ commit, dispatch, getters }, { id, manual_id }) {
+            axios.delete(`api/products/${id}/manuals/${manual_id}`, {
+                headers: {
+                    "Authorization" : "Bearer " + getters.getUserToken 
+                }
+            })
                 .then(() => {
                     commit('DELETE_MANUAL', manual_id)
                 }).catch(err => console.log(err));
@@ -188,24 +193,26 @@ export default new Vuex.Store({
             dispatch('fetchManuals', { id: id });
         },
 
-        uploadManual({ commit, dispatch }, { id, formData }) {
+        uploadManual({ commit, dispatch, getters }, { id, formData }) {
 
-            let feedbackData = {
+            /*let feedbackData = {
                 show: true,
                 message: "",
                 iconClass: ""
-            };
+            };*/
 
             axios.post(`api/products/${id}/manuals`, formData, {
                 headers: {
+                    // also authorizaton header
+                    "Authorization" : "Bearer " + getters.getUserToken,
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
 
-                feedbackData.message = response.statusText;
+                /*feedbackData.message = response.statusText;
                 feedbackData.iconClass = "fa fa-check has-text-success";
 
-                commit('SET_FEEDBACK_DATA', feedbackData);
+                commit('SET_FEEDBACK_DATA', feedbackData);*/
 
                 // reload manuals list
                 dispatch('fetchManuals', { id: id });
@@ -232,6 +239,10 @@ export default new Vuex.Store({
     getters: {
         getUserEmail: (state) => {
             return state.user.email;
+        },
+
+        getUserToken: (state) => {
+            return state.user.token
         },
 
         productIsSelected: (state) => (id) => {

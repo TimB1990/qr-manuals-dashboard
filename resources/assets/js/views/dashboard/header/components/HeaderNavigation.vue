@@ -50,15 +50,15 @@ export default {
 
 <style scoped>
 .navigationbar {
-  border: 1px solid hsl(0, 0%, 60);
   padding-left: 16px;
   height: 40px;
   padding-right: 16px;
   display: flex;
   justify-content: space-between;
+  /*border-top-left-radius: 6px;
+  border-top-right-radius: 6px;*/
   background-color: rgb(204, 0, 51);
   color: white;
-  border: 1px solid hsl(0, 0%, 60);
 }
 
 nav > div > span > a {
@@ -66,7 +66,7 @@ nav > div > span > a {
   cursor: pointer;
   display: inline;
   font-family: "Roboto Condensed", sans-serif, sans-serif;
-  font-size: 16.8px;
+  font-size: 14px;
   line-height: 40px;
   list-style-image: none;
   list-style-position: outside;
@@ -79,6 +79,7 @@ nav > div > span > a {
 
 nav > div > span {
   display: inline-block;
+  height: 40px;
   padding: 0px 6px 0px 6px;
 }
 

@@ -15,7 +15,6 @@ export default {
 #logo {
   height:100px;
   width: auto;
-  padding-top: 12px;
 }
 
 </style>

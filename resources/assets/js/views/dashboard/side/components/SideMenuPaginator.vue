@@ -53,8 +53,7 @@ export default {
 <style scoped>
 .paginator {
   display: flex;
-  /*justify-content: center;*/
-  padding: 14px;
+  padding-bottom: 16px;
 }
 .paginator a.active {
   background-color: #cc0033;
@@ -62,6 +61,6 @@ export default {
 }
 
 .paginator a:hover:not(.active) {
-  background-color: hsl(0, 0%, 96%);
+  border: 1px solid black;
 }
 </style>

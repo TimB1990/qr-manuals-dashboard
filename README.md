@@ -1,5 +1,3 @@
-<h2>qr manuals dashboard prototype</h2>
-
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
 

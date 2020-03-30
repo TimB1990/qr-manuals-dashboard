@@ -13,7 +13,7 @@
             }
         },
         "MainRoot": {
-            "RouterView": {
+            "Router-view": {
                 "MainProductDetails": {
                     "MainProductManualsUpload": {}
                 },
@@ -22,5 +22,11 @@
         },
         "FooterRoot": {}
     },
-    "productpage": {}
+    "productpage": {
+        "router-view":{
+            "scanner" : {},
+            "viewPanel" : {},
+            "quoteForm" : {}
+        }
+    }
 }

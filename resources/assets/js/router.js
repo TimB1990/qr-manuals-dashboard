@@ -9,6 +9,10 @@ import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
 
+import Scanner from './views/productpage/components/Scanner';
+import ViewPanel from './views/productpage/components/ViewPanel';
+import QuoteForm from './views/productpage/components/QuoteForm';
+
 const routes = [
     {
         path: '/',
@@ -39,9 +43,26 @@ const routes = [
         meta: { requiresAuth : true }
     },
     {
-        path: '/scan',
-        name: 'scan',
-        component: ProductPage
+        path: '/productpage',
+        name: 'productpage',
+        component: ProductPage,
+        children: [
+            {
+                path: '',
+                name: 'scanner',
+                component: Scanner 
+            },
+            {
+                path: '/view/:artnr',
+                name: 'view',
+                component: ViewPanel,
+            },
+            {
+                path: '/quote',
+                name: 'quote',
+                component: QuoteForm
+            }
+        ]
     }
 ];
 

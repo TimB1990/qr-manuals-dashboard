@@ -10,7 +10,7 @@
 
       <div class="navigation-right">
         <span>
-          <router-link to="scan">Scanner</router-link>
+          <router-link to="../productpage">Scanner</router-link>
         </span>
         <span>
           <a @click="logOut">

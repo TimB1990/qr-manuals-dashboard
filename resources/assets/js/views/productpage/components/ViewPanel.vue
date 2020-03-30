@@ -1,47 +1,52 @@
 <template>
   <div class="menu-root">
-    <table>
+    <div v-if="this.isLoading" class="loading">
+      <span class="loader"></span>
+    </div>
+
+    <table v-if="!this.isLoading">
       <tr>
         <td class="menu-header">
           <p id="product">
-            {{ product[0].name}}
+            {{ this.product[0].name}}
             <i id="stock" class="fa fa-check-circle"></i>
           </p>
-          <p>Art nr. {{ product[0].artnr }}</p>
+          <p>product id: {{ this.product[0].id}}</p>
+          <p>Art nr. {{ this.$route.params.artnr}}</p>
         </td>
       </tr>
       <tr>
         <td class="menu-category">
-          <i class="fa fa-book"></i>
+          <i class="fas fa-book"></i>
           Documentation
         </td>
       </tr>
 
-      <tbody v-if="this.productManuals && this.productManuals.length > 0">
-      <tr v-for="manual in this.productManuals" :key="manual.id">
-        <td class="menu-item">
-          <a :href="manual.file_url">{{ manual.file_name.substring(0, manual.file_name.length - 4) }} (pdf)</a>
-          <i class="fa fa-chevron-right"></i>
-        </td>
-      </tr>
+      <tbody v-if="this.manuals && this.manuals.length > 0">
+        <tr v-for="manual in this.manuals" :key="manual.id">
+          <td class="menu-item">
+            <a
+              :href="manual.file_url"
+            >{{ manual.file_name.substring(0, manual.file_name.length - 4) }} (pdf)</a>
+            <i class="fa fa-chevron-right"></i>
+          </td>
+        </tr>
       </tbody>
 
       <tbody v-else>
         <tr>
-          <td class="menu-item">
-            This product has no manuals attached
-          </td>
+          <td class="menu-item">No manuals found</td>
         </tr>
       </tbody>
 
       <tr>
         <td class="menu-category">
-          <i class="fa fa-dropbox"></i>
+          <i class="fa fa-box-open"></i>
           Product
         </td>
       </tr>
       <tr>
-        <td class="menu-item">
+        <td @click="gotoQuoteform" class="menu-item">
           Request a quote
           <i class="fa fa-chevron-right"></i>
         </td>
@@ -56,31 +61,60 @@
         <td class="menu-footer"></td>
       </tr>
     </table>
+    <div v-if="!this.isLoading" class="page-footer">
+      <button @click="gotoScanner">Scan a product</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "viewpanel",
-  props: {
-    product: Array
+  data() {
+    return {
+      product: [],
+      manuals: [],
+      isLoading: true
+    };
   },
-  created(){
-    this.fetchManuals(this.product[0].id);
+
+  created() {
+    this.setProductManuals(this.$route.params.artnr);
   },
+
   methods: {
-    fetchManuals(id) {
-      this.$store.dispatch("fetchManuals", {
-        id: id
-      });
-    }
-  },
-  computed: {
-    productManuals() {
-      // this.$store.dispatch("");
-      if (this.$store.state.productManuals.data) {
-        return this.$store.state.productManuals.data;
+    gotoScanner() {
+      this.$router.push({ path: "/productpage" });
+    },
+
+    async setProductManuals(artnr) {
+      // axios.get(`/api/products/${artnr}`)
+      try {
+        const product = await axios.get(`api/products/${artnr}`);
+        console.log("product: ", product);
+        
+        const manuals = await axios.get(
+          `/api/products/${product.data[0].id}/manuals`
+        );
+        console.log("manuals: ", manuals);
+
+        this.product = product.data;
+        this.manuals = manuals.data;
+
+        this.isLoading = false;
+      } catch (error) {
+        console.log(error);
       }
+    },
+
+    gotoQuoteform() {
+      this.$router.push({
+        name: "quote",
+        query: {
+          artnr: this.product[0].artnr,
+          name: this.product[0].name
+        }
+      });
     }
   }
 };
@@ -89,6 +123,8 @@ export default {
 <style>
 table {
   width: 100%;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
 }
 
 .menu-category {
@@ -96,7 +132,33 @@ table {
   word-spacing: 3px;
   color: white;
   padding: 12px;
-  box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);
+}
+
+.loading {
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid grey; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .menu-item {
@@ -106,7 +168,6 @@ table {
   background-color: white;
   padding: 14px;
   border: 1px solid hsl(0, 0%, 96%);
-  /*box-shadow: 0 6px 1px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 .menu-item:hover {
@@ -118,25 +179,20 @@ table {
   font-size: 10px;
 }
 
-/* unvisited link */
 a:link {
   color: grey;
 }
 
 .menu-header {
-  /*border-radius: 16px 16px 0px 0px;*/
   padding-left: 16px;
   padding-bottom: 18px;
   padding-top: 18px;
   background-color: white;
-  /*box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 .menu-footer {
   padding: 28px;
   background-color: white;
-  /*border-radius: 0px 0px 16px 16px;*/
-  /*box-shadow: 0 6px 8px 0 hsl(0, 0%, 70%), 0 12px 20px 0 hsl(0, 0%, 80%);*/
 }
 
 #stock {

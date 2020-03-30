@@ -180,6 +180,20 @@ export default new Vuex.Store({
 
         },
 
+        fetchManualsByArtnr({ commit }, { artnr }){
+            commit('SET_LOADING_STATUS', 'loading');
+            axios.get(`api/products/${artnr}/manuals`).then(result => {
+                commit('SET_LOADING_STATUS', 'notloading');
+                commit('SET_PRODUCT_MANUALS', result);
+
+            }).catch(err => {
+                commit('SET_LOADING_STATUS', 'notloading');
+                commit('SET_PRODUCT_MANUALS', []);
+                console.log(err);
+            });
+
+        },
+
         deleteManual({ commit, dispatch, getters }, { id, manual_id }) {
             axios.delete(`api/products/${id}/manuals/${manual_id}`, {
                 headers: {
@@ -237,6 +251,10 @@ export default new Vuex.Store({
     },
 
     getters: {
+        getProductID: (state) => {
+            return state.product[0].id;
+        },
+
         getUserEmail: (state) => {
             return state.user.email;
         },

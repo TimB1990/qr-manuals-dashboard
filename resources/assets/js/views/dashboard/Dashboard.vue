@@ -24,6 +24,7 @@ export default {
 </script>
 <style>
 .side-and-main {
+  
   display: flex;
   margin-bottom: 18px;
   margin-top: 18px;

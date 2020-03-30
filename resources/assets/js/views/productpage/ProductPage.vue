@@ -1,16 +1,11 @@
 <template>
-  <div class="container base">
+  <div class="base">
     <div class="page-header">
       <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
     </div>
 
     <div class="page-content">
-      <scanner v-if="!this.product.length"></scanner>
-      <view-panel v-else :product="this.product"></view-panel>
-    </div>
-
-    <div class="page-footer">
-      <button v-if="this.product.length" @click="emptyProduct">Scan a product</button>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -18,40 +13,24 @@
 <script>
 import Scanner from "./components/Scanner";
 import ViewPanel from "./components/ViewPanel";
+import QuoteForm from "./components/QuoteForm";
 
 export default {
   name: "productpage",
-  components: { Scanner, ViewPanel },
-
-  methods: {
-    emptyProduct(){
-      this.$store.dispatch("emptyProduct",{
-        id: this.product[0].id
-      });
-    }
-  },
-
-  computed: {
-    product() {
-      return this.$store.state.product;
-    }
-  }
+  components: { Scanner, ViewPanel, QuoteForm }
 };
 </script>
 
 <style>
 .base {
-  background-color: hsl(0, 0%, 96%);
   padding: 18px;
+  height: 731px;
+  background-color: hsl(0,0%,96%);
 }
 
 .page-header {
   margin-top: 18px;
   margin-bottom: 24px;
-}
-
-.page-content {
-  margin-bottom: 48px;
 }
 
 .page-footer {

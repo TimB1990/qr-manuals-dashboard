@@ -11,8 +11,17 @@
       </div>
 
       <div class="scanner-footer">
-        <input id="artnr" type="text" maxLength="9"/>
+        <em>Or instead provide the <strong>9 digit productcode</strong></em>
+        <em>Example: 000000.00</em>
+
+        <div class="artnr-panel">
+          <input v-model="artnr" id="artnr" type="text" maxlength="9" pattern="[0-9]{4}\.[0-9]{2}" />
+          <button id="artnr-submit">Go</button>
+        </div>
       </div>
+      <p>
+        <code v-if="this.artnr.length > 0">{{ this.artnr }}</code>
+      </p>
     </section>
   </div>
 </template>
@@ -26,7 +35,8 @@ export default {
   data() {
     return {
       result: "",
-      error: ""
+      error: "",
+      artnr: ""
     };
   },
   methods: {
@@ -54,14 +64,20 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding: 12px;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 24px;
+  padding-top: 12px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);
 }
 
 .scanner-body {
   padding: 12px;
-  height: 300px;
+  border: 1px solid hsl(0,0%,80%);
+  margin-bottom: 16px;
+  margin-top: 16px;
 }
 
 .scanner-head {
@@ -72,26 +88,50 @@ export default {
 
 .scanner-footer {
   display: flex;
+  flex-direction: column;
   padding: 12px;
   height: 150px;
-  border: 1px solid black;
+  /*border: 1px solid hsl(0, 0%, 80%);*/
   justify-content: center;
   align-items: center;
+  /*box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);*/
+  border: 1px solid hsl(0,0%,80%);
+}
+
+.artnr-panel {
+  display: flex;
+  padding: 6px;
+  border: none;
+  width: 300px;
+  justify-content: space-evenly;
 }
 
 #artnr {
   padding-left: 12px;
   padding-right: 12px;
   letter-spacing: 12px;
-  border: 1px solid black;
-  font-size:18px;
+  border: 1px solid hsl(0,0%,80%);
+  font-size: 18px;
   height: 50px;
-  width: 210px;
+  width: 230px;
+}
+
+#artnr-submit {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid hsl(0,0%,80%);
+  outline: none;
+}
+
+#artnr-submit:hover {
+  border: 1px solid black;
+  background-color: hsl(0,0%,96%);
 }
 
 /*#divInner{
   left: 0;
   position: sticky;
 }*/
-
 </style>

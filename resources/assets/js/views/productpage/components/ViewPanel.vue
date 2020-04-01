@@ -35,7 +35,7 @@
 
       <tbody v-else>
         <tr>
-          <td class="menu-item">No manuals found</td>
+          <td class="menu-item">No manuals attached</td>
         </tr>
       </tbody>
 

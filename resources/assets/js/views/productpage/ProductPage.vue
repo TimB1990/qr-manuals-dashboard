@@ -1,6 +1,6 @@
 <template>
   <div class="base">
-    <div class="page-header">
+    <div>
       <img id="logo" src="/img/EXALTO-TG-logo-WEB.png" />
     </div>
 
@@ -23,32 +23,17 @@ export default {
 
 <style>
 .base {
-  padding: 18px;
-  height: 731px;
   background-color: hsl(0,0%,96%);
 }
 
-.page-header {
-  margin-top: 18px;
-  margin-bottom: 24px;
+.page-content {
+  height: 731px;
+  padding: 16px;
 }
 
-.page-footer {
-  display: flex;
-  justify-content: space-evenly;
-}
+#logo{
+ margin-left: 16px;
+ margin-top: 16px;
 
-.page-footer > button {
-  color: hsl(0, 0%, 40%);
-  background-color: transparent;
-  border-radius: 6px;
-  font-size: 18px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 24px;
-  padding-right: 24px;
-  cursor: pointer;
-  border: 1px solid hsl(0, 0%, 40%);
-  display: inline;
 }
 </style>

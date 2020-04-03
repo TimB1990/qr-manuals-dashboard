@@ -4,30 +4,35 @@
       <div class="scanner-head">Scan your QR code below...</div>
 
       <div class="scanner-body">
-        <qrcode-stream :camera="auto" @decode="onDecode" @init="onInit"></qrcode-stream>
-        <p class="error">
-          <b>{{ error }}</b>
-        </p>
+        <qrcode-stream  @decode="onDecode" @init="onInit"></qrcode-stream>
       </div>
 
       <div class="scanner-footer">
-        <em>Or instead provide the <strong>9 digit productcode</strong></em>
-        <em>Example: 000000.00</em>
+        <em>
+          Or instead provide the
+          <strong>9 digit productcode</strong>
+        </em>
 
         <div class="artnr-panel">
-          <input v-model="artnr" id="artnr" type="text" maxlength="9" pattern="[0-9]{4}\.[0-9]{2}" />
-          <button id="artnr-submit">Go</button>
+          <input
+            v-model="artnr"
+            id="artnr"
+            type="text"
+            maxlength="9"
+            pattern="[0-9]{4}\.[0-9]{2}"
+            placeholder="000000.00"
+          />
+          <button @click="submitProductcode" id="artnr-submit">Go</button>
         </div>
+        <p class="error-msg">
+          <em>{{ error }}</em>
+        </p>
       </div>
-      <p>
-        <code v-if="this.artnr.length > 0">{{ this.artnr }}</code>
-      </p>
     </section>
   </div>
 </template>
 
 <script>
-// import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
 import { QrcodeStream } from "vue-qrcode-reader";
 export default {
   name: "scanner",
@@ -49,6 +54,17 @@ export default {
         await promise;
       } catch (error) {
         this.error = error.name;
+      }
+    },
+
+    submitProductcode() {
+      // check for valid code format
+      const regex = /^[0-9]{6}\.[0-9]{2}/g
+      if (regex.test(this.artnr)) {
+        this.error = "";
+        this.$router.push({ path: `/view/${this.artnr}` });
+      } else {
+        this.error = "The productcode is not valid";
       }
     }
   }
@@ -73,9 +89,14 @@ export default {
     0 0px 0 1px rgba(10, 10, 10, 0.02);
 }
 
+.error-msg {
+  color: red;
+  font-size: 16px;
+}
+
 .scanner-body {
   padding: 12px;
-  border: 1px solid hsl(0,0%,80%);
+  border: 1px solid hsl(0, 0%, 80%);
   margin-bottom: 16px;
   margin-top: 16px;
 }
@@ -90,13 +111,11 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 12px;
+
   height: 150px;
-  /*border: 1px solid hsl(0, 0%, 80%);*/
   justify-content: center;
   align-items: center;
-  /*box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
-    0 0px 0 1px rgba(10, 10, 10, 0.02);*/
-  border: 1px solid hsl(0,0%,80%);
+  border: 1px solid hsl(0, 0%, 80%);
 }
 
 .artnr-panel {
@@ -109,25 +128,28 @@ export default {
 
 #artnr {
   padding-left: 12px;
-  padding-right: 12px;
   letter-spacing: 12px;
-  border: 1px solid hsl(0,0%,80%);
-  font-size: 18px;
+  border: 1px solid hsl(0, 0%, 80%);
+  font-size: 20px;
   height: 50px;
-  width: 230px;
+  width: 215px;
+}
+
+.invalid{
+  border: 1px solid red;
 }
 
 #artnr-submit {
   width: 50px;
   height: 50px;
   background-color: white;
-  border: 1px solid hsl(0,0%,80%);
+  border: 1px solid hsl(0, 0%, 80%);
   outline: none;
 }
 
 #artnr-submit:hover {
   border: 1px solid black;
-  background-color: hsl(0,0%,96%);
+  background-color: hsl(0, 0%, 96%);
 }
 
 /*#divInner{

@@ -4,7 +4,11 @@
       <span class="loader"></span>
     </div>
 
-    <table v-if="!this.isLoading">
+    <div v-if="this.notFound && !this.isLoading" class="notfound">
+      <p>No product found</p>
+    </div>
+
+    <table v-if="this.product.length > 0">
       <tr>
         <td class="menu-header">
           <p id="product">
@@ -62,7 +66,7 @@
       </tr>
     </table>
     <div v-if="!this.isLoading" class="page-footer">
-      <button @click="gotoScanner">Scan a product</button>
+      <button @click="gotoScanner">Scan another product</button>
     </div>
   </div>
 </template>
@@ -74,7 +78,8 @@ export default {
     return {
       product: [],
       manuals: [],
-      isLoading: true
+      isLoading: true,
+      notFound: true
     };
   },
 
@@ -91,18 +96,24 @@ export default {
       // axios.get(`/api/products/${artnr}`)
       try {
         const product = await axios.get(`api/products/${artnr}`);
-        console.log("product: ", product);
-        
+    
         const manuals = await axios.get(
           `/api/products/${product.data[0].id}/manuals`
         );
-        console.log("manuals: ", manuals);
+        
+        if(product.data.length > 0){
+          this.isLoading = false;
+          this.notFound = false;
+          this.product = product.data;
+          this.manuals = manuals.data;
+        }
+        else{
+          this.isLoading = false;
+          this.notFound = true;
+        }
 
-        this.product = product.data;
-        this.manuals = manuals.data;
-
-        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         console.log(error);
       }
     },
@@ -133,14 +144,15 @@ table {
   color: white;
   padding: 12px;
 }
-
-.loading {
+.loading, .notfound {
   display: flex;
   height: 400px;
   justify-content: center;
   align-items: center;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);
+    margin-bottom: 24px;
+  font-size: 24px;
 }
 
 .loader {
@@ -207,4 +219,26 @@ a:link {
   font-size: 18px;
   color: black;
 }
+
+.page-footer {
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 24px;
+}
+
+.page-footer > button {
+  color: hsl(0, 0%, 40%);
+  background-color: transparent;
+  border-radius: 6px;
+  font-size: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 24px;
+  padding-right: 24px;
+  cursor: pointer;
+  border: 1px solid hsl(0, 0%, 40%);
+  display: inline;
+}
+
+
 </style>

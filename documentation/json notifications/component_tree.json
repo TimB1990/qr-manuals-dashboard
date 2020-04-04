@@ -1,5 +1,8 @@
 {
-    "entry": {},
+    "entry": {
+        "reset-password" : {},
+        "reset-password-form" : {}
+    },
     "dashboard": {
         "headerRoot": {
             "HeaderDecoration": {},

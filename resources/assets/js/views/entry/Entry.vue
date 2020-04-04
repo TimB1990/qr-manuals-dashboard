@@ -16,7 +16,7 @@
         <div class="dialog-footer">
           <!--<div></div>-->
           <button @click="login" class="submit-button">Submit</button>
-          <a>I forgot my password...</a>
+          <router-link to="/reset-password">I forgot my password...</router-link>
         </div>
         <p class="error-msg" v-if="loginError">Invalid Credentials!</p>
       </div>
@@ -51,7 +51,7 @@ export default {
 
           this.$store.dispatch("setUser", {data});
           this.loginError = false;
-          this.$router.push('dashboard');
+          this.$router.push({path: '/dashboard' });
 
           // console.log('data in store: ', this.$store.state.user);
         })
@@ -109,7 +109,6 @@ export default {
   /*border-radius: 6px;*/
   text-align: center;
   text-decoration: none;
-  width: 80px;
   font-size: 14px;
   outline: none;
 }

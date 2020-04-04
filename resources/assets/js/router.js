@@ -2,6 +2,9 @@ import VueRouter from 'vue-router';
 import store from './store/index';
 
 import Entry from './views/entry/Entry';
+import ForgotPassword from './views/entry/components/ForgotPassword'
+import ResetPasswordForm from './views/entry/components/ResetPasswordForm'
+
 import ProductPage from './views/productpage/ProductPage';
 import Dashboard from './views/dashboard/Dashboard';
 
@@ -14,11 +17,13 @@ import ViewPanel from './views/productpage/components/ViewPanel';
 import QuoteForm from './views/productpage/components/QuoteForm';
 
 const routes = [
+
     {
         path: '/',
         name: 'entry',
         component: Entry
     },
+
     {
         path: '/dashboard',
         name: 'dashboard',
@@ -63,7 +68,19 @@ const routes = [
                 component: QuoteForm
             }
         ]
-    }
+    },
+    {
+        path: '/reset-password',
+        name: 'reset-password',
+        component: ForgotPassword,
+        children: [
+            {
+                path: '/:token',
+                name: 'reset-password-form',
+                component: ResetPasswordForm,
+            }
+        ],
+    },
 ];
 
 const router =  new VueRouter({

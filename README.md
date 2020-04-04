@@ -1,6 +1,11 @@
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
 
+## test login data
+Email: admin-6c949c@inbox.mailtrap.io, 
+Password admin2
+
+## Issues & temporary bugs
 <p><strong>Known issues</strong><p>
 <ul>
     <li>Stock functionality productpage not yet implemented<li>

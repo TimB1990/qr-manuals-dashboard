@@ -12,6 +12,9 @@
     <li>Artnr field productpage's design in progress</li>
 </ul>
 
+## test login data
+admin-6c949c@inbox.mailtrap.io, admin2
+
 ## note
 <p>The most recent version is on branch 'V2'. Make sure you pull from this branche</p>
 

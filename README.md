@@ -9,7 +9,7 @@
 <p><strong>Temporary Bugs</strong></p>
 <ul>
     <li>No responsive layout<li>
-    <li>Artnr field productpage's design in progress</li>
+    <li>Lacking CSS reset password screen</li>
 </ul>
 
 ## note

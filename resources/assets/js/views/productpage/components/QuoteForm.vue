@@ -26,23 +26,24 @@
         </div>
         <div class="field-container">
           <i class="fas fa-phone-alt icon"></i>
-          <input id="phone" type="tel" placeholder="phone" />
+          <input v-model="phone" id="phone" type="tel" placeholder="phone" />
         </div>
       </div>
       <div class="amount-stock-panel">
         <div>
           <span>amount</span>
-          <input id="amount" type="number" placeholder="1" min="1" max="500" />
+          <input v-model="amount" id="amount" type="number" placeholder="..." min="1" max="500" />
         </div>
         <div>
           <span>stock: 1000</span>
         </div>
       </div>
       <p id="input-error" v-if="this.error">{{ this.error }}</p>
+      <p id="confirmation" v-if="this.confirmation">{{ this.confirmation }}</p>
     </div>
     <div class="page-footer">
-      <button @click="goBackToPanel">Go back to panel</button>
-      <button id="confirm" @click="processRequest">Confirm request</button>
+      <button v-if="!this.submitDisabled" @click="goBackToPanel">Go back to panel</button>
+      <button id="confirm" @click="processRequest" :disabled="this.submitDisabled">Confirm request</button>
     </div>
   </div>
 </template>
@@ -60,9 +61,17 @@ export default {
       company: null,
       contact: null,
       email: null,
+      phone: '',
+      amount: null,
 
       // error
-      error: null
+      error: null,
+
+      // confirmation
+      confirmation: null,
+
+      // controls
+      submitDisabled: false
     };
   },
   created() {
@@ -73,25 +82,58 @@ export default {
     processRequest() {
       this.error = null;
       if (!this.company) {
-        // this.errors.push("company");
         this.error = "Company / business field cannot be empty";
       }
 
       if (!this.contact) {
-        // this.errors.push("contact")
         this.error = "Contact name field cannot be empty";
       }
 
+      if(this.phone.length > 0){
+        const regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
+        if(!regex.test(this.phone)){
+          this.error = "phone number format not recognized";
+        }
+      }
+
+      if(!this.amount){
+        this.error = "Some amount is required"
+      }
+      else{
+        let amount = parseInt(this.amount);
+        if(!(this.amount > 0 && this.amount <= 500)){
+          this.error = "Some amount between 1 and 500 is requiref";
+        }
+      }
+
       if (!this.email) {
-        // this.errors.push("email");
         this.error = "Email field cannot be empty";
       } else {
         const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (!regex.test(this.email)) {
-          // this.errors.push("email");
           this.error = "invalid email format";
         }
+      }
+
+      if(!this.error){
+        let input = {
+          product_artnr: this.artnr,
+          company: this.company,
+          contact: this.contact,
+          email: this.email,
+          phone: this.phone,
+          amount: this.amount
+        };
+
+        axios.post('api/quotes',input).then(response => {
+          this.submitDisabled = true;
+          this.confirmation = "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
+          var self = this;
+          setTimeout(() => {self.goBackToPanel();}, 2000);
+
+
+        }).catch(error => console.log(error.response.data.error));
       }
     },
 
@@ -178,6 +220,10 @@ export default {
 #input-error {
   padding: 12px;
   color: red;
+}
+#confirmation {
+  padding: 12px;
+  color: green;
 }
 </style>
 

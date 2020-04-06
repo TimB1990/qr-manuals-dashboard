@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 Route::post('/login', 'Api\AuthController@login');
 Route::post('/register', 'Api\AuthController@register');
 
-
 Route::post('/send-token', 'Api\AuthController@sendToken');
 Route::post('/validate-token', 'Api\AuthController@validateToken');
 Route::post('/reset-password', 'Api\AuthController@resetPassword');
+
+Route::post('/quotes', 'QuoteController@store');
 
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{artnr}', 'ProductController@showByArtnr');

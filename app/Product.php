@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = ['id', 'artnr' ,'name','kind'];
-    // set incrementing to false
 
     public function categories(){
         return $this->belongsToMany('App\Category');
@@ -19,5 +18,9 @@ class Product extends Model
 
     public function productDetails(){
         return $this->hasOne('App\ProductDetails');
+    }
+
+    public function quotes(){
+        return $this->hasMany('App\Quote');
     }
 }

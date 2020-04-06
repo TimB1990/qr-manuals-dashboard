@@ -43,7 +43,10 @@
     </div>
     <div class="page-footer">
       <button v-if="!this.submitDisabled" @click="goBackToPanel">Go back to panel</button>
-      <button id="confirm" @click="processRequest" :disabled="this.submitDisabled">Confirm request</button>
+      <button id="confirm" @click="processRequest" :disabled="this.submitDisabled">
+        <span v-if="!this.submitDisabled">Confirm Request</span>
+        <span v-else>Processing request...</span>
+      </button>
     </div>
   </div>
 </template>
@@ -80,6 +83,7 @@ export default {
   },
   methods: {
     processRequest() {
+      this.submitDisabled = true;
       this.error = null;
       if (!this.company) {
         this.error = "Company / business field cannot be empty";
@@ -127,11 +131,9 @@ export default {
         };
 
         axios.post('api/quotes',input).then(response => {
-          this.submitDisabled = true;
           this.confirmation = "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
           var self = this;
           setTimeout(() => {self.goBackToPanel();}, 2000);
-
 
         }).catch(error => console.log(error.response.data.error));
       }

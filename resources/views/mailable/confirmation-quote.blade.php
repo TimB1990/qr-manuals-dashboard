@@ -12,10 +12,30 @@
 
    <p>You provided us with the following data</p>
    <table>
-      
+      <tr>
+         <td><strong>company</strong></td>
+      <td>{{$input['company']}}</td>
+      </tr>
+      <tr>
+         <td><strong>contact</strong></td>
+         <td>{{$input['contact']}}</td>
+      </tr>
+      <tr>
+         <td><strong>email</strong></td>
+         <td>{{$input['email']}}</td>
+      </tr>
+      <tr>
+         <td><strong>phonenumber</strong></td>
+         @if(isset($input['phone']))
+            <td>{{$input['phone']}}</td>
+         @else
+            <td>no phone number provided</td>
+         @endif
+      </tr>
+      <tr>
+         <td><strong>amount</strong></td>
+         <td>{{$input['amount']}}</td>
+      </tr>
    </table>
-
-
-
 </body>
 </html>

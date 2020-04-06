@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Email test'),
+        'address' => env('MAIL_FROM_ADDRESS', 'test@exalto.com'),
+        'name' => env('MAIL_FROM_NAME', 'Exalto Test Support'),
     ],
 
     /*

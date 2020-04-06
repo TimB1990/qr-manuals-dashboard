@@ -30,6 +30,6 @@ class QuoteConfirmationMailable extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->subject('Exalto Quote Request Confirmation')->view('mailable.confirmation-quote');
     }
 }

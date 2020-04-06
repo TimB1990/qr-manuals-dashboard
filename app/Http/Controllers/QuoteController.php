@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Quote;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use App\Mail\QuoteConfirmationMailable;
+use Illuminate\Support\Facades\Validator;
 
 class QuoteController extends Controller
 {
@@ -42,6 +44,8 @@ class QuoteController extends Controller
         else{
             // get all from request
             $input = $request->all();
+            // send email
+            Mail::to($input['email'])->send(new QuoteConfirmationMailable($input));
             // encrypt input email
             $input['email'] = Crypt::encryptString($input['email']);
             // encrypt phone if present

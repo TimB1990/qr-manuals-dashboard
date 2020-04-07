@@ -4,7 +4,7 @@
 
 ## test login data
 Email: admin-6c949c@inbox.mailtrap.io, 
-Password admin2
+Password admin
 
 ## Issues & temporary bugs
 <p><strong>Known issues</strong><p>

@@ -25,6 +25,7 @@
           :product_name="product.name"
           :product_artnr="product.artnr"
           :product_kind="product.kind"
+          :product_stock="product.stock"
           :categories="product.categories"
         />
       </ul>

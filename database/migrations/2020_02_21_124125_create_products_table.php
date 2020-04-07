@@ -18,6 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('artnr');
             $table->string('name');
             $table->string('kind');
+            $table->integer('stock');
             $table->timestamps();
         });
     }

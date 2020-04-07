@@ -4,6 +4,7 @@
       <li>{{ product_name }}</li>
       <li>{{ product_artnr }}</li>
       <li>{{ product_kind }}</li>
+      <li>current stock: {{product_stock}}</li>
     </ul>
     <nav v-if="categories">
       <span>
@@ -27,6 +28,7 @@ export default {
     product_artnr: String,
     product_name: String,
     product_kind: String,
+    product_stock: Number,
     categories: Array
   },
 

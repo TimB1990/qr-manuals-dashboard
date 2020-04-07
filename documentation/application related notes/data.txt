@@ -173,18 +173,21 @@ $product = App\Product::create([
     'artnr' => '211240.30',
     'name' => 'EXALTO RW 240BS 12V 40NM WD 30 MM',
     'kind' => '240 BS',
+    'stock' => 5000
 ])->save();
 
 $product = App\Product::create([
     'artnr' => '211255.35',
     'name' => 'EXALTO RW 255BS 12V 55NM WD 35MM',
     'kind' => '255 BS',
+    'stock' => 5000
 ])->save();
 
 $product = App\Product::create([
     'artnr' => '212430.25',
     'name' => 'EXALTO RUITENWISSER XP2 24V 30NM WD25',
     'kind' => 'MD1 - 230XP',
+    'stock' => 5000
 ])->save();
 
 --------------------------------------------------

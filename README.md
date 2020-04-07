@@ -24,6 +24,7 @@ Password admin2
 ## installation
 <code>composer update</code>
 <code> npm i </code>
+<code>php artisan passport:install --force</code>
 
 ## serve on laravel's localhost
 <code> php artisan serve</code>

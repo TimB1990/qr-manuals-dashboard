@@ -1,0 +1,73 @@
+// response data for pagination url: products?page=1
+
+{
+    "current_page":1,
+    "data":[{...},{...}],
+    "first_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "from":1,
+    "last_page":2,
+    "last_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "next_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "path":"http:\/\/localhost:8000\/products",
+    "per_page":5,
+    "prev_page_url":null,
+    "to":5,
+    "total":10
+ }
+ 
+ // response data for pagination url: products?page=2
+ {
+    "current_page":2,
+    "data":[{...},{...}],
+    "first_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "from":6,
+    "last_page":2,
+    "last_page_url":"http:\/\/localhost:8000\/products?page=2",
+    "next_page_url":null,
+    "path":"http:\/\/localhost:8000\/products",
+    "per_page":5,
+    "prev_page_url":"http:\/\/localhost:8000\/products?page=1",
+    "to":10,
+    "total":10
+ }
+ 
+the application renders first 4 pager blocks and next: [x] => disabled button
+[x][1][2][3][>>]
+[<<][4][5][6][>>]
+[<<][7][8][9][>>]
+[<<][10][x]
+
+
+Onclick on a page button, pagenumber is send over
+to store to be included in querystring url 
+
+// example VUEX
+const store = new Vuex.Store({
+	state:{
+		count: 0
+	},
+	mutations:{
+		increment(state){
+			state.count++
+		}
+	},
+	actions:{
+		increment (context){
+			context.commit('increment');
+		}
+	}
+})
+
+// dispatch with a payload
+this.$store.dispatch('fetchProducts', {
+	page: page
+})
+
+
+
+
+
+
+
+
+ 

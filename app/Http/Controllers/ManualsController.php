@@ -19,6 +19,13 @@ class ManualsController extends Controller
         return response()->json($manuals);
     }
 
+    public function indexByArtnr(Request $request){
+        $artnr = $request->route('artnr');
+        $manuals = Manual::where('artnr', $artnr)->get();
+
+        return response()->json($manuals);
+    }
+
     public function create()
     {
         //

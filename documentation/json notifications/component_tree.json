@@ -1,0 +1,35 @@
+{
+    "entry": {
+        "reset-password" : {},
+        "reset-password-form" : {}
+    },
+    "dashboard": {
+        "headerRoot": {
+            "HeaderDecoration": {},
+            "HeaderNavigation": {},
+            "HeaderActionbar": {}
+        },
+        "SideRoot": {
+            "SideMenu": {
+                "SideMenuItem": {},
+                "SideMenuPagination": {}
+            }
+        },
+        "MainRoot": {
+            "Router-view": {
+                "MainProductDetails": {
+                    "MainProductManualsUpload": {}
+                },
+                "MainQrConfigPanel": {}
+            }
+        },
+        "FooterRoot": {}
+    },
+    "productpage": {
+        "router-view":{
+            "scanner" : {},
+            "viewPanel" : {},
+            "quoteForm" : {}
+        }
+    }
+}

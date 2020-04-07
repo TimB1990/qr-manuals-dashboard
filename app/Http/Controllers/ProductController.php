@@ -12,23 +12,17 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $productslist = Product::all();
+        $term = $request->query('q');
+        // $productslist = Product::paginate(2);
+        $productslist = Product::where(
+            'name','like','%'.$term.'%'
+            )->orWhere('artnr','like','%'.$term.'%')->paginate(5);
 
         foreach ($productslist as $product){
 
-            // initialize empty array to push category->name
-            // $productCategories = array(); 
-
-            // loop over product->categories
-            /*foreach ($product->categories as $category){
-                array_push($productCategories, $category->name); // ['cat1','cat2']
-            }*/
-
-            // $product_categories = ['categories' => $product->categories];
             $product->categories;
-            // array_push($responseData, $product_categories);
         }
 
         return response()->json($productslist);
@@ -55,15 +49,21 @@ class ProductController extends Controller
         //
     }
 
+    public function showByArtnr($artnr){
+        $Product = Product::where('artnr',$artnr)->get();
+        return response()->json($Product);
+    }
+
     /**
      * Display the specified resource.
      *
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $product = Product::where('id',$id)->get();
+        return response()->json($product);
     }
 
     /**

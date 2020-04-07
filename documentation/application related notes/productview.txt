@@ -1,0 +1,13 @@
+# When the user accesses the productPage he will be shown a display to scan qrcode. When the qr-scan is done the user is redirected to a dynamic url where he sees the productpage view. 
+
+# the productinformation, cq interaction panel for the enduser is only displayed when a qr code is found. Then button to scan different product is present. otherwise a camera view stays on the screen. 
+
+# TODOS
+
+- mokup design: done
+
+- implementing scanner functionality that gets productinformation: done
+
+# Request a quote (offerte)
+view?
+

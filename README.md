@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
 
@@ -26,3 +27,10 @@ Password admin2
 
 ## serve on laravel's localhost
 <code> php artisan serve</code>
+=======
+## USE V2 INSTEAD
+
+
+
+
+>>>>>>> ac3843c4739c4197424de2871e38070ea12a4384

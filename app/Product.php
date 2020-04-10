@@ -23,4 +23,8 @@ class Product extends Model
     public function quotes(){
         return $this->hasMany('App\Quote');
     }
+
+    public function ProductReservation(){
+        return $this->hasOne('App\ProductReservation');
+    }
 }

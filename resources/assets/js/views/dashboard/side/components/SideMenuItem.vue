@@ -9,7 +9,7 @@
     <nav v-if="categories">
       <span>
         <i
-          @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind)"
+          @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind, product_stock)"
           :class="{'fa' : true, 'fa-check' : true, 'selected' : this.selected}"
         ></i>
       </span>

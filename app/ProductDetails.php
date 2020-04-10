@@ -15,7 +15,7 @@ class ProductDetails extends Model
     public $incrementing = false;
 
     // set keytype of model to be a string
-    protected $keyType = 'string';
+    // protected $keyType = 'string';
 
     public function products(){
         return $this->belongsTo('App\Product');

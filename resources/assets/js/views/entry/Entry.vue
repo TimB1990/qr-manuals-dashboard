@@ -56,6 +56,7 @@ export default {
           // console.log('data in store: ', this.$store.state.user);
         })
         .catch(err => {
+          console.log(err);
           this.loginError = true;
         });
     }

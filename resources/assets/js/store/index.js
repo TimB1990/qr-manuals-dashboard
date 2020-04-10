@@ -157,6 +157,7 @@ export default new Vuex.Store({
         fetchDetails({ commit }, { id }) {
             commit('SET_LOADING_STATUS', 'loading');
             axios.get(`api/products/${id}/details`).then(result => {
+                console.log("details object", result);
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_DETAILS', result);
 
@@ -170,6 +171,7 @@ export default new Vuex.Store({
         fetchManuals({ commit }, { id }) {
             commit('SET_LOADING_STATUS', 'loading');
             axios.get(`api/products/${id}/manuals`).then(result => {
+                console.log("manuals object", result)
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_MANUALS', result);
 
@@ -222,15 +224,8 @@ export default new Vuex.Store({
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
-
-                /*feedbackData.message = response.statusText;
-                feedbackData.iconClass = "fa fa-check has-text-success";
-
-                commit('SET_FEEDBACK_DATA', feedbackData);*/
-
-                // reload manuals list
+                console.log("formData object", formData);
                 dispatch('fetchManuals', { id: id });
-
 
             }).catch(err => {
 

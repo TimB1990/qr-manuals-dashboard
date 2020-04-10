@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -15,12 +16,14 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->String('product_artnr')->references('artnr')->on('products')->onDelete('cascade');
-            $table->String('company');
-            $table->String('contact');
-            $table->String('email');
-            $table->String('phone')->nullable();
-            $table->Integer('amount');
+            $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->string('product_artnr')->references('artnr')->on('products')->onDelete('cascade');
+            $table->string('company');
+            $table->string('contact');
+            $table->string('email');
+            $table->string('phone')->nullable();
+            $table->integer('amount');
+            $table->enum('status',['pending','processed','approved','released']);
             $table->timestamps();
         });
     }

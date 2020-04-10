@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       // product information
+      product_id: null,
       artnr: null,
       name: null,
 
@@ -78,6 +79,7 @@ export default {
     };
   },
   created() {
+    this.product_id = this.$route.query.id;
     this.artnr = this.$route.query.artnr;
     this.name = this.$route.query.name;
   },
@@ -122,15 +124,17 @@ export default {
 
       if(!this.error){
         let input = {
+          product_id: this.product_id,
           product_artnr: this.artnr,
           company: this.company,
           contact: this.contact,
           email: this.email,
           phone: this.phone,
-          amount: this.amount
+          amount: this.amount,
+          status: "pending"
         };
 
-        axios.post('api/quotes',input).then(response => {
+        axios.post(`api/products/${input.product_id}/quotations`,input).then(response => {
           this.confirmation = "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
           var self = this;
           setTimeout(() => {self.goBackToPanel();}, 2000);

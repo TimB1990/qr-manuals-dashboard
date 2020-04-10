@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\QuoteConfirmationMailable;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class QuoteController extends Controller
 {
@@ -30,12 +31,14 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
+            'product_id' => 'required|integer',
             'product_artnr' => 'required',
             'company' => 'required',
             'contact' => 'required',
             'email' => 'required|email',
             'phone' => 'nullable|min:10',
-            'amount' => 'required|integer|between:1,500'
+            'amount' => 'required|integer|between:1,500',
+            'status' => ['required', Rule::in(['pending','processed','approved','denied','released'])]
         ]);
 
         if($validator->fails()){

@@ -62,6 +62,7 @@ export default {
 
       for (let i = 0; i < this.files.length; i++) {
         let file = this.files[i];
+        console.log("file", file);
         formData.append(`files[${i}]`, file);
       }
 

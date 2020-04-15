@@ -16,14 +16,15 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->string('product_artnr')->references('artnr')->on('products')->onDelete('cascade');
+            $table->unsignedBigInteger('product_id');
+            $table->string('product_artnr');
             $table->string('company');
             $table->string('contact');
             $table->string('email');
             $table->string('phone')->nullable();
             $table->integer('amount');
-            $table->enum('status',['pending','processed','approved','released']);
+            $table->enum('status',['pending','accepted','processed','approved','review', 'denied']);
+            // $table->boolean('trashed')
             $table->timestamps();
         });
     }

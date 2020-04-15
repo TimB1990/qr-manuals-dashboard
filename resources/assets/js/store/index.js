@@ -15,7 +15,7 @@ export default new Vuex.Store({
         user: {},
         loadingStatus: 'notloading',
         feedbackData: {},
-        product:[],
+        product:{},
         products: {},
         errors: [],
         productManuals: [],
@@ -127,7 +127,7 @@ export default new Vuex.Store({
 
         setProduct({commit}, {artnr}){
             axios.get(`api/products/${artnr}`).then(result => {
-                commit('SET_PRODUCT', result.data)
+                commit('SET_PRODUCT', result.data[0])
             }).catch(err => {
                 commit('ADD_ERROR', err);
             })
@@ -247,7 +247,7 @@ export default new Vuex.Store({
 
     getters: {
         getProductID: (state) => {
-            return state.product[0].id;
+            return state.product.id;
         },
 
         getUserEmail: (state) => {

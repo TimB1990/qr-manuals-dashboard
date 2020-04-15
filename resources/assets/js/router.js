@@ -85,12 +85,11 @@ const routes = [
 
 const router =  new VueRouter({
 
-    /*mode: 'history',*/
     routes: routes,
     linkActiveClass: 'is-active'
 });
 
-router.beforeEach((to,from,next) => {
+/*router.beforeEach((to,from,next) => {
     if(to.matched.some(record => record.meta.requiresAuth)){
 
         console.log('user from router: ', store.state.user);
@@ -101,6 +100,14 @@ router.beforeEach((to,from,next) => {
     else{
         next();
     }
-});
+});*/
+
+router.beforeEach((to,from,next) => {
+    const loggedin = localStorage.getItem('user')
+    if(to.matched.some(record => record.meta.requiresAuth) && !loggedin){
+        next({name:'entry'})
+    }
+    next();
+})
 
 export default router;

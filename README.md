@@ -29,7 +29,7 @@ Password admin
 ## serve on laravel's localhost
 <code> php artisan serve</code>
 =======
-## USE V2 INSTEAD
+
 
 
 

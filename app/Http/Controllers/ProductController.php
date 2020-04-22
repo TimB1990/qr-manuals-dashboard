@@ -50,8 +50,8 @@ class ProductController extends Controller
     }
 
     public function showByArtnr($artnr){
-        $Product = Product::where('artnr',$artnr)->get();
-        return response()->json($Product);
+        $product = Product::where('artnr',$artnr)->get();
+        return response()->json($product);
     }
 
     /**

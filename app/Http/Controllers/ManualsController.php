@@ -33,7 +33,6 @@ class ManualsController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->route('id'));
         $files = $request->file('files');
         $product = Product::find($request->route('id'));
 
@@ -51,7 +50,6 @@ class ManualsController extends Controller
                 'artnr' => $product->artnr
             ]);
 
-            // call route name to be set as $manual->file_url, parsing id from product and id from manual,  then save $manual
             $manual->file_url = route('products.manuals.show', [$product->id, $manual->id]);
             $manual->save();     
 
@@ -64,8 +62,6 @@ class ManualsController extends Controller
     public function show($id, $manual_id, Request $request)
     {
         $manual = Manual::find($manual_id);
-
-        // this method is responsible for downloading manual
         return Storage::download($manual->file_path);
     }
 

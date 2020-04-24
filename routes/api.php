@@ -10,8 +10,6 @@ Route::post('/send-token', 'Api\AuthController@sendToken');
 Route::post('/validate-token', 'Api\AuthController@validateToken');
 Route::post('/reset-password', 'Api\AuthController@resetPassword');
 
-Route::post('/quotes', 'QuoteController@store');
-
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{artnr}', 'ProductController@showByArtnr');
 
@@ -26,3 +24,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     // DELETE
     Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
 });
+
+// quotations
+Route::post('/products/{id}/quotations', 'QuoteController@store');
+Route::put('/products/{id}/reservation'.'ProductReservationController@store');
+
+

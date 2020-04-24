@@ -122,6 +122,7 @@ export default {
       this.$router.push({
         name: "quote",
         query: {
+          id: this.product[0].id,
           artnr: this.product[0].artnr,
           name: this.product[0].name
         }

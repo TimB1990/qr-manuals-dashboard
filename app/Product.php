@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['id', 'artnr' ,'name','kind'];
+    protected $fillable = ['id', 'artnr' ,'name','kind', 'stock'];
 
     public function categories(){
         return $this->belongsToMany('App\Category');
@@ -22,5 +22,9 @@ class Product extends Model
 
     public function quotes(){
         return $this->hasMany('App\Quote');
+    }
+
+    public function ProductReservation(){
+        return $this->hasOne('App\ProductReservation');
     }
 }

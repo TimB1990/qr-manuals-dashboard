@@ -18,7 +18,7 @@
           <button @click="login" class="submit-button">Submit</button>
           <router-link to="/reset-password">I forgot my password...</router-link>
         </div>
-        <p class="error-msg" v-if="loginError">Invalid Credentials!</p>
+        <p class="error-msg" v-if="error">Invalid Credentials!</p>
       </div>
     </div>
   </div>
@@ -33,11 +33,11 @@ export default {
     return {
       email: null,
       password: null,
-      loginError: false
+      error: null
     };
   },
   methods: {
-    login() {
+    /*login() {
       axios
         .post("/api/login", {
           email: this.email,
@@ -49,15 +49,26 @@ export default {
             token: res.data.success.token
           };
 
-          this.$store.dispatch("setUser", {data});
-          this.loginError = false;
+          this.$store.dispatch("setUser", { data });
+          this.error = null
           this.$router.push({path: '/dashboard' });
-
-          // console.log('data in store: ', this.$store.state.user);
         })
         .catch(err => {
-          this.loginError = true;
+          this.error = err
         });
+    }*/
+
+    login(){
+      this.$store.dispatch('login',{
+        email: this.email,
+        password: this.password
+      }).then(() => {
+        this.$router.push({name:'dashboard'})
+      }).catch(err => {
+        console.log("err from entry: ", err)
+        this.error = err
+        
+      })
     }
   }
 };

@@ -4,11 +4,12 @@
       <li>{{ product_name }}</li>
       <li>{{ product_artnr }}</li>
       <li>{{ product_kind }}</li>
+      <li>current stock: {{product_stock}}</li>
     </ul>
     <nav v-if="categories">
       <span>
         <i
-          @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind)"
+          @click="addRemoveSelected(product_id, product_name, product_artnr, product_kind, product_stock)"
           :class="{'fa' : true, 'fa-check' : true, 'selected' : this.selected}"
         ></i>
       </span>
@@ -27,6 +28,7 @@ export default {
     product_artnr: String,
     product_name: String,
     product_kind: String,
+    product_stock: Number,
     categories: Array
   },
 

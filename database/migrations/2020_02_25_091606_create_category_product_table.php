@@ -18,7 +18,7 @@ class CreateCategoryProductTable extends Migration
             $table->unsignedBigInteger('category_id');
 
             // TODO change to unsignedBigInteger and migrate
-            $table->string('product_id');
+            $table->unsignedBigInteger('product_id');
             
             // foreign keys
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

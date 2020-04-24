@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateProductReservationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('product_reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('artnr');
-            $table->string('name');
-            $table->string('kind');
-            $table->integer('stock');
+            $table->unsignedBigInteger('product_id')->references('id')->on('product')->onDelete('cascade');
+            $table->String('product_artnr')->references('artnr')->on('products')->onDelete('cascade');
+            $table->integer('reserved');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('product_reservations');
     }
 }

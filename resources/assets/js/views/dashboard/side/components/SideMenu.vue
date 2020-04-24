@@ -25,6 +25,7 @@
           :product_name="product.name"
           :product_artnr="product.artnr"
           :product_kind="product.kind"
+          :product_stock="parseInt(product.stock)"
           :categories="product.categories"
         />
       </ul>
@@ -92,6 +93,7 @@ export default {
     // no local data(), only computed properties
     products() {
       return this.$store.state.products;
+      // console.log(products);
     },
     loading() {
       return this.$store.state.loadingStatus === "notloading";

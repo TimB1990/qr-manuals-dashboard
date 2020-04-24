@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
+use App\ProductReservation;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductReservationController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $term = $request->query('q');
-        // $productslist = Product::paginate(2);
-        $productslist = Product::where(
-            'name','like','%'.$term.'%'
-            )->orWhere('artnr','like','%'.$term.'%')->paginate(5);
-
-        foreach ($productslist as $product){
-
-            $product->categories;
-        }
-
-        return response()->json($productslist);
+        //
     }
 
     /**
@@ -44,35 +33,39 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
-    }
+        $input = $request->all();
 
-    public function showByArtnr($artnr){
-        $product = Product::where('artnr',$artnr)->get();
-        return response()->json($product);
+        // id, product_id, product_artnr, reserved
+        $reservation = ProductReservation::where('product_id', $id)->firstOr(function(){
+            ProductReservation::create($input);
+        });
+
+        $reservation->reserved += $input['reserved'];
+        $reservation->save();
+
+        return response()->json(['succes' => 'reservation created'],201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\ProductReservation  $productReservation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ProductReservation $productReservation)
     {
-        $product = Product::where('id',$id)->get();
-        return response()->json($product);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  \App\ProductReservation  $productReservation
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(ProductReservation $productReservation)
     {
         //
     }
@@ -81,10 +74,10 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param  \App\ProductReservation  $productReservation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, ProductReservation $productReservation)
     {
         //
     }
@@ -92,10 +85,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\ProductReservation  $productReservation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(ProductReservation $productReservation)
     {
         //
     }

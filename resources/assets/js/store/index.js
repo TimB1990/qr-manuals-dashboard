@@ -8,20 +8,16 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 
-    // user: null
-    // store.user = this.username
-
     state: {
-        user: {},
+        user: null,
         loadingStatus: 'notloading',
         feedbackData: {},
-        product:[],
+        product:{},
         products: {},
         errors: [],
         productManuals: [],
         productDetails: [],
         selectedProducts: [],
-        // max_pages: 1
     },
 
     mutations: {
@@ -44,7 +40,6 @@ export default new Vuex.Store({
         },
 
         DELETE_MANUAL(state, { manual_id }) {
-            // let index = state.productManuals.findIndex(manual => manual.id == manual_id);
             let index = state.productManuals.findIndex(manual_id);
             state.productManuals.splice(index, 1);
         },
@@ -91,22 +86,46 @@ export default new Vuex.Store({
             state.product.splice(index, 1);
         },
 
-        SET_USER(state, data){
+        /*SET_USER(state, data){
+            localStorage.setItem('user', JSON.stringify(userData))
             state.user = data;
-        },
+        },*/
 
-        LOGOUT_USER(state){
+        /*LOGOUT_USER(state){
             state.user = {}
+        }*/
+
+        SET_USER_DATA(state, data){
+            state.user = data
+            console.log("SET_USER_DATA: ", data)
+            localStorage.setItem('user', JSON.stringify(data))
+            axios.defaults.headers.common['Authorization'] = `Bearer ${
+                data.token
+            }`
+        },
+        
+        CLEAR_USER_DATA(state){
+            state.user = null
+			localStorage.removeItem('user')
+			axios.defaults.headers.common['Authorization'] = null
         }
     },
 
     actions: {
         setUser({commit},{data}){
-            commit('SET_USER', data);
+            commit('SET_USER_DATA', data);
+        },
+
+        login({commit}, credentials){
+            console.log("credentials from login action store: ", credentials)
+            return axios.post("/api/login", credentials).then(({data}) => {
+                console.log("response from login: ", data); // {success:{token: ""}}
+                commit('SET_USER_DATA', {email: credentials.email, token: data.success.token})
+            })
         },
 
         logoutUser({commit}){
-            commit('LOGOUT_USER');
+            commit('CLEAR_USER_DATA');
         },
 
         addSelectedProduct({ commit }, { data }) {
@@ -127,7 +146,7 @@ export default new Vuex.Store({
 
         setProduct({commit}, {artnr}){
             axios.get(`api/products/${artnr}`).then(result => {
-                commit('SET_PRODUCT', result.data)
+                commit('SET_PRODUCT', result.data[0])
             }).catch(err => {
                 commit('ADD_ERROR', err);
             })
@@ -161,7 +180,6 @@ export default new Vuex.Store({
                 commit('SET_PRODUCT_DETAILS', result);
 
             }).catch(err => {
-                console.log(err);
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_DETAILS', []);
             });
@@ -189,7 +207,6 @@ export default new Vuex.Store({
             }).catch(err => {
                 commit('SET_LOADING_STATUS', 'notloading');
                 commit('SET_PRODUCT_MANUALS', []);
-                console.log(err);
             });
 
         },
@@ -209,12 +226,6 @@ export default new Vuex.Store({
 
         uploadManual({ commit, dispatch, getters }, { id, formData }) {
 
-            /*let feedbackData = {
-                show: true,
-                message: "",
-                iconClass: ""
-            };*/
-
             axios.post(`api/products/${id}/manuals`, formData, {
                 headers: {
                     // also authorizaton header
@@ -222,15 +233,7 @@ export default new Vuex.Store({
                     "Content-Type": "multipart/form-data"
                 }
             }).then(response => {
-
-                /*feedbackData.message = response.statusText;
-                feedbackData.iconClass = "fa fa-check has-text-success";
-
-                commit('SET_FEEDBACK_DATA', feedbackData);*/
-
-                // reload manuals list
                 dispatch('fetchManuals', { id: id });
-
 
             }).catch(err => {
 
@@ -251,8 +254,12 @@ export default new Vuex.Store({
     },
 
     getters: {
+        loggedIn(state){
+            return !!state.user
+        },
+
         getProductID: (state) => {
-            return state.product[0].id;
+            return state.product.id;
         },
 
         getUserEmail: (state) => {

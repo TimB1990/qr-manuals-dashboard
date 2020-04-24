@@ -4,8 +4,9 @@
       <header-root></header-root>
     </header>
     <section class="side-and-main">
-      <side-root class="side"></side-root>
-      <router-view class="main"></router-view>
+      <!--<side-root class="side"></side-root>-->
+      <router-view name="side" class="side"></router-view>
+      <router-view name="content" class="main"></router-view>
     </section>
   </div>
 </template>

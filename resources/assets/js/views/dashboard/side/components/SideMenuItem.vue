@@ -37,7 +37,7 @@ export default {
       console.log("navigate to details of:", id);
       this.$router
         .replace({
-          name: "product-details",
+          name: "product_details",
           params: {
             id: id
           }

@@ -16,6 +16,8 @@ import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
 import QuoteForm from './views/productpage/components/QuoteForm';
 
+import SideRoot from './views/dashboard/side/SideRoot'
+
 const routes = [
 
     {
@@ -28,24 +30,29 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: Dashboard,
-        children: [
-            {
-                path: '',
-                name: 'home',
-                component: Home
+        children: [{
+            path: 'products',
+            name: 'products',
+            components: {
+                side: SideRoot,
+                content: Home
             },
-            {
-                path: '/products/:id/details',
-                name: 'product-details',
-                component: MainProductDetails
-            },
-            {
-                path: '/sheets',
-                name: 'qr-config-panel',
-                component: MainQrConfigPanel
+        }, {
+            path: 'products/:id/details',
+            name: 'product_details',
+            components: {
+                side: SideRoot,
+                content: MainProductDetails
             }
-        ],
-        meta: { requiresAuth : true }
+        }, {
+            path: 'products/qr-sheet',
+            name: 'qr-config-panel',
+            components: {
+                side: SideRoot,
+                content: MainQrConfigPanel
+            }
+        }],
+        meta: { requiresAuth: true }
     },
     {
         path: '/productpage',
@@ -55,7 +62,7 @@ const routes = [
             {
                 path: '',
                 name: 'scanner',
-                component: Scanner 
+                component: Scanner
             },
             {
                 path: '/view/:artnr',
@@ -83,7 +90,7 @@ const routes = [
     },
 ];
 
-const router =  new VueRouter({
+const router = new VueRouter({
 
     routes: routes,
     linkActiveClass: 'is-active'
@@ -102,10 +109,10 @@ const router =  new VueRouter({
     }
 });*/
 
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
     const loggedin = localStorage.getItem('user')
-    if(to.matched.some(record => record.meta.requiresAuth) && !loggedin){
-        next({name:'entry'})
+    if (to.matched.some(record => record.meta.requiresAuth) && !loggedin) {
+        next({ name: 'entry' })
     }
     next();
 })

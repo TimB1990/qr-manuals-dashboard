@@ -11,12 +11,15 @@ import Dashboard from './views/dashboard/Dashboard';
 import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
+import MainQuotationDetails from './views/dashboard/main/components/MainQuotationDetails';
 
 import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
 import QuoteForm from './views/productpage/components/QuoteForm';
 
-import SideRoot from './views/dashboard/side/SideRoot'
+import SideMenu from './views/dashboard/side/SideMenu';
+import SideQuotations from './views/dashboard/side/SideQuotations';
+
 
 const routes = [
 
@@ -34,23 +37,31 @@ const routes = [
             path: 'products',
             name: 'products',
             components: {
-                side: SideRoot,
+                side: SideMenu,
                 content: Home
             },
         }, {
             path: 'products/:id/details',
             name: 'product_details',
             components: {
-                side: SideRoot,
+                side: SideMenu,
                 content: MainProductDetails
             }
         }, {
             path: 'products/qr-sheet',
             name: 'qr-config-panel',
             components: {
-                side: SideRoot,
+                side: SideMenu,
                 content: MainQrConfigPanel
             }
+        }, {
+            path: 'quotations',
+            name: 'quotations',
+            components: {
+                side: SideQuotations,
+                content: MainQuotationDetails
+            }
+
         }],
         meta: { requiresAuth: true }
     },

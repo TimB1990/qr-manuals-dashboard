@@ -42,7 +42,6 @@ export default {
             id: id
           }
         })
-        .catch(err => {});
     },
 
     addRemoveSelected(id, name, artnr, kind) {

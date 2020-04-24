@@ -46,8 +46,8 @@
 
 
 <script>
-import SideMenuItem from "./SideMenuItem";
-import SideMenuPaginator from "./SideMenuPaginator";
+import SideMenuItem from "./components/SideMenuItem";
+import SideMenuPaginator from "./components/SideMenuPaginator";
 import _ from "lodash";
 
 export default {

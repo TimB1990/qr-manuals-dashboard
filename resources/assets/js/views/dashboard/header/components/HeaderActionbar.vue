@@ -1,15 +1,16 @@
 <template>
   <nav class="actionbar" role="actionbar" aria-label="actionbar">
     <div class="actionbar-start">
-      <!-- <span>QR-Codes / Product:</span>
-      <input class="action-input" type="number" value="1" onfocus="this.value=''" min="1" max="99" v-model="qrAmount" />-->
-      <button @click="linkToSheetConfiguration" class="action-btn">
-        Generate Sheet
-        <!-- <i class="fa fa-qrcode"></i> -->
+      <button @click="linkToProducts" class="action-btn">
+        Products
+      </button>
+      <button  @click="linkToQuotations" class="action-btn">
+        Quotations
       </button>
     </div>
     <div class="actionbar-end">
-      <button class="action-btn" @click.prevent="clearSelected">Clear Selection</button>
+      <button @click="linkToSheetConfiguration" class="action-btn">QR sheet</button>
+      <button class="action-btn" @click.prevent="clearSelected">Clear</button>
       <button class="tag-selected">{{ selectedProductCount }}</button>
     </div>
   </nav>
@@ -19,20 +20,30 @@
 export default {
   name: "headerActionbar",
   components: {},
-  data(){
+  data() {
     return {
       qrAmount: 1
-    }
+    };
   },
   methods: {
     clearSelected() {
       this.$store.dispatch("clearSelected");
     },
 
-    linkToSheetConfiguration(){
+    linkToSheetConfiguration() {
       this.$router.push({
-        name: 'qr-config-panel',
+        name: "qr-config-panel"
       });
+    },
+    linkToQuotations(){
+      this.$router.push({
+        name: "quotations"
+      })
+    },
+    linkToProducts(){
+      this.$router.push({
+        name: "products"
+      })
     }
   },
 
@@ -65,8 +76,8 @@ export default {
 .tag-selected {
   display: inline-block;
   margin: 3px 3px 3px 3px;
-  width: 40px;
-  height: 35px;
+  width: 2rem;
+  height: 2rem;
   background-color: transparent;
   border: 1px solid hsl(0, 0%, 76%);
   padding: 6px;
@@ -80,15 +91,14 @@ export default {
 .action-btn {
   display: inline-block;
   margin: 3px 3px 3px 3px;
-  width: 150px;
-  height: 35px;
+  width: 6rem;
+  height: 2rem;
   background-color: transparent;
   border: 1px solid hsl(0, 0%, 76%);
   padding: 6px;
   /*border-radius: 6px;*/
   text-align: center;
   text-decoration: none;
-  display: inline-block;
   font-size: 14px;
   outline: none;
 }

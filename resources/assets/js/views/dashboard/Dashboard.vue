@@ -13,13 +13,11 @@
 
 <script>
 import HeaderRoot from "./header/HeaderRoot";
-import SideRoot from "./side/SideRoot";
 
 export default {
   name: "dashboard",
   components: {
-    HeaderRoot,
-    SideRoot
+    HeaderRoot
   }
 };
 </script>

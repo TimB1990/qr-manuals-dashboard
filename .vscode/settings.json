@@ -1,3 +1,4 @@
 {
-    "editor.suggest.hideStatusBar": false
+    "editor.suggest.hideStatusBar": false,
+    "editor.formatOnPaste": true
 }

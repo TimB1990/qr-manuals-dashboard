@@ -36,7 +36,7 @@ export default {
 }
 
 .side{
-  width: 50%;
+  width: auto;
 }
 
 .header{

@@ -140,7 +140,6 @@ input[type="file"] {
 
 .upload-button-panel {
   display: flex;
-  /*border: 1px solid hsl(0,0%,80%);*/
   flex-direction: row-reverse;
   margin-top: 12px;
 }
@@ -157,7 +156,6 @@ input[type="file"] {
   font-size: 14px;
   outline: none;
   margin-right: 12px;
-  /*box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);*/
 }
 
 .panel-button:hover{

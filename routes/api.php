@@ -26,7 +26,9 @@ Route::group(['middleware' => 'auth:api'], function(){
 });
 
 // quotations
-Route::post('/products/{id}/quotations', 'QuoteController@store');
+Route::post('/quotations', 'QuoteController@store');
+
+// reservations
 Route::put('/products/{id}/reservation'.'ProductReservationController@store');
 
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateQuoteCredentialsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('quote_credentials', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('artnr');
-            $table->string('name');
-            $table->string('kind');
-            $table->integer('stock');
-            $table->decimal('unit_price',6,2);
+            $table->unsignedBigInteger('customers_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->unsignedBigInteger('quotes_id')->references('id')->on('quotes')->onDelete('cascade');
+            $table->string('token');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('quote_credentials');
     }
 }

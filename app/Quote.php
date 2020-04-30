@@ -8,12 +8,20 @@ class Quote extends Model
 {
     protected $guarded = [];
 
-    public function product(){
-        return $this->belongsTo('App\Product');
+    public function customer(){
+        return $this->belongsTo('App\Customer');
     }
 
-    public function productReservation(){
-        return $this->belongsTo('App\ProductReservation');
+    public function quoteProduct(){
+        return $this->hasMany('App\QuoteProduct');
+    }
+
+    public function quotePriceSpecification(){
+        return $this->hasOne('App\QuotePriceSpecification');
+    }
+
+    public function quoteCredential(){
+        return $this->belongsTo('App\QuoteCredential');
     }
 
 }

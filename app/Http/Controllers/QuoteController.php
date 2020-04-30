@@ -30,6 +30,7 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
+        // TODO: NEEDS TO BE ADJUSTED BECAUSE OF NEW DATA STRUCTURE!!
         $validator = Validator::make($request->all(),[
             'product_id' => 'required|integer',
             'product_artnr' => 'required',

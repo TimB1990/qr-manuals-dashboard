@@ -15,6 +15,7 @@
 import HeaderRoot from "./header/HeaderRoot";
 
 export default {
+  // some comment
   name: "dashboard",
   components: {
     HeaderRoot

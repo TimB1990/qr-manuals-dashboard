@@ -13,6 +13,6 @@ class Customer extends Model
     }
 
     public function quoteCredential(){
-        return $this->hasMany('App\QuoteCredential')
+        return $this->hasMany('App\QuoteCredential');
     }
 }

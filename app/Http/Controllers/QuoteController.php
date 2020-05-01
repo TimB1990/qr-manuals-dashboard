@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
+use App\Customer;
+use App\QuoteProduct;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use App\Mail\QuoteConfirmationMailable;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class QuoteController extends Controller
 {
@@ -38,7 +40,7 @@ class QuoteController extends Controller
             'email' => 'required|email',
             'phone' => 'nullable|min:10',
             'address' => 'required',
-            '_nr' => 'required',
+            'nr' => 'required',
             'post_code' => 'required',
             'residence' => 'required',
             'amount' => 'required|integer|between:1,500',
@@ -63,7 +65,7 @@ class QuoteController extends Controller
             // retrieve productid
             $productid = $request->input('product_id');
             // retrieve customer inputs
-            $customer_inputs = $request->only(['email','company','contact', 'phone','address','_nr','post_code','residence']);
+            $customer_inputs = $request->only(['email','company','contact', 'phone','address','nr','post_code','residence']);
             // create customer record
             Customer::create($customer_inputs);
             // retrieve customer id

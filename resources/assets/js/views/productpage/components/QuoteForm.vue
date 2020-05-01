@@ -31,7 +31,7 @@
         </div>
         <div class="field-container">
           <i></i>
-          <input v-model="_nr" type="text" placeholder="house nr." />
+          <input v-model="nr" type="text" placeholder="house nr." />
         </div>
         <div class="field-container">
           <i></i>
@@ -85,7 +85,7 @@ export default {
       email: null,
       phone: "",
       address: null,
-      _nr: null,
+      nr: null,
       post_code: null,
       residence: null,
       amount: null,
@@ -128,11 +128,11 @@ export default {
         this.error = "Company Address is required";
       }
 
-      if (!this._nr) {
+      if (!this.nr) {
         this.error = "House nr. is required!";
       } else {
         const regex = /.*\d/;
-        if (!regex.test(this._nr)) this.error = "_nr. requires digit";
+        if (!regex.test(this.nr)) this.error = "nr. requires digit";
       }
 
       if (!this.post_code) this.error = "post code is required";
@@ -168,7 +168,7 @@ export default {
           phone: this.phone,
           // new fields
           address: this.address,
-          _nr: this._nr,
+          nr: this.nr,
           post_code: this.post_code,
           residence: this.residence,
           amount: this.amount,
@@ -185,7 +185,7 @@ export default {
               self.goBackToPanel();
             }, 2000);
           })
-          .catch(error => console.log(error.response.data.error));
+          .catch(error => console.log(error));
       }
     },
 

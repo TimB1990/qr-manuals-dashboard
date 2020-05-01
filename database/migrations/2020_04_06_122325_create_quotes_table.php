@@ -17,7 +17,7 @@ class CreateQuotesTable extends Migration
         Schema::create('quotes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customers_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->unsignedBigInteger('quote_products_id')->references('id')->on('quote_products')->onDelete('cascade');
+            $table->unsignedBigInteger('quotes_products_id')->references('id')->on('quote_products')->onDelete('cascade');
             $table->integer('amount');
             $table->enum('status',['pending','accepted','processed','approved','review', 'denied']);
             $table->timestamps();

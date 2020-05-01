@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['id', 'artnr' ,'name','kind', 'stock'];
+    protected $guarded = [];
 
     public function categories(){
         return $this->belongsToMany('App\Category');

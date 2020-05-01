@@ -12,3 +12,4 @@ class QuotePriceSpecification extends Model
         return $this->belongsTo('App\Quote');
     }
 }
+

@@ -30,7 +30,6 @@ class QuoteController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: NEEDS TO BE ADJUSTED BECAUSE OF NEW DATA STRUCTURE!!
         $validator = Validator::make($request->all(),[
             'product_id' => 'required|integer',
             'product_artnr' => 'required',
@@ -38,6 +37,10 @@ class QuoteController extends Controller
             'contact' => 'required',
             'email' => 'required|email',
             'phone' => 'nullable|min:10',
+            'address' => 'required',
+            '_nr' => 'required',
+            'post_code' => 'required',
+            'residence' => 'required',
             'amount' => 'required|integer|between:1,500',
             'status' => ['required', Rule::in(['pending','processed','approved','denied','released'])]
         ]);
@@ -57,12 +60,39 @@ class QuoteController extends Controller
                 $input['phone'] = Crypt::encryptString($input['phone']);
             }
 
-            // put in database
-            Quote::create($input);
-            return response()->json(['success','quote has been created'],201);
+            // retrieve productid
+            $productid = $request->input('product_id');
+            // retrieve customer inputs
+            $customer_inputs = $request->only(['email','company','contact', 'phone','address','_nr','post_code','residence']);
+            // create customer record
+            Customer::create($customer_inputs);
+            // retrieve customer id
+            $customer_id = Customer::where('email',$customer_inputs['email'])->first()->id;
 
+            $quote = Quote::create(['customers_id' => $customer_id, 'quotes_products_id' => '', 'amount' => $request->input('amount'), 'status' => "pending"]);
+            $quoteId = $quote->id;
+
+            $product = Product::find($productid);
+
+            // create quote product record
+            $quoteProduct = QuoteProduct::create([
+                'origin_products_id' => $productid,
+                'quotes_id' => $quoteId,
+                'unit_price' => $product->unit_price,
+                'artnr' => $product->artnr,
+                'name' => $product->name,
+                'kind' => $product->kind
+            ]);
+
+            $quoteProductId = $quoteProduct->id;
+
+            // insert quoteProductId into quote record
+            $quote->quotes_product_id = $quoteProductId;
+            $quote->save();
+
+            // return response
+            return response()->json(['success' => 'quote created'],201);
         }
-
 
     }
 

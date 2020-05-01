@@ -15,7 +15,7 @@ class CreateQuoteProductsTable extends Migration
     {
         Schema::create('quote_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('orgin_product_id')->references('id')->on('products');
+            $table->unsignedBigInteger('orgin_products_id')->references('id')->on('products');
             $table->unsignedBigInteger('quotes_id')->references('id')->on('quotes')->onDelete('cascade');
             $table->decimal('unit_price',6,2);
             $table->string('artnr');

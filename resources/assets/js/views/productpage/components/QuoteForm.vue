@@ -24,6 +24,24 @@
           <i class="fas fa-at icon"></i>
           <input v-model="email" type="text" placeholder="Email *" />
         </div>
+        <!-- new fields -->
+        <div class="field-container">
+          <i></i>
+          <input v-model="address" type="text" placeholder="address" />
+        </div>
+        <div class="field-container">
+          <i></i>
+          <input v-model="_nr" type="text" placeholder="house nr." />
+        </div>
+        <div class="field-container">
+          <i></i>
+          <input v-model="post_code" type="text" placeholder="post code" />
+        </div>
+        <div class="field-container">
+          <i></i>
+          <input v-model="residence" type="text" placeholder="residence" />
+        </div>
+        <!-- -->
         <div class="field-container">
           <i class="fas fa-phone-alt icon"></i>
           <input v-model="phone" id="phone" type="tel" placeholder="phone" />
@@ -65,7 +83,11 @@ export default {
       company: null,
       contact: null,
       email: null,
-      phone: '',
+      phone: "",
+      address: null,
+      _nr: null,
+      post_code: null,
+      residence: null,
       amount: null,
 
       // error
@@ -95,20 +117,34 @@ export default {
         this.error = "Contact name field cannot be empty";
       }
 
-      if(this.phone.length > 0){
+      if (this.phone.length > 0) {
         const regex = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g;
-        if(!regex.test(this.phone)){
+        if (!regex.test(this.phone)) {
           this.error = "phone number format not recognized";
         }
       }
 
-      if(!this.amount){
-        this.error = "Some amount is required"
+      if (!this.address) {
+        this.error = "Company Address is required";
       }
-      else{
+
+      if (!this._nr) {
+        this.error = "House nr. is required!";
+      } else {
+        const regex = /.*\d/;
+        if (!regex.test(this._nr)) this.error = "_nr. requires digit";
+      }
+
+      if (!this.post_code) this.error = "post code is required";
+
+      if (!this.residence) this.error = "Residence is required";
+
+      if (!this.amount) {
+        this.error = "Some amount is required";
+      } else {
         let amount = parseInt(this.amount);
-        if(!(this.amount > 0 && this.amount <= 500)){
-          this.error = "Some amount between 1 and 500 is requiref";
+        if (!(this.amount > 0 && this.amount <= 500)) {
+          this.error = "Some amount between 1 and 500 is required";
         }
       }
 
@@ -122,7 +158,7 @@ export default {
         }
       }
 
-      if(!this.error){
+      if (!this.error) {
         let input = {
           product_id: this.product_id,
           product_artnr: this.artnr,
@@ -130,16 +166,26 @@ export default {
           contact: this.contact,
           email: this.email,
           phone: this.phone,
+          // new fields
+          address: this.address,
+          _nr: this._nr,
+          post_code: this.post_code,
+          residence: this.residence,
           amount: this.amount,
           status: "pending"
         };
 
-        axios.post(`api/products/${input.product_id}/quotations`,input).then(response => {
-          this.confirmation = "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
-          var self = this;
-          setTimeout(() => {self.goBackToPanel();}, 2000);
-
-        }).catch(error => console.log(error.response.data.error));
+        axios
+          .post(`api/quotations`, input)
+          .then(response => {
+            this.confirmation =
+              "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
+            var self = this;
+            setTimeout(() => {
+              self.goBackToPanel();
+            }, 2000);
+          })
+          .catch(error => console.log(error.response.data.error));
       }
     },
 
@@ -149,7 +195,7 @@ export default {
   },
 
   computed: {
-    hasError(){
+    hasError() {
       return this.error ? true : false;
     }
   }

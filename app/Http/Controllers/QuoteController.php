@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
+use App\Product;
 use App\Customer;
 use App\QuoteProduct;
 use Illuminate\Http\Request;
@@ -40,7 +41,6 @@ class QuoteController extends Controller
             'email' => 'required|email',
             'phone' => 'nullable|min:10',
             'address' => 'required',
-            'nr' => 'required',
             'post_code' => 'required',
             'residence' => 'required',
             'amount' => 'required|integer|between:1,500',
@@ -65,13 +65,13 @@ class QuoteController extends Controller
             // retrieve productid
             $productid = $request->input('product_id');
             // retrieve customer inputs
-            $customer_inputs = $request->only(['email','company','contact', 'phone','address','nr','post_code','residence']);
+            $customer_inputs = $request->only(['email','company','contact', 'phone','address','post_code','residence']);
             // create customer record
             Customer::create($customer_inputs);
             // retrieve customer id
             $customer_id = Customer::where('email',$customer_inputs['email'])->first()->id;
 
-            $quote = Quote::create(['customers_id' => $customer_id, 'quotes_products_id' => '', 'amount' => $request->input('amount'), 'status' => "pending"]);
+            $quote = Quote::create(['customers_id' => $customer_id, 'quotes_products_id' => 0, 'amount' => $request->input('amount'), 'status' => "pending"]);
             $quoteId = $quote->id;
 
             $product = Product::find($productid);
@@ -89,7 +89,7 @@ class QuoteController extends Controller
             $quoteProductId = $quoteProduct->id;
 
             // insert quoteProductId into quote record
-            $quote->quotes_product_id = $quoteProductId;
+            $quote->quotes_products_id = $quoteProductId;
             $quote->save();
 
             // return response

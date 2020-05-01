@@ -27,11 +27,7 @@
         <!-- new fields -->
         <div class="field-container">
           <i></i>
-          <input v-model="address" type="text" placeholder="address" />
-        </div>
-        <div class="field-container">
-          <i></i>
-          <input v-model="nr" type="text" placeholder="house nr." />
+          <input v-model="address" type="text" placeholder="address + house-nr." />
         </div>
         <div class="field-container">
           <i></i>
@@ -62,8 +58,8 @@
     <div class="page-footer">
       <button v-if="!this.submitDisabled" @click="goBackToPanel">Go back to panel</button>
       <button id="confirm" @click="processRequest" :disabled="this.submitDisabled">
-        <span v-if="!this.submitDisabled">Confirm Request</span>
-        <span v-else>Processing request...</span>
+        <span>Confirm Request</span>
+        <span v-if="this.processing">Processing request...</span>
       </button>
     </div>
   </div>
@@ -85,7 +81,6 @@ export default {
       email: null,
       phone: "",
       address: null,
-      nr: null,
       post_code: null,
       residence: null,
       amount: null,
@@ -97,7 +92,8 @@ export default {
       confirmation: null,
 
       // controls
-      submitDisabled: false
+      submitDisabled: false,
+      processing: false
     };
   },
   created() {
@@ -107,7 +103,7 @@ export default {
   },
   methods: {
     processRequest() {
-      this.submitDisabled = true;
+      this.procesing = true;
       this.error = null;
       if (!this.company) {
         this.error = "Company / business field cannot be empty";
@@ -127,13 +123,11 @@ export default {
       if (!this.address) {
         this.error = "Company Address is required";
       }
-
-      if (!this.nr) {
-        this.error = "House nr. is required!";
-      } else {
+      else {
         const regex = /.*\d/;
-        if (!regex.test(this.nr)) this.error = "nr. requires digit";
+        if (!regex.test(this.address)) this.error = "address field requires House nr. digit";
       }
+
 
       if (!this.post_code) this.error = "post code is required";
 
@@ -168,7 +162,6 @@ export default {
           phone: this.phone,
           // new fields
           address: this.address,
-          nr: this.nr,
           post_code: this.post_code,
           residence: this.residence,
           amount: this.amount,

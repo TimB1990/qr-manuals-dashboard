@@ -1,6 +1,6 @@
 <template>
   <div class="product-details-root">
-    <table>
+    <table class="details_table">
       <thead>
         <tr>
           <td colspan="2">Product Details</td>
@@ -19,7 +19,7 @@
       </tbody>
     </table>
 
-    <table>
+    <table class="details_table">
       <thead>
         <tr>
           <td colspan="4">Download Manual</td>
@@ -113,7 +113,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 thead > tr {
   background-color: #cc0033;
   color: white;
@@ -161,7 +161,7 @@ tbody > a {
   text-decoration: none;
 }
 
-table {
+.details_table {
   border: 1px solid hsl(0,0,90%);
   margin-bottom: 16px;
 }

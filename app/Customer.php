@@ -8,11 +8,11 @@ class Customer extends Model
 {
     protected $guarded = [];
     
-    public function quote(){
+    public function quotes(){
         return $this->hasMany('App\Quote');
     }
 
-    public function quoteCredential(){
+    public function quoteCredentials(){
         return $this->hasMany('App\QuoteCredential');
     }
 }

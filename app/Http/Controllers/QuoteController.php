@@ -15,22 +15,57 @@ use Illuminate\Support\Facades\Validator;
 
 class QuoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        //
+        $quotes = [];
+
+        $total_quotes = Quote::all()->count();
+        $filter = $request->query('status');
+
+        if(!empty($filter)){
+            $quotes = Quote::where('status', $filter)->get();
+        }
+        else{
+            $quotes = Quote::all();
+        }
+
+        $responseObject = [
+            'items' => [],
+            'count_status' => [
+                'pending' => Quote::where('status','pending')->count(),
+                'accepted' => Quote::where('status','accepted')->count(),
+                'processed' => Quote::where('status','processed')->count(),
+                'approved' => Quote::where('status','approved')->count(),
+                'denied' => Quote::where('status','denied')->count(),
+                'review' => Quote::where('status','review')->count(),
+            ],
+            'count_all' => $total_quotes
+        ];
+
+        foreach ($quotes as $quote){
+            $responseItem = [
+                'quote_id' => $quote->id,
+                'articles' => [],
+                'amount' => $quote->amount,
+                'email' => $quote->customer->email,
+                'company' => $quote->customer->company,
+                'status' => $quote->status,
+                'created_at' => $quote->created_at,
+                'updated_at' => $quote->updated_at
+            ];
+
+            foreach($quote->quoteProducts as $quoteProduct){
+                array_push($responseItem['articles'], $quoteProduct->artnr);
+            }
+
+            array_push($responseObject['items'], $responseItem);  
+        }
+
+
+        return response()->json($responseObject);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -98,35 +133,38 @@ class QuoteController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Quote $quote)
+    public function show(Request $request)
     {
-        //
+        $id = $request->route('id');
+        $quote = Quote::find($id);
+
+        $customer = $quote->customer;
+
+        if(empty($customer->phone)){
+            $customer['phone'] = "no phone number provided";
+        }
+
+        $responseObject = [
+            'customer' => $customer,
+            'products' => [],
+            'quote' => [
+                'amount' => $quote->amount,
+                'status' => $quote->status
+            ]
+        ];
+
+        foreach($quote->quoteProducts as $product){
+            array_push($responseObject['products'], $product);
+        }
+
+        return response()->json($responseObject);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Quote $quote)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Quote  $quote
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Quote $quote)
     {
         //

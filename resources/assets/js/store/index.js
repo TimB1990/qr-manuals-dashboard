@@ -18,6 +18,8 @@ export default new Vuex.Store({
         productManuals: [],
         productDetails: [],
         selectedProducts: [],
+        quotes: {},
+        quoteDetails: {}
     },
 
     mutations: {
@@ -29,6 +31,10 @@ export default new Vuex.Store({
         SET_PRODUCTS(state, { data, page }) {
             state.page = page;
             state.products = data;
+        },
+
+        SET_QUOTES(state, payload){
+            state.quotes = payload
         },
 
         CLEAR_PRODUCTS(state) {
@@ -60,6 +66,10 @@ export default new Vuex.Store({
             state.productDetails = payload;
         },
 
+        SET_QUOTE_DETAILS(state, payload){
+            state.quoteDetails = payload;
+        },
+
         SET_PRODUCT_MANUALS(state, payload) {
             state.productManuals = payload;
         },
@@ -85,15 +95,6 @@ export default new Vuex.Store({
             let index = state.product.findIndex(index => index.id == id);
             state.product.splice(index, 1);
         },
-
-        /*SET_USER(state, data){
-            localStorage.setItem('user', JSON.stringify(userData))
-            state.user = data;
-        },*/
-
-        /*LOGOUT_USER(state){
-            state.user = {}
-        }*/
 
         SET_USER_DATA(state, data){
             state.user = data
@@ -165,12 +166,36 @@ export default new Vuex.Store({
             })
         },
 
+        fetchQuotes({commit}){
+            commit('SET_LOADING_STATUS','loading')
+            axios.get('api/quotations').then(result => {
+                commit('SET_LOADING_STATUS','notloading')
+                commit('SET_QUOTES', result.data)
+            }).catch(err => {
+                commit('SET_LOADING_STATUS','notloading')
+                commit('SET_QUOTES', {})
+                commit('ADD_ERROR', err)
+            })
+
+        },
+
         clearProducts({ commit }) {
             commit('CLEAR_PRODUCTS');
         },
 
         clearManuals({ commit }) {
             commit('CLEAR_MANUALS');
+        },
+
+        fetchQuoteDetails({commit},{ quote_id }){
+            commit('SET_LOADING_STATUS', 'loading')
+            axios.get(`api/quotations/${quote_id}`).then(result => {
+                commit('SET_LOADING_STATUS', 'notloading');
+                commit('SET_QUOTE_DETAILS', result.data);
+            }).catch(() => {
+                commit('SET_LOADING_STATUS', 'notloading');
+                commit('SET_QUOTE_DETAILS', {});
+            })
         },
 
         fetchDetails({ commit }, { id }) {
@@ -254,6 +279,7 @@ export default new Vuex.Store({
     },
 
     getters: {
+        // other
         loggedIn(state){
             return !!state.user
         },

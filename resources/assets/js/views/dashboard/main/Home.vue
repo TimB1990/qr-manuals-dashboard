@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="flex-container">
-            Select a product to view details...
+            Select item to view its details...
         </div>
         
     </div>

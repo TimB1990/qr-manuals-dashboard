@@ -25,6 +25,7 @@ Password admin
 <code>composer update</code>
 <code> npm i </code>
 <code>php artisan passport:install --force</code>
+<code> php artisan tinker -> factory(App\Product::class,7)->create();</code>
 
 ## serve on laravel's localhost
 <code> php artisan serve</code>

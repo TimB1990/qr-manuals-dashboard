@@ -1,14 +1,14 @@
 <template>
-   <div class="side-quote-item">
-      <div class="content">
-         <div class="content__left">
-            <span><strong>email:</strong> {{ quote_email }}</span>
-            <span><strong>company:</strong> {{ quote_company }}</span>
-         </div>
-         <div class="content__right">
-            <span>quotation #{{ quote_id }}</span>
-            <span>{{ quote_status }} at {{ quote_timestamp }}</span>
-         </div>
+   <div class="quote-item" @click="showDetails(quote_id)">
+     <div class="item-header">
+       <span>#{{ quote_id }}</span>
+       <span>{{ this.momentAgo}}</span>
+     </div>
+      <div class="item-content">
+        <span><b>email:</b> {{ quote_email }}</span>
+        <span><b>company:</b> {{ quote_company }}</span>
+        <span><b>created:</b> {{ this.createdAt }}</span>
+        <span><b>status:</b> {{ quote_status }} at {{ this.updatedAt }}</span>
       </div>
       <div class="buttons">
          <button class="item-btn">Decline</button>
@@ -18,30 +18,64 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "sideQuoteItem",
   props: {
     quote_id: Number,
+    quote_articles: Array,
+    quote_amount: Number,
     quote_email: String,
     quote_company: String,
     quote_status: String,
-    quote_timestamp: String
+    quote_created_at: String,
+    quote_updated_at: String
+  },
+  methods: {
+    showDetails(quote_id){
+      this.$router.replace({
+        name: 'quotation_details',
+        params: {
+          id: quote_id
+        }
+      }).catch(err => {})
+    }
+
+  },
+  computed: {
+    momentAgo() {
+      return moment(this.quote_updated_at).fromNow();
+    },
+    createdAt(){
+      return moment(this.quote_created_at).format("DD-MM-YYYY, HH:mm");
+    },
+    updatedAt(){
+      return moment(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
+
+    }
   }
 };
 </script>
 
 <style scoped>
-.side-quote-item {
+.quote-item {
   display: flex;
   flex-direction: column;
-  border: 1px solid hsl(0, 0%, 60%);
   padding: 8px;
+  border: 1px solid hsl(0,0%,92%);
   margin-bottom: 14px;
   font-size: 14px;
+    box-shadow: 0 0.5em 0.5em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
 
   /*animation: blinkPending 1s ease-in;
   animation-iteration-count: infinite;
   backface-visibility: hidden;*/
+}
+
+.quote-item:hover {
+  border: 1.0px solid black;
+
 }
 .buttons {
   display: flex;
@@ -49,8 +83,16 @@ export default {
   justify-content: center;
 }
 
-.content {
+.item-content {
   display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 0.75rem;
+}
+
+.item-header {
+  display: flex;
+  font-weight: bold;
   justify-content: space-between;
 }
 .item-btn {
@@ -61,7 +103,6 @@ export default {
   background-color: transparent;
   border: 1px solid hsl(0, 0%, 76%);
   padding: 6px;
-  /*border-radius: 6px;*/
   text-align: center;
   text-decoration: none;
   font-size: 14px;
@@ -70,19 +111,6 @@ export default {
 .item-btn:hover {
   border: 1px solid black;
   background-color: hsl(0, 0%, 96%);
-}
-
-.content__left, .content__right {
-   display: flex;
-   flex-direction: column;
-}
-
-.content__left{
-   text-align: left;
-}
-
-.content__right{
-   text-align: right;
 }
 
 @keyframes blinkPending {

@@ -1,10 +1,11 @@
 <template>
   <div :class="{'side-menu-item' : true, 'selected' : this.selected}" ref="item">
     <ul @click="fetchDetails(product_id)">
-      <li>{{ product_name }}</li>
-      <li>{{ product_artnr }}</li>
-      <li>{{ product_kind }}</li>
-      <li>current stock: {{product_stock}}</li>
+      <li><b>{{ product_name }}</b></li>
+      <li>#{{ product_artnr }}</li>
+      <li>kind: {{ product_kind }}</li>
+      <li>stock: {{product_stock}}</li>
+      <li>&euro; {{ product_unit_price}} per unit</li>
     </ul>
     <nav v-if="categories">
       <span>
@@ -23,14 +24,13 @@
 <script>
 export default {
   name: "sideMenuItem",
-  props: {
-    product_id: Number,
+  props: ['product_id','product_artnr','product_name','product_kind','product_stock','product_unit_price','categories'],
+    /*product_id: Number,
     product_artnr: String,
     product_name: String,
     product_kind: String,
     product_stock: Number,
-    categories: Array
-  },
+    categories: Array*/
 
   methods: {
     fetchDetails(id) {

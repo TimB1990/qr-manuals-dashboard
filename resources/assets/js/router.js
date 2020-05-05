@@ -12,6 +12,7 @@ import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
 import MainQuotationDetails from './views/dashboard/main/components/MainQuotationDetails';
+import MainQuotationsHome from './views/dashboard/main/components/MainQuotationsHome'
 
 import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
@@ -59,9 +60,16 @@ const routes = [
             name: 'quotations',
             components: {
                 side: SideQuotations,
-                content: MainQuotationDetails
+                content: MainQuotationsHome
             }
 
+        }, {
+            path: 'quotations/:id/details',
+            name: 'quotation_details',
+            components: {
+                side: SideQuotations,
+                content: MainQuotationDetails
+            }
         }],
         meta: { requiresAuth: true }
     },
@@ -106,19 +114,6 @@ const router = new VueRouter({
     routes: routes,
     linkActiveClass: 'is-active'
 });
-
-/*router.beforeEach((to,from,next) => {
-    if(to.matched.some(record => record.meta.requiresAuth)){
-
-        console.log('user from router: ', store.state.user);
-
-        if(!store.state.user.token) next({name: 'entry'});
-        else next();
-    }
-    else{
-        next();
-    }
-});*/
 
 router.beforeEach((to, from, next) => {
     const loggedin = localStorage.getItem('user')

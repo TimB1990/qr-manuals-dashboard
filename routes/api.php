@@ -23,12 +23,13 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/products/{id}/manuals', 'ManualsController@store');
     // DELETE
     Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
+    // GET quotes
+    Route::get('/quotations', 'QuoteController@index');
+    Route::get('/quotations/{id}', 'QuoteController@show');
 });
 
 // quotations
 Route::post('/quotations', 'QuoteController@store');
 
-// reservations
-Route::put('/products/{id}/reservation'.'ProductReservationController@store');
 
 

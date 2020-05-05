@@ -12,7 +12,7 @@ class Quote extends Model
         return $this->belongsTo('App\Customer');
     }
 
-    public function quoteProduct(){
+    public function quoteProducts(){
         return $this->hasMany('App\QuoteProduct');
     }
 

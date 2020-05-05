@@ -26,6 +26,7 @@
           :product_artnr="product.artnr"
           :product_kind="product.kind"
           :product_stock="parseInt(product.stock)"
+          :product_unit_price="product.unit_price"
           :categories="product.categories"
         />
       </ul>

@@ -114,7 +114,7 @@ export default {
 </script>
 
 <style scoped>
-thead > tr {
+/*thead > tr {
   background-color: #cc0033;
   color: white;
 }
@@ -164,7 +164,7 @@ tbody > a {
 .details_table {
   border: 1px solid hsl(0,0,90%);
   margin-bottom: 16px;
-}
+}*/
 
 .product-details-root{
   padding: 12px;

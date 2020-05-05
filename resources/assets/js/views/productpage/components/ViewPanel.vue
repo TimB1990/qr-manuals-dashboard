@@ -8,7 +8,7 @@
       <p>No product found</p>
     </div>
 
-    <table v-if="this.product.length > 0">
+    <table class="panel-table" v-if="this.product.length > 0">
       <tr>
         <td class="menu-header">
           <p id="product">
@@ -132,8 +132,8 @@ export default {
 };
 </script>
 
-<style>
-table {
+<style scoped>
+.panel-table {
   width: 100%;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);

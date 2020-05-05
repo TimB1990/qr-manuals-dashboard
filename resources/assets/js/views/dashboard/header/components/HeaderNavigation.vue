@@ -10,7 +10,7 @@
 
       <div class="navigation-right">
         <span>
-          <router-link :to="{ name: 'productpage'}">Scanner</router-link>
+          <router-link :to="{ name: 'scanner'}">Scanner</router-link>
         </span>
         <span>
           <a @click="logOut">

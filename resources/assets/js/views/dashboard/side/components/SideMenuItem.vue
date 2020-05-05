@@ -89,6 +89,10 @@ nav > span > a {
   color: hsl(0, 0%, 50%);
 }
 
+ul {
+  list-style-type: none;
+}
+
 span > i {
   padding: 1px;
   border: 1px solid hsl(0, 0%, 86%);

@@ -100,11 +100,11 @@ class QuoteController extends Controller
             // retrieve productid
             $productid = $request->input('product_id');
             // retrieve customer inputs
-            $customer_inputs = $request->only(['email','company','contact', 'phone','address','post_code','residence']);
+            $customer_inputs = $request->only(['company','contact', 'phone','address','post_code','residence']);
             // create customer record
-            Customer::create($customer_inputs);
+            Customer::firstOrCreate(['email' => $request->input('email')], $customer_inputs);
             // retrieve customer id
-            $customer_id = Customer::where('email',$customer_inputs['email'])->first()->id;
+            $customer_id = Customer::where('email', $request->input('email'))->first()->id;
 
             $quote = Quote::create(['customers_id' => $customer_id, 'quotes_products_id' => 0, 'amount' => $request->input('amount'), 'status' => "pending"]);
             $quoteId = $quote->id;

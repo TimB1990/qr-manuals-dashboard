@@ -3,10 +3,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+
+    plugins: [createPersistedState()],
 
     state: {
         user: null,
@@ -120,7 +123,6 @@ export default new Vuex.Store({
         login({commit}, credentials){
             console.log("credentials from login action store: ", credentials)
             return axios.post("/api/login", credentials).then(({data}) => {
-                console.log("response from login: ", data); // {success:{token: ""}}
                 commit('SET_USER_DATA', {email: credentials.email, token: data.success.token})
             })
         },
@@ -279,8 +281,20 @@ export default new Vuex.Store({
     },
 
     getters: {
+        //quote detail getters
+        getQuoteDetails: (state) => {
+            return state.quoteDetails.quote;
+        },
+
+        getQuoteCustomerDetails: (state) => {
+            return state.quoteDetails.customer;
+        },
+        getQuoteProductDetails: (state) => {
+            return state.quoteDetails.products[0];
+        },
+
         // other
-        loggedIn(state){
+        loggedIn: (state) => {
             return !!state.user
         },
 

@@ -1,16 +1,6 @@
 <template>
     <div class="quotation-details-root">
-          <table>
-            <tr>
-              <th colspan="2">Quote Product Details</th>
-            </tr>
-            <tr v-for="detail in quoteProductDetailsEntries" :key="detail[0]">
-              <td>{{ detail[0]}}</td>
-              <td v-if="detail[0] == 'unit_price'">&euro; {{detail[1]}}</td>
-              <td v-else>{{ detail[1]}}</td>
-            </tr>
-          </table>
-            <table>
+                  <table>
               <tr>
                 <th colspan="2">Customer Details</th>
               </tr>
@@ -19,8 +9,19 @@
                   <td>{{ detail[1] }}</td>
                </tr>
             </table>
+
+          <table>
+            <tr>
+              <th colspan="2">Quotation Product Details</th>
+            </tr>
+            <tr v-for="detail in quoteProductDetailsEntries" :key="detail[0]">
+              <td>{{ detail[0]}}</td>
+              <td v-if="detail[0] == 'unit_price'">&euro; {{detail[1]}}</td>
+              <td v-else>{{ detail[1]}}</td>
+            </tr>
+          </table>
             <table>
-              <tr><th colspan="2">Quote</th></tr>
+              <tr><th colspan="2">Quotation</th></tr>
               <tr>
                 <td>Amount Of Product</td>
                 <td>{{ quoteDetails.amount }}</td>
@@ -50,7 +51,7 @@ export default {
       this.$store.dispatch("fetchQuoteDetails", {
         quote_id: quote_id
       });
-    },
+    }
   },
   computed: {
     quoteDetails() {
@@ -69,15 +70,13 @@ export default {
       return Object.entries(data);
     },
 
-    quoteTotalPrice(){
-      const quoteProductDetails =  this.$store.getters.getQuoteProductDetails;
+    quoteTotalPrice() {
+      const quoteProductDetails = this.$store.getters.getQuoteProductDetails;
       let unitPrice = parseFloat(quoteProductDetails.unit_price);
       const quoteDetails = this.$store.getters.getQuoteDetails;
       let amount = quoteDetails.amount;
-      let sum = unitPrice * amount
-
+      let sum = unitPrice * amount;
       return sum.toFixed(2);
-
     }
   }
 };
@@ -85,8 +84,7 @@ export default {
 
 <style scoped>
 .quotation-details-root {
-  padding: 12px;
-  /*border: 1px solid hsl(0, 0%, 80%);*/
+  padding: 0.25rem;
   border-radius: 6px;
   box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
     0 0px 0 1px rgba(10, 10, 10, 0.02);
@@ -95,14 +93,13 @@ export default {
 table {
   width: 100%;
   padding: 0.75rem;
-  /*border-collapse: separate;
-   border-spacing: 0.5rem;*/
 }
 
 table > tr > td {
   width: 50%;
-  padding: 0.25rem;
-  border-bottom: 1px solid hsl(0, 0%, 80%);
+  padding: 0.3rem;
+  /*border-bottom: 1px solid hsl(0, 0%, 80%);*/
+  border: 1px solid hsl(0, 0%, 80%);
 }
 
 th {

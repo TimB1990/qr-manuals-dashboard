@@ -5,14 +5,25 @@
          <span>{{this.quotes.count_all}}</span>
       </div>
       <div class="filter-panel">
-         <button v-for="(status,index) in statuses" :key="index">
+        <div v-for="(status,index) in statuses" :key="index">
+         <button @click="fetchQuotes(statuses[index])" class="filter-button">
             {{ statuses[index]}}
-            <span>{{ quotes.count_status[statuses[index]]}}</span>
+            <span>
+              {{ quotes.count_status[statuses[index]]}}
+            </span>
          </button>
+         </div>
       </div>
       
-      <div class="head">Quotations</div>
+      <div class="head">
+        <span>Quotations</span>
+        <span>{{ this.currentItemStatus }}</span>
+        </div>
       <div class="quotations-panel">
+        <div v-if="!quotes.items.length">
+          There are currently no items with status: 
+          {{ this.currentItemStatus }} 
+        </div>
        <side-quote-item v-for="quote in quotes.items" :key="quote.id"
          :quote_id="quote.quote_id"
          :quote_articles="quote.articles"
@@ -34,12 +45,16 @@ export default {
   name: "sideQuotations",
   components: { SideQuoteItem },
   created() {
-    this.fetchQuotes();
+    this.fetchQuotes("pending");
   },
+
   methods: {
-    fetchQuotes() {
-      this.$store.dispatch("fetchQuotes");
-      console.log("quotes: ", this.quotes);
+    fetchQuotes(status) {
+      this.$store.dispatch("fetchQuotes", {
+        status: status
+      });
+
+      this.currentItemStatus = status;
     }
   },
   data() {
@@ -51,7 +66,8 @@ export default {
         "approved",
         "denied",
         "review"
-      ]
+      ],
+      currentItemStatus: null
     };
   },
   computed: {
@@ -96,7 +112,7 @@ export default {
   /*border: 1px solid hsl(0, 0%, 80%);*/
 }
 
-.filter-panel > button {
+.filter-button {
   display: flex;
   justify-content: space-between;
   outline: none;
@@ -107,12 +123,12 @@ export default {
   margin: 0.25rem;
 }
 
-.filter-panel > button:hover {
+.filter-button:hover {
   border: 1px solid black;
   background-color: hsl(0, 0%, 96%);
 }
 
-.filter-panel > button > span {
+.filter-button > span {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border: 1px solid hsl(0, 0%, 76%);

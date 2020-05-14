@@ -15,7 +15,7 @@ class CreateQuotePriceSpecificationsTable extends Migration
     {
         Schema::create('quote_price_specifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('quotes_id')->references('id')->on('quotes')->onDelete('cascade');
+            $table->unsignedBigInteger('quote_id')->references('id')->on('quotes')->onDelete('cascade');
             $table->decimal('new_unit_price',6,2);
             $table->decimal('total',6,2);
             $table->decimal('discount',6,2);

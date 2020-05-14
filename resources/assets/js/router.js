@@ -13,6 +13,7 @@ import MainProductDetails from './views/dashboard/main/components/MainProductDet
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
 import MainQuotationDetails from './views/dashboard/main/components/MainQuotationDetails';
 import MainQuotationsHome from './views/dashboard/main/components/MainQuotationsHome'
+import MainQuotationSpecification from './views/dashboard/main/components/MainQuotationSpecification'
 
 import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
@@ -69,6 +70,13 @@ const routes = [
             components: {
                 side: SideQuotations,
                 content: MainQuotationDetails
+            }
+        },{
+            path: 'quotations/:id/specification',
+            name: 'quotation_specification',
+            components: {
+                side: SideQuotations,
+                content: MainQuotationSpecification
             }
         }],
         meta: { requiresAuth: true }

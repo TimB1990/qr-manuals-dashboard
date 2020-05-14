@@ -23,7 +23,7 @@ class QuoteController extends Controller
         $total_quotes = Quote::all()->count();
         $filter = $request->query('status');
 
-        if(!empty($filter)){
+        if(!($filter == 'any')){
             $quotes = Quote::where('status', $filter)->get();
         }
         else{
@@ -106,7 +106,7 @@ class QuoteController extends Controller
             // retrieve customer id
             $customer_id = Customer::where('email', $request->input('email'))->first()->id;
 
-            $quote = Quote::create(['customers_id' => $customer_id, 'quotes_products_id' => 0, 'amount' => $request->input('amount'), 'status' => "pending"]);
+            $quote = Quote::create(['customer_id' => $customer_id, 'quotes_products_id' => 0, 'amount' => $request->input('amount'), 'status' => "pending"]);
             $quoteId = $quote->id;
 
             $product = Product::find($productid);
@@ -114,7 +114,7 @@ class QuoteController extends Controller
             // create quote product record
             $quoteProduct = QuoteProduct::create([
                 'origin_products_id' => $productid,
-                'quotes_id' => $quoteId,
+                'quote_id' => $quoteId,
                 'unit_price' => $product->unit_price,
                 'artnr' => $product->artnr,
                 'name' => $product->name,
@@ -160,9 +160,14 @@ class QuoteController extends Controller
         return response()->json($responseObject);
     }
 
-    public function update(Request $request, Quote $quote)
+    public function update(Request $request)
     {
-        //
+        $id = $request->route('id');
+        $status = $request->input('status');
+
+        $quote = Quote::find($id);
+        $quote->status = $status;
+        $quote->save();
     }
 
     public function destroy(Quote $quote)

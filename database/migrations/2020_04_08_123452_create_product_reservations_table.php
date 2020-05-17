@@ -16,7 +16,6 @@ class CreateProductReservationsTable extends Migration
         Schema::create('product_reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('product_id')->references('id')->on('product')->onDelete('cascade');
-            $table->String('product_artnr')->references('artnr')->on('products')->onDelete('cascade');
             $table->integer('reserved');
             $table->timestamps();
         });

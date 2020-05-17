@@ -1,27 +1,32 @@
 import VueRouter from 'vue-router';
 import store from './store/index';
 
+// entry route imports
 import Entry from './views/entry/Entry';
 import ForgotPassword from './views/entry/components/ForgotPassword'
 import ResetPasswordForm from './views/entry/components/ResetPasswordForm'
 
+// main route imports
 import ProductPage from './views/productpage/ProductPage';
 import Dashboard from './views/dashboard/Dashboard';
 
+// side view route imports
+import SideMenu from "./views/dashboard/side/SideMenu";
+import SideQuotations from "./views/dashboard/side/SideQuotations";
+
+// main view route imports
 import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
 import MainQuotationDetails from './views/dashboard/main/components/MainQuotationDetails';
 import MainQuotationsHome from './views/dashboard/main/components/MainQuotationsHome'
 import MainQuotationSpecification from './views/dashboard/main/components/MainQuotationSpecification'
+import MainPreviewSpec from './views/dashboard/main/components/MainPreviewSpec'
 
+// customer route imports
 import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
 import QuoteForm from './views/productpage/components/QuoteForm';
-
-import SideMenu from './views/dashboard/side/SideMenu';
-import SideQuotations from './views/dashboard/side/SideQuotations';
-
 
 const routes = [
 
@@ -77,6 +82,12 @@ const routes = [
             components: {
                 side: SideQuotations,
                 content: MainQuotationSpecification
+            }
+        }, {
+            path: 'quotations/:id/specification/preview',
+            name: 'quotation_specification_preview',
+            components: {
+                content: MainPreviewSpec
             }
         }],
         meta: { requiresAuth: true }

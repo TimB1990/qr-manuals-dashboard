@@ -9,7 +9,7 @@
                 <input
                     id="p-name"
                     type="text"
-                    v-model="product_name"
+                    :value="this.quoteProducts.products[0].name"
                     disabled
                 />
             </div>
@@ -17,21 +17,21 @@
                 <label for="p-artnr">artnr</label>
                 <input
                     id="p-artnr"
-                    v-model="product_artnr"
                     type="text"
+                    :value="this.quoteProducts.products[0].artnr"
                     disabled
                 />
             </div>
             <div class="input-container">
                 <label for="p-amount">amount</label>
-                <input v-model="amount" id="p-amount" type="text" disabled />
+                <input id="p-amount" type="text" :value="this.quoteProducts.amount" disabled />
             </div>
             <div class="input-container">
                 <label for="p-ppu">Orig. Unit Price</label>
                 <input
-                    v-model="origUnitPrice"
                     id="p-ppu"
                     type="text"
+                    :value="this.quoteProducts.products[0].unit_price"
                     disabled
                 />
                 <span>EUR</span>
@@ -71,37 +71,67 @@
             </div>
             <div class="input-container">
                 <label for="c-tax-total">Tax total</label>
-                <input id="c-tax-total" type="text" :value="this.taxTotal" disabled />
+                <input
+                    id="c-tax-total"
+                    type="text"
+                    :value="this.taxTotal"
+                    disabled
+                />
                 <span>EUR</span>
             </div>
             <div class="input-container">
                 <label for="c-ship-total">Shipping total</label>
-                <input id="c-ship-total" type="text" :value="this.shipTotal" disabled />
+                <input
+                    id="c-ship-total"
+                    type="text"
+                    :value="this.shipTotal"
+                    disabled
+                />
                 <span>EUR</span>
             </div>
             <div class="input-container">
                 <label for="c-ship-tax-total">Ship Tax Total</label>
-                <input id="c-ship-tax-total" type="text" :value="this.shipTaxTotal" disabled />
+                <input
+                    id="c-ship-tax-total"
+                    type="text"
+                    :value="this.shipTaxTotal"
+                    disabled
+                />
                 <span>EUR</span>
             </div>
             <div class="input-container">
                 <label for="c-final-total">Final total</label>
-                <input id="c-final-total" type="text" :value="this.finalTotal" disabled />
+                <input
+                    id="c-final-total"
+                    type="text"
+                    :value="this.finalTotal"
+                    disabled
+                />
                 <span>EUR</span>
             </div>
             <div class="input-container">
                 <label for="c-discount">Provided Discount</label>
-                <input id="c-discount" type="text" :value="this.provDiscount" disabled />
+                <input
+                    id="c-discount"
+                    type="text"
+                    :value="this.provDiscount"
+                    disabled
+                />
                 <span>EUR</span>
             </div>
-                        <div class="input-container">
+            <div class="input-container">
                 <label for="c-discount-%">Discount Percentage</label>
-                <input id="c-discount-%" type="text" :value="this.discountPercentage" disabled />
+                <input
+                    id="c-discount-%"
+                    type="text"
+                    :value="this.discountPercentage"
+                    disabled
+                />
                 <span>%</span>
             </div>
         </div>
         <div class="btn-panel">
-            <button class="attach-btn">Attach to quotation</button>
+            <button @click="goToPreview" class="attach-btn">Attach to quotation...</button>
         </div>
     </div>
 </template>
@@ -109,48 +139,81 @@
 <script>
 export default {
     name: "mainQuotationSpecification",
-    created(){
-       // window.addEventListener('scroll', this.detectScroll)
+    created() {
+        this.fetchQuoteProductsOnly(this.$route.params.id);
     },
-    destroyed(){
-       // window.removeEventListener('scroll', this.detectScroll)
+
+    watch: {
+        $route(to,from){
+            this.fetchQuoteProductsOnly(this.$route.params.id);
+        }
     },
+
     data() {
         return {
-            product_name: "Exalto 3932 RW",
-            product_artnr: "211200.25",
-            amount: 12,
-            origUnitPrice: (255.5).toFixed(2),
             newUnitPrice: 0,
             tax: 0.21,
             shipUnitPrice: 0,
-            shipTax: 0.21,
-            // scroll: false
+            shipTax: 0.21
         };
     },
+    methods: {
+        fetchQuoteProductsOnly(quote_id) {
+            this.$store.dispatch("fetchQuoteProductsOnly", {
+                quote_id: quote_id
+            });
+        },
+
+        goToPreview(){
+            this.$router.push({
+                name: 'quotation_specification_preview',
+                query: {
+                    productname: this.quoteProducts.products[0].name,
+                    artnr: this.quoteProducts.products[0].artnr,
+                    amount: this.quoteProducts.amount,
+                    subtotal: this.quoteProducts.products[0].unit_price * this.quoteProducts.amount,
+                    discount: this.provDiscount,
+                    pdiscount: this.discountPercentage,
+                    tax: this.taxTotal,
+                    ptax: this.tax,
+                    shipping: this.shipTotal,
+                    shippingtax: this.shipTaxTotal,
+                    pshiptax: this.shipTax,
+                    total: this.finalTotal
+                }
+            }).catch(err => {})
+        }
+    },
     computed: {
-       total(){
-          return this.amount * this.newUnitPrice
-       },
-       taxTotal(){
-          return this.total * this.tax
-       },
-       shipTotal(){
-          return this.amount * this.shipUnitPrice
-       },
-       shipTaxTotal(){
-          return this.shipTotal * this.shipTax;
-       },
-       finalTotal(){
-          return parseFloat(this.total + this.taxTotal + this.shipTotal + this.shipTaxTotal).toFixed(2)
-       },
-       provDiscount(){
-          return (this.origUnitPrice * this.amount) - this.total
-       },
-       discountPercentage(){
-          return ((this.provDiscount / (this.origUnitPrice * this.amount)) * 100).toFixed(1)
-       }
-      
+        quoteProducts() {
+            return this.$store.state.quoteProducts;
+        },
+        total() {
+            return this.quoteProducts.amount * this.newUnitPrice;
+        },
+        taxTotal() {
+            return this.total * this.tax;
+        },
+        shipTotal() {
+            return this.quoteProducts.amount * this.shipUnitPrice;
+        },
+        shipTaxTotal() {
+            return this.shipTotal * this.shipTax;
+        },
+        finalTotal() {
+            return parseFloat(
+                this.total + this.taxTotal + this.shipTotal + this.shipTaxTotal
+            ).toFixed(2);
+        },
+        provDiscount() {
+            return (this.quoteProducts.products[0].unit_price * this.quoteProducts.amount - this.total).toFixed(2);
+        },
+        discountPercentage() {
+            return (
+                (this.provDiscount / (this.quoteProducts.products[0].unit_price * this.quoteProducts.amount)) *
+                100
+            ).toFixed(1);
+        }
     }
 };
 </script>
@@ -203,7 +266,7 @@ export default {
     padding: 0.25rem;
     border: 1px solid black;
     font-size: 14px;
-    letter-spacing: .13rem;
+    letter-spacing: 0.13rem;
 }
 
 .input-container > input:disabled {

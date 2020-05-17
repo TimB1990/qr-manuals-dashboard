@@ -138,23 +138,45 @@ class QuoteController extends Controller
         $id = $request->route('id');
         $quote = Quote::find($id);
 
-        $customer = $quote->customer;
+        $loadDetails = $request->query('details');
+        $loadCustomer = $request->query('customer');
 
-        if(empty($customer->phone)){
-            $customer['phone'] = "no phone number provided";
+        if($loadDetails == 1){
+            // quote details
+            $customer = $quote->customer;
+
+            if(empty($customer->phone)){
+                $customer['phone'] = "no phone number provided";
+            }
+
+            $responseObject = [
+                'customer' => $customer,
+                'products' => [],
+                'quote' => [
+                    'amount' => $quote->amount,
+                    'status' => $quote->status
+                ]
+            ];
+
+            foreach($quote->quoteProducts as $product){
+                array_push($responseObject['products'], $product);
+            }
         }
+        elseif($loadCustomer == 1){
+            $customer = $quote->customer;
+            $responseObject = $customer;
+        }
+        
+        else{
 
-        $responseObject = [
-            'customer' => $customer,
-            'products' => [],
-            'quote' => [
+            $responseObject = [
                 'amount' => $quote->amount,
-                'status' => $quote->status
-            ]
-        ];
+                'products' => []
+            ];
 
-        foreach($quote->quoteProducts as $product){
-            array_push($responseObject['products'], $product);
+            foreach($quote->quoteProducts as $product){
+                array_push($responseObject['products'],$product);     
+            }
         }
 
         return response()->json($responseObject);

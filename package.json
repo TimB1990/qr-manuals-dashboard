@@ -28,6 +28,7 @@
         "jspdf": "^1.5.3",
         "moment": "^2.24.0",
         "qrcode.vue": "^1.7.0",
+        "vue-crypt": "^1.0.0",
         "vue-qrcode-reader": "^2.1.1",
         "vuex": "^3.1.2",
         "vuex-persistedstate": "^3.0.1"

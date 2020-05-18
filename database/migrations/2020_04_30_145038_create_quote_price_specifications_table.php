@@ -16,13 +16,12 @@ class CreateQuotePriceSpecificationsTable extends Migration
         Schema::create('quote_price_specifications', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('quote_id')->references('id')->on('quotes')->onDelete('cascade');
-            $table->decimal('new_unit_price',6,2);
-            $table->decimal('total',6,2);
+            $table->decimal('subtotal',6,2);
             $table->decimal('discount',6,2);
             $table->decimal('tax',6,2);
-            $table->decimal('shipping_per_unit',6,2);
-            $table->decimal('shipping_tax',6,2);
-            $table->decimal('final_total',6,2);
+            $table->decimal('shipping',6,2);
+            $table->decimal('shippingtax',6,2);
+            $table->decimal('total',6,2);
             $table->timestamps();
         });
     }

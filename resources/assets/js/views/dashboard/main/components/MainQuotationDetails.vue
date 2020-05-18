@@ -1,5 +1,5 @@
 <template>
-    <div class="quotation-details-root">
+    <div v-if="quoteCustomerDetails" class="quotation-details-root">
                   <table>
               <tr>
                 <th colspan="2">Customer Details</th>
@@ -61,13 +61,15 @@ export default {
 
     quoteCustomerDetails() {
       const data = this.$store.getters.getQuoteCustomerDetails;
-      return Object.entries(data);
+      if(data) return Object.entries(data);
+      
     },
 
     quoteProductDetailsEntries() {
       // till now only one product per quote
       const data = this.$store.getters.getQuoteProductDetails;
-      return Object.entries(data);
+      if(data) return Object.entries(data);
+      
     },
 
     quoteTotalPrice() {

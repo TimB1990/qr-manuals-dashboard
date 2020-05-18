@@ -4,34 +4,39 @@
             Specify pricing
         </div>
         <div class="spec-form">
-            <div class="input-container">
+            <div v-if="quoteProducts.products" class="input-container">
                 <label for="p-name">product</label>
                 <input
                     id="p-name"
                     type="text"
-                    :value="this.quoteProducts.products[0].name"
+                    :value="quoteProducts.products[0].name"
                     disabled
                 />
             </div>
-            <div class="input-container">
+            <div v-if="quoteProducts.products" class="input-container">
                 <label for="p-artnr">artnr</label>
                 <input
                     id="p-artnr"
                     type="text"
-                    :value="this.quoteProducts.products[0].artnr"
+                    :value="quoteProducts.products[0].artnr"
                     disabled
                 />
             </div>
             <div class="input-container">
                 <label for="p-amount">amount</label>
-                <input id="p-amount" type="text" :value="this.quoteProducts.amount" disabled />
+                <input
+                    id="p-amount"
+                    type="text"
+                    :value="this.quoteProducts.amount"
+                    disabled
+                />
             </div>
-            <div class="input-container">
+            <div v-if="quoteProducts.products" class="input-container">
                 <label for="p-ppu">Orig. Unit Price</label>
                 <input
                     id="p-ppu"
                     type="text"
-                    :value="this.quoteProducts.products[0].unit_price"
+                    :value="quoteProducts.products[0].unit_price"
                     disabled
                 />
                 <span>EUR</span>
@@ -63,7 +68,7 @@
         <div class="quote-spec-heading">
             Calculation
         </div>
-        <div class="calc">
+        <div v-if="quoteProducts.products" class="calc">
             <div class="input-container">
                 <label for="c-total">Total</label>
                 <input id="p-name" type="text" :value="this.total" disabled />
@@ -131,7 +136,9 @@
             </div>
         </div>
         <div class="btn-panel">
-            <button @click="goToPreview" class="attach-btn">Attach to quotation...</button>
+            <button @click="goToPreview" class="attach-btn">
+                Attach to quotation...
+            </button>
         </div>
     </div>
 </template>
@@ -144,7 +151,7 @@ export default {
     },
 
     watch: {
-        $route(to,from){
+        $route(to, from) {
             this.fetchQuoteProductsOnly(this.$route.params.id);
         }
     },
@@ -164,29 +171,34 @@ export default {
             });
         },
 
-        goToPreview(){
-            this.$router.push({
-                name: 'quotation_specification_preview',
-                query: {
-                    productname: this.quoteProducts.products[0].name,
-                    artnr: this.quoteProducts.products[0].artnr,
-                    amount: this.quoteProducts.amount,
-                    subtotal: this.quoteProducts.products[0].unit_price * this.quoteProducts.amount,
-                    discount: this.provDiscount,
-                    pdiscount: this.discountPercentage,
-                    tax: this.taxTotal,
-                    ptax: this.tax,
-                    shipping: this.shipTotal,
-                    shippingtax: this.shipTaxTotal,
-                    pshiptax: this.shipTax,
-                    total: this.finalTotal
-                }
-            }).catch(err => {})
+        goToPreview() {
+            this.$router
+                .push({
+                    name: "quotation_specification_preview",
+                    query: {
+                        productname: this.quoteProducts.products[0].name,
+                        artnr: this.quoteProducts.products[0].artnr,
+                        amount: this.quoteProducts.amount,
+                        subtotal:
+                            this.quoteProducts.products[0].unit_price *
+                            this.quoteProducts.amount,
+                        discount: this.provDiscount,
+                        pdiscount: this.discountPercentage,
+                        tax: this.taxTotal,
+                        ptax: this.tax,
+                        shipping: this.shipTotal,
+                        shippingtax: this.shipTaxTotal,
+                        pshiptax: this.shipTax,
+                        total: this.finalTotal
+                    }
+                })
+                .catch(err => {});
         }
     },
     computed: {
         quoteProducts() {
-            return this.$store.state.quoteProducts;
+            let data = this.$store.state.quoteProducts;
+            if (data) return data;
         },
         total() {
             return this.quoteProducts.amount * this.newUnitPrice;
@@ -206,11 +218,17 @@ export default {
             ).toFixed(2);
         },
         provDiscount() {
-            return (this.quoteProducts.products[0].unit_price * this.quoteProducts.amount - this.total).toFixed(2);
+            return (
+                this.quoteProducts.products[0].unit_price *
+                    this.quoteProducts.amount -
+                this.total
+            ).toFixed(2);
         },
         discountPercentage() {
             return (
-                (this.provDiscount / (this.quoteProducts.products[0].unit_price * this.quoteProducts.amount)) *
+                (this.provDiscount /
+                    (this.quoteProducts.products[0].unit_price *
+                        this.quoteProducts.amount)) *
                 100
             ).toFixed(1);
         }

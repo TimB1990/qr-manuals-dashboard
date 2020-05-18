@@ -23,13 +23,13 @@ export default {
 };
 </script>
 <style>
-.side-and-main {
+/*.side-and-main {
   
   display: flex;
   margin-bottom: 18px;
   margin-top: 18px;
   align-items: stretch;
-}
+}*/
 
 .main{
   width: 100%;

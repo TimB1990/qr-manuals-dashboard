@@ -49,18 +49,3 @@ export default {
   }
 };
 </script>   
-
-<style scoped>
-.paginator {
-  display: flex;
-  padding-bottom: 16px;
-}
-.paginator a.active {
-  background-color: #cc0033;
-  color: white;
-}
-
-.paginator a:hover:not(.active) {
-  border: 1px solid black;
-}
-</style>

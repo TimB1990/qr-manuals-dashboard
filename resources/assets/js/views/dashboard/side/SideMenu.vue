@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="side-menu-container">
-      <div class="side-menu-search">
+    <div class="content-root">
+      <div class="search">
             <input
             v-if="products"
             v-model="search"
@@ -12,12 +12,12 @@
             <i class="fa fa-search" aria-hidden="true"></i>
       </div>
 
-      <div class="side-menu-block">
+      <div class="menu-header">
         <strong>products</strong>
-        <button v-if="!loading" class="button is-loading is-small"></button>
+        <span v-if="!loading">Loading...</span>
       </div>
 
-      <ul v-if="products.data && products.data.length">
+      <div v-if="products.data && products.data.length">
         <side-menu-item
           v-for="product in products.data"
           :key="product.id"
@@ -29,7 +29,7 @@
           :product_unit_price="product.unit_price"
           :categories="product.categories"
         />
-      </ul>
+      </div>
 
       <!-- paginator -->
       <div>
@@ -91,10 +91,8 @@ export default {
   },
 
   computed: {
-    // no local data(), only computed properties
     products() {
       return this.$store.state.products;
-      // console.log(products);
     },
     loading() {
       return this.$store.state.loadingStatus === "notloading";
@@ -111,40 +109,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.side-menu-block {
-  display: flex;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.side-menu-search{
-  display: flex;
-  flex-direction: row-reverse;
-  border: 1px solid hsl(0,0%,80%);
-  align-items: baseline;
-  padding: 6px;
-  border-radius: 6px;
-}
-
-.side-menu-search > i {
-  padding: 6px;
-}
-
-.side-menu-container {
-  background-color: white;
-  padding: 12px;
-  border-radius: 6px;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0px 0 1px rgba(10, 10, 10, 0.02);
-}
-
-.side-menu-search > input {
-  padding: 6px;
-  width: 100%;
-  border: none;
-  outline: transparent;
-}
-</style>

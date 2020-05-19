@@ -1,0 +1,58 @@
+// header
+.actionbar {
+    display: flex;
+    justify-content: space-between;
+    border-top-color: white;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 12px;
+    padding-right: 12px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+        0 0px 0 1px rgba(10, 10, 10, 0.02);
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.navigationbar {
+    padding-left: 16px;
+    height: 40px;
+    padding-right: 16px;
+    display: flex;
+    justify-content: space-between;
+    background-color: $exalto;
+    color: white;
+
+    div {
+        span {
+            display: inline-block;
+            height: 40px;
+            padding: 0px 6px 0px 6px;
+
+            &:hover {
+                border: 1px solid hsl(0, 0%, 60%);
+                border-bottom-color: white;
+                background-color: white;
+
+                a {
+                    color: $exalto;
+                }
+            }
+
+            a {
+                color: rgb(255, 255, 255);
+                cursor: pointer;
+                display: inline;
+                font-family: "Roboto Condensed", sans-serif, sans-serif;
+                font-size: 14px;
+                line-height: 40px;
+                list-style-image: none;
+                list-style-position: outside;
+                list-style-type: none;
+                overflow-wrap: break-word;
+                text-align: left;
+                text-size-adjust: 100%;
+                text-transform: uppercase;
+            }
+        }
+    }
+}

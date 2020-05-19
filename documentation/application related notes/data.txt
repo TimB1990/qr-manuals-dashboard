@@ -235,10 +235,10 @@ php artisan migrate:refresh --path=/database/migrations/2020_02_21_144642_create
 ----------------------------------------------------
 ProductDetails::create([
     'product_id' => 1,
-    'artnr' => "211240.30",
+    'artnr' => "177155.97",
     'recommended_fuse' => "15",
     'driven_shafts' => 2,
-    'centre_distance_mm' => 60,
+    'centre_distance_mm' => 46,
     'arm_type' => "PF MD2 PF HD1 P10",
     'torque' => 40,
     'brand' => "Exalto",
@@ -247,8 +247,8 @@ ProductDetails::create([
     'diameter_idler_spindle' => 20,
     'range' => "MD2",
     'voltage_dc' => 12,
-    'bulkhead_thickness' => 30,
-    'kind' => "240BS" 
+    'bulkhead_thickness' => 24,
+    'kind' => "GG5 054PL" 
 ])->save();
 
 ProductDetails::create([

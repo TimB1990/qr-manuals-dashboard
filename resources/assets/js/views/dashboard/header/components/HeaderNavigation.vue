@@ -48,55 +48,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.navigationbar {
-  padding-left: 16px;
-  height: 40px;
-  padding-right: 16px;
-  display: flex;
-  justify-content: space-between;
-  /*border-top-left-radius: 6px;
-  border-top-right-radius: 6px;*/
-  background-color: rgb(204, 0, 51);
-  color: white;
-}
-
-nav > div > span > a {
-  color: rgb(255, 255, 255);
-  cursor: pointer;
-  display: inline;
-  font-family: "Roboto Condensed", sans-serif, sans-serif;
-  font-size: 14px;
-  line-height: 40px;
-  list-style-image: none;
-  list-style-position: outside;
-  list-style-type: none;
-  overflow-wrap: break-word;
-  text-align: left;
-  text-size-adjust: 100%;
-  text-transform: uppercase;
-}
-
-nav > div > span {
-  display: inline-block;
-  height: 40px;
-  padding: 0px 6px 0px 6px;
-}
-
-nav > div > span:hover {
-  border: 1px solid hsl(0, 0%, 60%);
-  border-bottom-color: white;
-  background-color: white;
-}
-
-nav > div > span:hover > a {
-  color: rgb(204, 0, 51);
-}
-
-.navigation-right > span {
-  margin-right: 12px;
-}
-</style>
-
 
 

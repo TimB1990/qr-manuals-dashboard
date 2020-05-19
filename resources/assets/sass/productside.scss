@@ -1,0 +1,84 @@
+.menu-header {
+    display: flex;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paginator {
+    display: flex;
+    padding-bottom: 16px;
+    justify-content: center;
+
+    a {
+        display: inline-block;
+        border: 1px solid $exaltoGrey;
+        margin-right: 0.75rem;
+        padding: 0.5rem;
+        width: 1rem;
+        height: 1rem;
+        text-align: center;
+        &:not(.active):hover {
+            border: 1px solid black;
+        }
+    }
+
+    a.active {
+        display: inline-block;
+        background-color: #cc0033;
+        color: white;
+        padding: 0.5rem;
+    }
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $borderColor;
+    margin-bottom: 0.75rem;
+
+    &:hover {
+        border: 1px solid black;
+        color: black;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0.5rem;
+    }
+
+    nav {
+        padding: 0.5rem;
+        span {
+            font-size: 12px;
+
+            b {
+                color: hsl(0, 0%, 50%);
+            }
+
+            i {
+                padding: 1px;
+                border: 1px solid hsl(0, 0%, 86%);
+                color: hsl(0, 0%, 86%);
+                font-size: 18px;
+                float: right;
+
+                &:hover {
+                    border: 1px solid black;
+                    color: black;
+                }
+            }
+
+            i.item-selected {
+                border: 1px solid black;
+                color: black;
+            }
+        }
+    }
+}
+
+.item-selected {
+    border: 1px solid black;
+    color: black;
+}

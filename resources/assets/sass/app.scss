@@ -1,4 +1,116 @@
-body{
+@import "variables";
+@import "header";
+@import "upload";
+@import "productside";
+
+body {
     color: hsl(0, 0%, 50%);
+    font-family: $font;
 }
 
+.search {
+    display: flex;
+    flex-direction: row-reverse;
+    border: 1px solid hsl(0, 0%, 80%);
+    align-items: baseline;
+    padding: 6px;
+    border-radius: 6px;
+
+    i {
+        padding: 6px;
+    }
+
+    input {
+        padding: 6px;
+        width: 100%;
+        border: none;
+        outline: transparent;
+    }
+}
+
+// general
+.content-root {
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+        0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.btn {
+    display: inline-block;
+    margin: 3px 3px 3px 3px;
+    height: 2rem;
+    background-color: transparent;
+    border: 1px solid hsl(0, 0%, 76%);
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    outline: none;
+
+    &:hover {
+        border: 1px solid black;
+    }
+}
+
+.panel-btn {
+    background-color: transparent;
+    border: 1px solid hsl(0, 0%, 76%);
+    color: #363636;
+    width: 150px;
+    padding: 6px 12px 6px 12px;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    outline: none;
+    margin-right: 12px;
+
+    &:hover {
+        border: 1px solid black;
+        color: black;
+    }
+
+    &:disabled {
+        background-color: $btnDisabled;
+    }
+}
+
+.panel {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 12px;
+}
+
+.content-table {
+    padding: 0.5rem;
+    width: 100%;
+
+    thead {
+        background-color: $exalto;
+        color: white;
+
+        tr > td {
+            padding: 0.5rem;
+        }
+    }
+
+    tr > td {
+        border-bottom: 1px solid $borderColor;
+        padding: 0.25rem;
+
+        a {
+            cursor: default;
+            text-decoration: none;
+            color: $exaltoGrey;
+        }
+
+        a > i {
+            font-size: 20px;
+            color: $exaltoGrey;
+            &:hover {
+                color: black;
+            }
+        }
+    }
+}

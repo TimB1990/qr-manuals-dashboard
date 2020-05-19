@@ -7,15 +7,14 @@
       </label>
     </div>
 
-    <table class="upload-files-container">
-      <thead class="upload-header">
+    <table class="content-table">
+      <thead>
         <tr>
-          <td>Upload Manual</td>
-          <td>files: {{ this.files.length }}</td>
+          <td colspan="2">Upload Manual - files: {{ this.files.length }}</td>
         </tr>
       </thead>
 
-      <tbody class="file-listing" v-if="this.files.length">
+      <tbody v-if="this.files.length">
         <tr v-for="(file, key) in files" :key="key">
           <td>{{ file.name }}</td>
           <td>
@@ -24,7 +23,7 @@
         </tr>
       </tbody>
 
-      <tbody v-else class="file-listing">
+      <tbody v-else>
         <tr>
           <td colspan="2">No files selected to upload...</td>
         </tr>
@@ -32,9 +31,9 @@
 
     </table>
 
-    <div class="upload-button-panel">
-        <button :disabled="this.filesPresented" class="panel-button" v-on:click="submitFiles()">Upload Manuals <i class="fas fa-file-upload"></i></button>
-        <button class="panel-button" v-on:click="addFiles()">Add Manuals</button>
+    <div class="panel">
+        <button :disabled="this.filesPresented" class="panel-btn" v-on:click="submitFiles()">Upload Manuals <i class="fas fa-file-upload"></i></button>
+        <button class="panel-btn" v-on:click="addFiles()">Add Manuals</button>
     </div>
   </div>
 </template>
@@ -94,82 +93,3 @@ export default {
   }
 };
 </script>
-<style>
-input[type="file"] {
-  position: absolute;
-  top: -500px;
-}
-
-.file-listing {
-  width: 100%;
-}
-
-.remove-file {
-  font-weight: bolder;
-  cursor: pointer;
-  float: right;
-}
-
-.upload-files-container{
-  border: 1px solid hsl(0,0%,80%);
-}
-
-.upload-header {
-  background-color: #cc0033;
-  color: white;
-}
-
-.upload-header > tr > td {
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-.upload-header > tr > td:nth-child(2){
-  text-align: right;
-}
-
-.file-listing > tr > td {
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 6px;
-  padding-bottom: 6px;
-  font-size: 14px;
-}
-
-.upload-button-panel {
-  display: flex;
-  flex-direction: row-reverse;
-  margin-top: 12px;
-}
-
-.panel-button {
-  background-color: transparent;
-  border: 1px solid hsl(0, 0%, 76%);
-  color: #363636;
-  width: 150px;
-  padding: 6px 12px 6px 12px;
-  border-radius: 3px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 14px;
-  outline: none;
-  margin-right: 12px;
-}
-
-.panel-button:hover{
-  border: 1px solid black;
-  color: black;
-}
-
-.panel-button:disabled{
-  background-color: hsl(0,0%,98%);
-  pointer-events: none;
-}
-
-.panel-button:disabled > i{
-  color: grey;
-}
-
-</style>

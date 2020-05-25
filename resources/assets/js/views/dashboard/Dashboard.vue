@@ -2,6 +2,7 @@
   <div id="root">
     <header class="header">
       <header-root></header-root>
+      <router-view name="actionbar"></router-view>
     </header>
     <section class="side-and-main">
       <router-view name="side" class="side"></router-view>

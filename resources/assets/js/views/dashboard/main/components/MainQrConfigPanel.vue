@@ -1,36 +1,52 @@
 <template>
     <div class="content-root">
-        <div>
-            <em>toggle one or more products to generate QR-codes on sheet</em>
-            <span>
-                paper format: A4, page:
-                {{ this.selectedProducts.length > 1 ? this.current_page : 1 }}
-                of
-                {{ this.max_pages ? this.max_pages : 1 }}
-            </span>
-        </div>
+        <div class="panel-layout">
+            <div class="config-panel">
+                <em
+                    >toggle one or more products to generate QR-codes on
+                    sheet</em
+                >
+                <ul>
+                    <li>paper format: A4</li>
+                    <li>
+                        page:
+                        {{
+                            this.selectedProducts.length > 1
+                                ? this.current_page
+                                : 1
+                        }}
+                        of {{ this.max_pages ? this.max_pages : 1 }}
+                    </li>
+                    <li>
+                      items per page: {{ page_size }}
+                    </li>
+                </ul>
+            </div>
 
-        <div class="sticker-sheet-underlay">
-            <div
-                v-for="n in this.page_size"
-                :key="n"
-                class="qr-item-blueprint"
-            ></div>
-        </div>
+            <div id="sheet" class="sheet">
+                <div class="sheet__blueprint">
+                    <div
+                        v-for="n in page_size"
+                        :key="n"
+                        class="qr-item-blueprint"
+                    ></div>
+                    <div class="sheet__items">
+                        <main-qr-item
+                            v-for="item in paginated()"
+                            :key="item.id"
+                            :id="item.id"
+                            :artnr="item.artnr"
+                            :kind="item.kind"
+                        ></main-qr-item>
+                    </div>
+                </div>
+            </div>
 
-        <div id="sheet" class="sticker-sheet">
-            <main-qr-item
-                v-for="item in paginated()"
-                :key="item.id"
-                :id="item.id"
-                :artnr="item.artnr"
-                :kind="item.kind"
-            ></main-qr-item>
-        </div>
-        <div class="config-panel">
-            <button @click="prevPage">&laquo;</button>
-            <button @click="nextPage">&raquo;</button>
-            <button @click="download">download pdf</button>
+            <div class="config-panel">
+                <button class="btn" @click="prevPage">&laquo;</button>
+                <button class="btn" @click="download()">download pdf</button>
+                <button class="btn" @click="nextPage">&raquo;</button>
+            </div>
         </div>
     </div>
 </template>
@@ -46,13 +62,14 @@ export default {
 
     data() {
         return {
-            page_size: 16,
+            page_size: 25,
             current_page: 1,
             max_pages: 1
         };
     },
 
     methods: {
+
         nextPage() {
             console.log("called next page");
             let max_pages = this.max_pages;
@@ -88,7 +105,7 @@ export default {
         },
 
         download() {
-            var canvas = document.getElementById("sheet");
+            /*var canvas = document.getElementById("sheet");
 
             html2canvas(canvas, {
                 // options
@@ -96,64 +113,22 @@ export default {
             }).then(canvas => {
                 var imgData = canvas.toDataURL("image/png");
                 var doc = new jspdf();
-                doc.addImage(imgData, "PNG", -3, -3);
+                doc.addImage(imgData, "PNG", 0, 0);
                 doc.save("sheet.pdf");
-            });
+            });*/
+
+            // API call using laravel simple pdf
         }
     },
 
     computed: {
         selectedProducts() {
             return this.$store.state.selectedProducts;
+        },
+
+        pagesize(){
+          return this.page_size;
         }
     }
 };
 </script>
-
-<style>
-.config-panel {
-    border: 1px solid grey;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 8px;
-    margin-bottom: 24px;
-}
-
-.sticker-sheet {
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
-    border: 1px solid grey;
-    width: 100%;
-    height: 100%;
-    width: 210mm;
-    height: 297mm;
-    padding: 11.5mm;
-}
-
-.sticker-sheet-underlay {
-    /*background-color: hsl(300, 50%, 90%);*/
-    opacity: 0.5;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    position: absolute;
-    width: 210mm;
-    height: 297mm;
-    padding: 11.5mm;
-    z-index: -1;
-}
-
-.qr-item-blueprint {
-    height: 55mm;
-    width: 40mm;
-    border: 1px dashed hsl(0, 0%, 65%);
-    border-radius: 12px;
-    margin: 12px;
-    z-index: -1;
-}
-
-button:disabled {
-    background-color: red;
-}
-</style>

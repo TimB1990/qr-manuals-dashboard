@@ -37,26 +37,6 @@ export default {
     };
   },
   methods: {
-    /*login() {
-      axios
-        .post("/api/login", {
-          email: this.email,
-          password: this.password
-        })
-        .then(res => {
-          let data = {
-            email: this.email,
-            token: res.data.success.token
-          };
-
-          this.$store.dispatch("setUser", { data });
-          this.error = null
-          this.$router.push({path: '/dashboard' });
-        })
-        .catch(err => {
-          this.error = err
-        });
-    }*/
 
     login(){
       this.$store.dispatch('login',{

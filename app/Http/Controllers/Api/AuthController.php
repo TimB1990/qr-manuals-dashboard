@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use Hash;
 use App\User;
+use App\PasswordReset;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\ResetPasswordMailable;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ResetPasswordMailable;
-use App\PasswordReset;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -60,7 +61,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'User with this email does not exist'], 401);
         }
 
-        $token = str_random(32);
+        $token = Str::random(32);
 
         Mail::to($user)->send(new ResetPasswordMailable($token));
 

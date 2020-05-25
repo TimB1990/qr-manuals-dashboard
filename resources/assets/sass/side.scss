@@ -4,6 +4,7 @@
     padding-bottom: 8px;
     justify-content: space-between;
     align-items: center;
+    font-weight: bold;
 }
 
 .paginator {
@@ -81,4 +82,12 @@
 .item-selected {
     border: 1px solid black;
     color: black;
+}
+
+.item-header{
+    display: flex;
+    padding: 0.5rem;
+    justify-content: space-between;
+    font-weight: bold;
+    
 }

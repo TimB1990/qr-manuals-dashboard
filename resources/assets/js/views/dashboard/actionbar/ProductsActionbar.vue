@@ -1,0 +1,74 @@
+<template>
+    <nav class="actionbar" role="actionbar" aria-label="actionbar">
+        <div class="search">
+            <input
+                v-model="search"
+                @input="updateProductFetch(1)"
+                type="text"
+                placeholder="Search Products..."
+            />
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+        <div class="actionbar-start"></div>
+        <div class="actionbar-end">
+            <button @click="linkToSheetConfiguration" class="btn">
+                QR sheet
+            </button>
+            <button class="btn" @click.prevent="clearSelected">Clear</button>
+            <span>{{ selectedProductCount }}</span>
+        </div>
+    </nav>
+</template>
+
+<script>
+import _ from "lodash";
+export default {
+    name: "productsActionBar",
+    components: {},
+    created() {
+        this.fetchProducts(1);
+    },
+    data() {
+        return {
+            qrAmount: 1,
+            search: ""
+        };
+    },
+    methods: {
+        fetchProducts(page) {
+            this.$store.dispatch("fetchProducts", {
+                page: page,
+                query: this.search
+            });
+        },
+
+        updateProductFetch: _.debounce(function(page) {
+            console.log("fetchProducts called");
+            this.fetchProducts(1);
+        }, 800),
+
+        clearProducts() {
+            this.$store.dispatch("clearProducts");
+        },
+
+        clearSelected() {
+            this.$store.dispatch("clearSelected");
+        },
+
+        linkToSheetConfiguration() {
+            this.$router.push({
+                name: "qr-config-panel"
+            });
+        }
+    },
+
+    computed: {
+        selectedProductCount() {
+            return this.$store.getters.selectedProductCount;
+        },
+        selectedProducts() {
+            return this.$store.state.selectedProducts;
+        }
+    }
+};
+</script>

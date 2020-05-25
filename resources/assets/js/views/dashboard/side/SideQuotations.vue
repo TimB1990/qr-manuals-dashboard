@@ -1,29 +1,10 @@
 <template>
-    <div v-if="quotes" class="side-menu-container">
-        <div class="head">
-            <span>Filter</span>
-            <span>{{ quotes.count_all }}</span>
-        </div>
-        <div v-if="statuses.length" class="filter-panel">
-            <div v-for="(status, index) in statuses" :key="index">
-                <button
-                    @click="fetchQuotes(statuses[index])"
-                    class="filter-button"
-                >
-                    {{ statuses[index] }}
-                    <span v-if="quotes.count_status">
-                        <!-- error on startup ? count_status undefined -->
-                        {{ quotes.count_status[statuses[index]] }}
-                    </span>
-                </button>
-            </div>
-        </div>
+    <div class="content-root">
 
-        <div class="head">
+        <div class="menu-header">
             <span>Quotations</span>
-            <span>{{ currentItemStatus }}</span>
         </div>
-        <div class="quotations-panel">
+        <div>
             <div v-if="quotes">
                 <side-quote-item
                     v-for="quote in quotes.items"
@@ -39,8 +20,7 @@
                 />
             </div>
             <div v-if="!quotes.items || !quotes.items.length">
-                There are currently no items with status:
-                {{ currentItemStatus }}
+                There are currently no items pending or with this status
             </div>
         </div>
     </div>
@@ -52,32 +32,6 @@ import moment from "moment";
 export default {
     name: "sideQuotations",
     components: { SideQuoteItem },
-    created() {
-        this.fetchQuotes("pending");
-    },
-
-    methods: {
-        fetchQuotes(status) {
-            this.$store
-                .dispatch("fetchQuotes", {
-                    status: status
-                })
-                .then((this.currentItemStatus = status));
-        }
-    },
-    data() {
-        return {
-            statuses: [
-                "pending",
-                "accepted",
-                "processed",
-                "approved",
-                "denied",
-                "review"
-            ],
-            currentItemStatus: null
-        };
-    },
     computed: {
         quotes() {
             let data = this.$store.state.quotes;
@@ -86,61 +40,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.side-menu-container {
-    background-color: white;
-    padding: 12px;
-    border-radius: 6px;
-    box-shadow: 0 0.5em 0.5em -0.125em rgba(10, 10, 10, 0.1),
-        0 0px 0 1px rgba(10, 10, 10, 0.02);
-}
-
-.head {
-    display: flex;
-    justify-content: space-between;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-    background-color: #cc0033;
-    color: #fff;
-}
-
-.quotations-panel {
-    padding: 1rem;
-    /*border: 1px solid hsl(0, 0%, 80%);*/
-}
-
-.filter-panel {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    margin-bottom: 0.75rem;
-    padding: 1rem;
-    /*border: 1px solid hsl(0, 0%, 80%);*/
-}
-
-.filter-button {
-    display: flex;
-    justify-content: space-between;
-    outline: none;
-    width: 7rem;
-    background-color: transparent;
-    border: 1px solid hsl(0, 0%, 60%);
-    padding: 0.5rem;
-    margin: 0.25rem;
-}
-
-.filter-button:hover {
-    border: 1px solid black;
-    background-color: hsl(0, 0%, 96%);
-}
-
-.filter-button > span {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    border: 1px solid hsl(0, 0%, 76%);
-    border-radius: 25%;
-}
-</style>

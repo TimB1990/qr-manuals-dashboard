@@ -24,7 +24,11 @@ class Product extends Model
         return $this->hasMany('App\Quote');
     }
 
-    public function ProductReservation(){
+    public function productReservation(){
         return $this->hasOne('App\ProductReservation');
+    }
+
+    public function qrSheets(){
+        return $this->belongsToMany('App\QrSheet');
     }
 }

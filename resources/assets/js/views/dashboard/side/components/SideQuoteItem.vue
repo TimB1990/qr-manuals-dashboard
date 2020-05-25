@@ -1,21 +1,21 @@
 <template>
-    <div class="quote-item">
+    <div class="menu-item">
         <div class="item-header">
             <span>#{{ quote_id }}</span>
             <span>{{ this.momentAgo }}</span>
         </div>
-        <div class="item-content">
-            <span><b>email:</b> {{ quote_email }}</span>
-            <span><b>company:</b> {{ quote_company }}</span>
-            <span><b>created:</b> {{ this.createdAt }}</span>
-            <span
-                ><b>status:</b> {{ quote_status }} at {{ this.updatedAt }}</span
+        <ul>
+            <li><b>email:</b> {{ quote_email }}</li>
+            <li><b>company:</b> {{ quote_company }}</li>
+            <li><b>created:</b> {{ this.createdAt }}</li>
+            <li
+                ><b>status:</b> {{ quote_status }} at {{ this.updatedAt }}</li
             >
-        </div>
-        <div class="buttons">
+        </ul>
+        <div class="panel">
             <button
                 v-if="quote_status == 'denied'"
-                class="item-btn"
+                class="btn"
                 @click="updateQuoteStatus('review')"
             >
                 Review
@@ -23,28 +23,27 @@
             <button
                 v-if="quote_status == 'accepted' || quote_status == 'pending'"
                 @click="updateQuoteStatus('denied')"
-                class="item-btn"
+                class="btn"
             >
                 Decline
             </button>
             <button
                 v-if="quote_status == 'pending'"
                 @click="updateQuoteStatus('accepted')"
-                class="item-btn"
+                class="btn"
             >
                 Accept
             </button>
             <button
                 v-if="quote_status == 'accepted'"
                 @click="addSpecification(quote_id)"
-                class="item-btn"
+                class="btn"
             >
                 Add Price Specification
             </button>
         </div>
-        <div class="buttons">
-            <button class="item-btn" @click="showDetails(quote_id)">Show Details</button>
-        </div>
+        <button class="btn" @click="showDetails(quote_id)">Show Details</button>
+
     </div>
 </template>
 
@@ -120,53 +119,6 @@ export default {
   backface-visibility: hidden;*/
 }
 
-.quote-item:hover {
-    border: 1px solid black;
-}
-.buttons {
-    display: flex;
-    align-items: stretch;
-    padding: 0.5rem;
-}
-
-.item-content {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    padding: 0.75rem;
-}
-
-.item-header {
-    display: flex;
-    font-weight: bold;
-    justify-content: space-between;
-}
-.item-btn, .item-btn-details {
-    display: inline-block;
-    flex: 1;
-    margin: 3px 3px 3px 3px;
-    background-color: transparent;
-    border: 1px solid hsl(0, 0%, 76%);
-    padding: 6px 12px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 14px;
-    outline: none;
-}
-
-.item-btn-details{
-    background-color: rgb(204, 0, 51);
-    color: white;
-}
-
-.item-btn:hover {
-    border: 1px solid black;
-    background-color: hsl(0, 0%, 96%);
-}
-
-.item-btn-details:hover{
-    border: 1.3px solid black;
-}
 
 @keyframes blinkPending {
     0% {

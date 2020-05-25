@@ -2,13 +2,19 @@
   <section>
     <nav class="navigationbar" role="navigation" aria-label="main navigation">
       <!-- navbar menu -->
-      <div class="navigation-left">
+      <div>
         <span>
           <a> {{ userEmail }} <i class="fas fa-user"></i></a>
         </span>
       </div>
 
-      <div class="navigation-right">
+      <div>
+        <span>
+          <router-link :to="{ name: 'products'}">Products</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'quotations'}">Quotations</router-link>
+        </span>
         <span>
           <router-link :to="{ name: 'scanner'}">Scanner</router-link>
         </span>

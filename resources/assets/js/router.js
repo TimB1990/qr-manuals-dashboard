@@ -4,7 +4,10 @@ import store from './store/index';
 // entry route imports
 import Entry from './views/entry/Entry';
 import ForgotPassword from './views/entry/components/ForgotPassword'
-import ResetPasswordForm from './views/entry/components/ResetPasswordForm'
+
+// actionbar route imports
+import ProductsActionBar from './views/dashboard/actionbar/ProductsActionbar'
+import QuotesActionBar from './views/dashboard/actionbar/QuotesActionbar'
 
 // main route imports
 import ProductPage from './views/productpage/ProductPage';
@@ -45,14 +48,16 @@ const routes = [
             name: 'products',
             components: {
                 side: SideMenu,
-                content: Home
+                content: Home,
+                actionbar: ProductsActionBar
             },
         }, {
             path: 'products/:id/details',
             name: 'product_details',
             components: {
                 side: SideMenu,
-                content: MainProductDetails
+                content: MainProductDetails,
+                actionbar: ProductsActionBar
             }
         }, {
             path: 'products/qr-sheet',
@@ -66,7 +71,8 @@ const routes = [
             name: 'quotations',
             components: {
                 side: SideQuotations,
-                content: MainQuotationsHome
+                content: MainQuotationsHome,
+                actionbar: QuotesActionBar
             }
 
         }, {
@@ -74,7 +80,8 @@ const routes = [
             name: 'quotation_details',
             components: {
                 side: SideQuotations,
-                content: MainQuotationDetails
+                content: MainQuotationDetails,
+                actionbar: QuotesActionBar
             }
         },{
             path: 'quotations/:id/specification',
@@ -118,13 +125,6 @@ const routes = [
         path: '/reset-password',
         name: 'reset-password',
         component: ForgotPassword,
-        children: [
-            {
-                path: '/:token',
-                name: 'reset-password-form',
-                component: ResetPasswordForm,
-            }
-        ],
     },
 ];
 

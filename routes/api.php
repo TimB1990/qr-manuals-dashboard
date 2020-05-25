@@ -21,13 +21,24 @@ Route::group(['middleware' => 'auth:api'], function(){
 
     // UPLOAD
     Route::post('/products/{id}/manuals', 'ManualsController@store');
-    Route::post('/quotations/{id}/specification');
+    
     // DELETE
     Route::delete('/products/{id}/manuals/{manual_id}', 'ManualsController@destroy')->name('products.manuals.destroy');
-    // GET quotes
+    
+    // QUOTES
     Route::get('/quotations', 'QuoteController@index');
     Route::get('/quotations/{id}', 'QuoteController@show');
     Route::put('/quotations/{id}', 'QuoteController@update');
+    // Route::post('/quotations/{id}/specification');
+
+    // QR SHEETS
+    Route::post('/qrsheets','QrSheetController@store');
+    Route::get('/qrsheets', 'QrSheetController@index');
+    Route::get('/qrsheets/{id}', 'QrSheetController@show');
+    Route::put('/qrsheets/{id}', 'QrSheetController@delete');
+    Route::delete('/qrsheets/{id}', 'QrSheetController@destroy');
+    
+
 });
 
 // quotations

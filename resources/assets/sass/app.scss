@@ -1,11 +1,17 @@
 @import "variables";
 @import "header";
 @import "upload";
-@import "productside";
+@import "side";
+@import "qrsheet";
 
 body {
     color: hsl(0, 0%, 50%);
     font-family: $font;
+}
+
+.panel-btn.active{
+    background-color: $exaltoGrey;
+    border: 1px solid black;
 }
 
 .search {
@@ -39,7 +45,6 @@ body {
 .btn {
     display: inline-block;
     margin: 3px 3px 3px 3px;
-    height: 2rem;
     background-color: transparent;
     border: 1px solid hsl(0, 0%, 76%);
     padding: 6px;
@@ -69,6 +74,7 @@ body {
     &:hover {
         border: 1px solid black;
         color: black;
+        background-color: hsl(0, 0%, 80%);
     }
 
     &:disabled {
@@ -78,8 +84,8 @@ body {
 
 .panel {
     display: flex;
-    flex-direction: row-reverse;
-    margin-top: 12px;
+    justify-content: center;
+
 }
 
 .content-table {
@@ -96,7 +102,7 @@ body {
     }
 
     tr > td {
-        border-bottom: 1px solid $borderColor;
+        border: 1px solid $borderColor;
         padding: 0.25rem;
 
         a {

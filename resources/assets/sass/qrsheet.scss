@@ -1,66 +1,32 @@
-@mixin itemSize($paperWidth, $paperHeight, $paperMargin, $rows, $columns) {
-    $itemHeight: ($paperHeight - $paperMargin) / $rows;
-    $itemWidth: ($paperWidth - $paperMargin) / $columns;
-
-    height: $itemHeight;
-    width: $itemWidth;
-}
-
-$radius: 1.5rem;
-$paperHeight: 300mm;
-$paperWidth: 210mm;
-
-/*@media (max-width: 960px){
-   .sheet {
-      overflow: scroll;
-   }
-}*/
-.sheet {
-    .sheet__blueprint {
-        position: relative;
-        width: $paperWidth;
-        height: $paperHeight;
-        opacity: 1;
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        padding: 11.5mm;
-        border: 1px solid grey;
-    }
-    .sheet__items {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: $paperWidth;
-        height: $paperHeight;
-        display: flex;
-        align-content: flex-start;
-        flex-wrap: wrap;
-        padding: 11.5mm;
-    }
-}
-
-.qr-item-blueprint {
-    // @include itemSize(210mm, 300mm, 11.5mm, 5, 5);
-    border: 1px dashed hsl(0, 0%, 65%);
-    border-radius: $radius;
-}
-
-.qr-item {
-    // @include itemSize(210mm, 300mm, 11.5mm, 5, 5);
-    border: 1px solid black;
-    border-radius: $radius;
-    text-align: center;
-}
-
 .qr-item-head {
     font-weight: bold;
     text-align: center;
 }
 
 .config-panel {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid lightgrey;
     margin-bottom: 1rem;
     margin-top: 1rem;
+}
+
+.sub-panel{
+    padding: 0.5rem;
+    
+    input[type=number]{
+        display: block;
+       height: 1.5rem;
+       &::-webkit-outer-spin-button,
+       &::-webkit-inner-spin-button {
+           appearance: none;
+           margin: 0;
+       }
+    }
+    select{
+        display: block;
+        height: 1.5rem;
+    }
 }
 
 .panel-layout {

@@ -1,11 +1,16 @@
 <template>
-    <div class="qr-item">
+    <div :style="item">
         <div class="qr-item-head">
             <p>{{ this.kind }}</p>
             <p>{{ this.artnr }}</p>
         </div>
         <div>
-            <qrcode-vue :value="qrValue" :size="qrSize" level="H"></qrcode-vue>
+            <qrcode-vue
+                :value="qrValue"
+                :size="80"
+                level="H"
+            ></qrcode-vue>
+            <code>{{ this.width}}x{{this.height}}</code>
         </div>
     </div>
 </template>
@@ -17,18 +22,32 @@ export default {
     props: {
         id: Number,
         kind: String,
-        artnr: String
+        artnr: String,
+        qrSizeRatio: Number,
+        width: Number,
+        height: Number
     },
     components: { QrcodeVue },
     data() {
         return {
-            qrSize: 100
+            //
         };
     },
     computed: {
         qrValue() {
-            // return `${this.id}-${this.artnr}-${this.name}-${this.kind}`;
             return `${this.artnr}`;
+        },
+
+        // dynamic styling
+        item() {
+            return {
+                width: `${this.width}mm`,
+                height: `${this.height}mm`,
+                border: "1px solid black",
+                borderRadius: "1rem",
+                textAlign: "center",
+                padding: "0.25rem",
+            };
         }
     }
 };

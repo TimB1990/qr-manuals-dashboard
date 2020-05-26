@@ -16,7 +16,6 @@
             @endfor
          </div>
          <div class="sheet__items">
-
             @for($i = 0; $i < $sheet->product_amount; $i++)
             <div class="qr-item">
                <div class="qr-item-head">

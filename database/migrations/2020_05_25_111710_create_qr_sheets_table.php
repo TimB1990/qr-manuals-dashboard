@@ -19,6 +19,7 @@ class CreateQrSheetsTable extends Migration
             $table->integer('pages');
             $table->integer('rows_per_page');
             $table->integer('cols_per_page');
+            // $table->string('page_dimensions');
             $table->integer('product_amount');
             // $table->softDeletes();
             $table->timestamps();

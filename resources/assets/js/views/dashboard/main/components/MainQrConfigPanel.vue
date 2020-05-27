@@ -39,10 +39,13 @@
                     </ul>
                 </div>
             </div>
-            <em>toggle one or more products to generate QR-codes on sheet</em>
+            <em
+                >select paper size and toggle one or more products to generate
+                QR-codes on sheet</em
+            >
 
-            <div id="sheet">
-                <div v-if="this.currentPaperFormat" :style="sheetBlueprint">
+            <div v-if="this.currentPaperFormat" id="sheet">
+                <div :style="sheetBlueprint">
                     <div
                         v-for="n in page_size"
                         :key="n"
@@ -61,9 +64,7 @@
                             :id="item.id"
                             :artnr="item.artnr"
                             :kind="item.kind"
-                            :qrSizeRatio="0.8"
-                            :width="parseInt(itemBlueprint.width.replace('mm',''))"
-                            :height="parseInt(itemBlueprint.height.replace('mm',''))"
+                            :dimensions="dimensions"
                         ></main-qr-item>
                     </div>
                 </div>
@@ -185,15 +186,15 @@ export default {
 
                 return {
                     position: "absolute",
-                    border: "1px solid red",
                     top: 0,
                     left: 0,
                     width: `${paperWidth}mm`,
                     height: `${paperHeight}mm`,
                     display: "flex",
-                    alignContent: "flex-start",
                     flexWrap: "wrap",
-                    padding: `12mm`
+                    alignContent: "flex-start",
+                    padding: `12mm`,
+                    border: "1px solid red"
                 };
             }
         },
@@ -238,6 +239,23 @@ export default {
                     alignItems: "center",
                     border: "1px dashed hsl(0, 0%, 65%)",
                     borderRadius: "1rem"
+                };
+            }
+        },
+
+        dimensions() {
+            if (this.currentPaperFormat) {
+                var paperWidth = parseInt(
+                    this.currentPaperFormat.split("x")[0]
+                );
+                var paperHeight = parseInt(
+                    this.currentPaperFormat.split("x")[1]
+                );
+
+                return {
+                    height: Math.round((paperHeight - 12) / this.rows) - 2,
+                    width: Math.round((paperWidth - 12) / this.cols) - 2,
+                    qrRatio: 0.8
                 };
             }
         }

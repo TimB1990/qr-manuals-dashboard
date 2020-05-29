@@ -23,10 +23,15 @@ export default new Vuex.Store({
         quotes: {},
         quoteDetails: {},
         quoteProducts: {},
-        quoteCustomer: {}
+        quoteCustomer: {},
+        qrsheets: {}
     },
 
     mutations: {
+        SET_QRSHEETS(state, payload) {
+            state.qrsheets = payload;
+        },
+
         SET_LOADING_STATUS(state, payload) {
             state.loadingStatus = payload;
         },
@@ -77,8 +82,8 @@ export default new Vuex.Store({
             state.quoteProducts = payload;
         },
 
-        SET_QUOTE_CUSTOMER(state, payload){
-            state.quoteCustomer = payload
+        SET_QUOTE_CUSTOMER(state, payload) {
+            state.quoteCustomer = payload;
         },
 
         SET_PRODUCT_MANUALS(state, payload) {
@@ -171,6 +176,14 @@ export default new Vuex.Store({
                 });
         },
 
+        fetchQrSheets({ commit }) {
+            axios.get('api/qrsheets').then(result => {
+                commit('SET_QRSHEETS', result.data)
+            }).catch(err => {
+                console.log(err.response.data.error)
+            })
+        },
+
         // for context.commit, and page parameter
         fetchProducts({ commit }, { page, query }) {
             commit("SET_LOADING_STATUS", "loading");
@@ -224,16 +237,22 @@ export default new Vuex.Store({
                 });
         },
 
-        fetchQuoteProductsOnly({ commit }, {quote_id}) {
-            axios.get(`api/quotations/${quote_id}`).then(result => {
-                commit('SET_QUOTE_PRODUCTS', result.data)
-            }).catch(error => console.log(error));
+        fetchQuoteProductsOnly({ commit }, { quote_id }) {
+            axios
+                .get(`api/quotations/${quote_id}`)
+                .then(result => {
+                    commit("SET_QUOTE_PRODUCTS", result.data);
+                })
+                .catch(error => console.log(error));
         },
 
-        fetchQuoteCustomerOnly({commit},{quote_id}){
-            axios.get(`api/quotations/${quote_id}?customer=1`).then(result => {
-                commit('SET_QUOTE_CUSTOMER', result.data)
-            }).catch(error => console.log(error));
+        fetchQuoteCustomerOnly({ commit }, { quote_id }) {
+            axios
+                .get(`api/quotations/${quote_id}?customer=1`)
+                .then(result => {
+                    commit("SET_QUOTE_CUSTOMER", result.data);
+                })
+                .catch(error => console.log(error));
         },
 
         fetchDetails({ commit }, { id }) {

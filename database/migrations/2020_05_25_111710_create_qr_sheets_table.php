@@ -13,10 +13,12 @@ class CreateQrSheetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('qrsheets', function (Blueprint $table) {
+        Schema::create('qr_sheets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('alias');
             $table->integer('pages');
+            $table->integer('page_width_mm');
+            $table->integer('page_height_mm');
             $table->integer('rows_per_page');
             $table->integer('cols_per_page');
             // $table->string('page_dimensions');
@@ -28,6 +30,6 @@ class CreateQrSheetsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('qrsheets');
+        Schema::dropIfExists('qr_sheets');
     }
 }

@@ -38,8 +38,10 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('/qrsheets/{id}', 'QrSheetController@delete');
     Route::delete('/qrsheets/{id}', 'QrSheetController@destroy');
     
-
 });
+
+// ONLY TESTING, AUTH ACCESS CURRENTLY NOT WORKING!
+Route::get('/qrsheets/{id}/download', 'QrSheetController@downloadPDF')->name('qrsheets.download');
 
 // quotations
 Route::post('/quotations', 'QuoteController@store');

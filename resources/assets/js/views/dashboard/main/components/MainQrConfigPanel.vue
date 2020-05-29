@@ -1,13 +1,33 @@
 <template>
     <div class="content-root">
         <div class="panel-layout">
+            <div class="panel-layout-header">
+                <span><b>Layout Blueprint</b> </span>
+                <span>
+                    page
+                    {{
+                        this.selectedProducts.length > 1 ? this.current_page : 1
+                    }}
+                    of {{ this.max_pages ? this.max_pages : 1 }}
+                </span>
+                <span>items per page: {{ page_size }}</span>
+            </div>
+            <!-- config panel -->
             <div class="config-panel">
-                <div class="sub-panel">
-                    <p>Layout blueprints</p>
-                    <b>rows:</b>
+                <div>
+                    <b>Name/Alias:</b>
+                    <input
+                        v-model="alias"
+                        type="text"
+                        placeholder="new sheet"
+                    />
+                    <b>Rows:</b>
                     <input v-model="rows" type="number" />
-                    <b>cols:</b>
+                    <b>Columns:</b>
                     <input v-model="cols" type="number" />
+                </div>
+
+                <span>
                     <b>Paper Size:</b>
                     <select
                         v-model="currentPaperFormat"
@@ -23,21 +43,15 @@
                             {{ format.height }} mm
                         </option>
                     </select>
-                </div>
-                <div class="sub-panel">
-                    <ul>
-                        <li>
-                            page:
-                            {{
-                                this.selectedProducts.length > 1
-                                    ? this.current_page
-                                    : 1
-                            }}
-                            of {{ this.max_pages ? this.max_pages : 1 }}
-                        </li>
-                        <li>items per page: {{ page_size }}</li>
-                    </ul>
-                </div>
+                </span>
+                <span>
+                    <button class="panel-btn" @click="saveSheet">Save Sheet</button>
+                    <button class="btn" @click="prevPage">&laquo;</button>
+                    <button class="btn" @click="nextPage">&raquo;</button>
+                    <!-- messages -->
+                    <p v-if="success" style="color:green;">{{ success }}</p>
+                    <p v-if="error" style="color:red;">{{ error }}</p>
+                </span>
             </div>
             <em
                 >select paper size and toggle one or more products to generate
@@ -69,13 +83,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="config-panel">
-                <button class="btn" @click="prevPage">&laquo;</button>
-                <button class="btn" @click="download()">download pdf</button>
-                <button class="btn" @click="nextPage">&raquo;</button>
-            </div>
         </div>
+        <code>{{ selectedProducts }}</code>
     </div>
 </template>
 
@@ -90,11 +99,16 @@ export default {
 
     data() {
         return {
+            alias: "",
             rows: 4,
             cols: 4,
             current_page: 1,
             max_pages: 1,
-            currentPaperFormat: null
+            currentPaperFormat: null,
+
+            // messages
+            success: null,
+            error: null
         };
     },
 
@@ -115,6 +129,54 @@ export default {
 
             return sizesArray;
         },
+
+        saveSheet() {
+            const items = this.selectedProducts;
+
+            if (!this.alias || this.alias == "") {
+                this.error = "Alias is required";
+            } 
+            else if (!items || items.length < 1) {
+                this.error = "Select at least one item!";
+            } 
+            else if (!this.currentPaperFormat) {
+                this.error = "Please select some paper format!";
+            } 
+            else if (
+                !(this.rows && this.cols) ||
+                this.rows < 1 ||
+                this.cols < 1
+            ) 
+            {
+                this.error = "At least one row and column are required!";
+            } 
+            else {
+                let data = {
+                    alias: this.alias,
+                    pages: this.max_pages,
+                    page_width_mm: parseInt(
+                        this.currentPaperFormat.split("x")[0]
+                    ),
+                    page_height_mm: parseInt(
+                        this.currentPaperFormat.split("x")[1]
+                    ),
+                    rows_per_page: this.rows,
+                    cols_per_page: this.cols,
+                    product_amount: items.length,
+                    items: items
+                };
+
+                axios
+                    .post("/api/qrsheets", data)
+                    .then(res => {
+                        this.success = res.data.success;
+                    })
+                    .catch(err => {
+                        this.error = err.response.data.error;
+                    });
+            }
+        },
+
         nextPage() {
             console.log("called next page");
             let max_pages = this.max_pages;
@@ -148,21 +210,6 @@ export default {
             );
             return paginated[0].items;
         },
-
-        download() {
-            /*var canvas = document.getElementById("sheet");
-
-            html2canvas(canvas, {
-                // options
-                scale: 1
-            }).then(canvas => {
-                var imgData = canvas.toDataURL("image/png");
-                var doc = new jspdf();
-                doc.addImage(imgData, "PNG", 0, 0);
-                doc.save("sheet.pdf");
-            });*/
-            // API call using laravel simple pdf
-        }
     },
 
     computed: {

@@ -8,6 +8,7 @@ import ForgotPassword from './views/entry/components/ForgotPassword'
 // actionbar route imports
 import ProductsActionBar from './views/dashboard/actionbar/ProductsActionbar'
 import QuotesActionBar from './views/dashboard/actionbar/QuotesActionbar'
+import SheetsActionbar from './views/dashboard/actionbar/SheetsActionbar'
 
 // main route imports
 import ProductPage from './views/productpage/ProductPage';
@@ -25,6 +26,7 @@ import MainQuotationDetails from './views/dashboard/main/components/MainQuotatio
 import MainQuotationsHome from './views/dashboard/main/components/MainQuotationsHome'
 import MainQuotationSpecification from './views/dashboard/main/components/MainQuotationSpecification'
 import MainPreviewSpec from './views/dashboard/main/components/MainPreviewSpec'
+import SheetManager from './views/dashboard/main/components/SheetManager'
 
 // customer route imports
 import Scanner from './views/productpage/components/Scanner';
@@ -64,9 +66,18 @@ const routes = [
             name: 'qr-config-panel',
             components: {
                 side: SideMenu,
-                content: MainQrConfigPanel
+                content: MainQrConfigPanel,
+                actionbar: SheetsActionbar
             }
         }, {
+            path: '/sheet-manager',
+            name: 'sheet_manager',
+            components: {
+                content: SheetManager
+            }
+        },
+        
+        {
             path: 'quotations',
             name: 'quotations',
             components: {

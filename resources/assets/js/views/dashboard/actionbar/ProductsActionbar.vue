@@ -11,10 +11,9 @@
         </div>
         <div class="actionbar-start"></div>
         <div class="actionbar-end">
-            <button @click="linkToSheetConfiguration" class="btn">
-                QR sheet
+            <button class="btn" @click.prevent="clearSelected">
+                Clear Selection
             </button>
-            <button class="btn" @click.prevent="clearSelected">Clear</button>
             <span>{{ selectedProductCount }}</span>
         </div>
     </nav>
@@ -53,12 +52,6 @@ export default {
 
         clearSelected() {
             this.$store.dispatch("clearSelected");
-        },
-
-        linkToSheetConfiguration() {
-            this.$router.push({
-                name: "qr-config-panel"
-            });
         }
     },
 

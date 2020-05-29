@@ -6,29 +6,48 @@
 .config-panel {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     border: 1px solid lightgrey;
     margin-bottom: 1rem;
     margin-top: 1rem;
+    padding: 0.5rem;
+
+    div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    span {
+        input[type="number"] {
+            display: inline-block;
+            width: 1.5rem;
+            text-align: center;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                appearance: none;
+                margin: 0;
+            }
+        }
+        select {
+            display: inline-block;
+            height: 2rem;
+            border-radius: 3px;
+        }
+    }
 }
 
-.sub-panel{
+.sub-panel {
+    display: flex;
+    justify-content: space-between;
     padding: 0.5rem;
-    
-    input[type=number]{
-        display: block;
-       height: 1.5rem;
-       &::-webkit-outer-spin-button,
-       &::-webkit-inner-spin-button {
-           appearance: none;
-           margin: 0;
-       }
-    }
-    select{
-        display: block;
-        height: 1.5rem;
-    }
 }
 
 .panel-layout {
     padding: 0.5rem;
+}
+
+.panel-layout-header {
+    display: flex;
+    justify-content: space-between;
 }

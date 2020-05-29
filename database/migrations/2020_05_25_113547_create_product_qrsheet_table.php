@@ -13,9 +13,14 @@ class CreateProductQrsheetTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_qrsheet', function (Blueprint $table) {
-            $table->unsignedBigInteger('qrsheet_id')->references('id')->on('qrsheets');
-            $table->unsignedBigInteger('product_id')->references('id')->on('products');
+        Schema::create('product_qr_sheet', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('qr_sheet_id');
+            $table->unsignedBigInteger('product_id');
+
+            // foreign keys
+            $table->foreign('qr_sheet_id')->references('id')->on('qr_sheets');
+            $table->foreign('product_id')->references('id')->on('products');
         });
     }
 
@@ -26,6 +31,6 @@ class CreateProductQrsheetTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_qrsheet');
+        Schema::dropIfExists('product_qr_sheet');
     }
 }

@@ -7,7 +7,7 @@
         <div>
             <qrcode-vue
                 :value="qrValue"
-                :size="(dimensions.width * dimensions.qrRatio)*3.78"
+                :size="Math.sqrt((dimensions.width * dimensions.height) * dimensions.qrRatio *3.78 )"
                 level="H"
             ></qrcode-vue>
         </div>
@@ -37,6 +37,9 @@ export default {
 
         itemStyle() {
             return {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
                 height: `${this.dimensions.height}mm`,
                 width: `${this.dimensions.width}mm`,
                 border: "1px solid black",

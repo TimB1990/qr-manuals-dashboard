@@ -10,7 +10,7 @@ class QrSheet extends Model
     // use SoftDeletes;
     protected $guarded = [];
 
-        public function products(){
-        return $this->hasMany('App\Product');
+    public function products(){
+        return $this->belongsToMany('App\Product');
     }
 }

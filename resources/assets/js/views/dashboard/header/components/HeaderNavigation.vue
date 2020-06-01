@@ -13,7 +13,7 @@
           <router-link :to="{ name: 'products'}">Products</router-link>
         </span>
         <span>
-          <router-link :to="{name: 'qr-config-panel'}">Generate QR sheet</router-link>
+          <router-link :to="{name: 'qr-config-panel'}">New QR sheet</router-link>
         </span>
         <span>
           <router-link :to="{ name: 'quotations'}">Quotations</router-link>

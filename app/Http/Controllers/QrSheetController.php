@@ -72,20 +72,19 @@ class QrSheetController extends Controller
             ]);
 
             $sheetId = $record->id;
-            $itemRefs = [];
 
+            // delete all previous items in sheet
+            DB::table('product_qr_sheet')->where('qr_sheet_id', $sheetId)->delete();
+            
             // loop over items
             foreach($items as $item){
-                $itemRef = [
-                    'qr_sheet_id' => $sheetId,
-                    'product_id' => $item['id']
-                ];
 
-                array_push($itemRefs, $itemRef);   
+                DB::table('product_qr_sheet')->insert(
+                    ['qr_sheet_id' => $sheetId, 'product_id' => $item['id']],
+                    ['product_id' => $item['id']]);
+                // array_push($itemRefs, $itemRef);   
             }
 
-            // insert data into product_qrsheet table
-            DB::table('product_qr_sheet')->insert($itemRefs);
             return response()->json(['success' => "sheet: ". $alias." has been saved"],201);
         }
     }
@@ -94,7 +93,7 @@ class QrSheetController extends Controller
     public function show(Request $request)
     {
         $id = $request->route('id');
-        $sheet = QrSheet::find('id');
+        $sheet = QrSheet::find($id);
 
         $responseObj = [
             'alias' => $sheet->alias,
@@ -110,9 +109,9 @@ class QrSheetController extends Controller
         // $products = $sheet->products;
         foreach($sheet->products as $product){
             array_push($responseObj['items'], [
-                'item_id' => $product->id,
-                'item_name' => $product->name,
-                'item_artnr' => $product->artnr
+                'id' => $product->id,
+                'artnr' => $product->artnr,
+                'kind' => $product->kind
             ]);
         }
 
@@ -126,23 +125,7 @@ class QrSheetController extends Controller
         $id = $request->route('id');
         $sheet = QrSheet::find($id);
 
-        /*// set item dimensions
-        $itemheight = $sheet->page_height_mm / $sheet->rows_per_page;
-        $itemwidth = $sheet->page_width_mm / $sheet->cols_per_page;
-        $qrRatio = 0.8;
 
-        // calculate qrcode size in pixels
-        $qrsize = sqrt(($itemheight * $itemwidth) * $qrRatio *3.78);
-
-        // find each product artnr in sheet->products and store as  .png file
-        foreach($sheet->products as $p){
-            $id = $p->id;
-            $artnr = $p->artnr;
-            QrCode::size($qrsize)->format('png')->generate($artnr, '../public/qrcodes/qr_'.$id.'.png');
-        }*/
-
-        // 72pt/inch, 1 inch = 25.4mm
-        // A4 210 x 297
         $paperWidthPt = $sheet->page_width_mm * (72 / 25.4);
         $paperHeightPt = $sheet->page_height_mm * (72 / 25.4);
         
@@ -182,6 +165,7 @@ class QrSheetController extends Controller
 
     public function destroy(Request $request)
     {
+        // QUERY EXCEPTION!
         $id = $request->route('id');
         $sheet = QrSheet::find($id);
         $sheet->forceDelete();

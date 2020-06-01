@@ -45,11 +45,15 @@ import SideMenuPaginator from "./components/SideMenuPaginator";
 export default {
     name: "sideMenu",
     components: { SideMenuItem, SideMenuPaginator },
+    created(){
+        this.fetchProducts(1)
+    },
     methods: {
         fetchProducts(page) {
             this.$store.dispatch("fetchProducts", {
                 page: page,
                 query: ""
+
             });
         }
     },

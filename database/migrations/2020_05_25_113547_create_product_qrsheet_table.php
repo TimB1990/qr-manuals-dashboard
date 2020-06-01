@@ -19,8 +19,8 @@ class CreateProductQrsheetTable extends Migration
             $table->unsignedBigInteger('product_id');
 
             // foreign keys
-            $table->foreign('qr_sheet_id')->references('id')->on('qr_sheets');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('qr_sheet_id')->references('id')->on('qr_sheets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

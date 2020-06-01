@@ -1,6 +1,13 @@
 <template>
     <!-- use only this.object in script -->
     <div class="content-root">
+        <div v-if="deleteDialog" class="warn-dialog">
+            <span>Are you sure you want to delete this sheet permanently?</span>
+            <div>
+                <button @click="cancelDestroy" class="panel-btn">no</button>
+                <button @click="destroySheet(currentSheetID)" class="panel-btn">yes</button>
+            </div>
+        </div>
         <table class="content-table">
             <thead>
                 <tr>
@@ -27,7 +34,10 @@
                     <td>{{ convertUpdatedAt(item) }}</td>
                     <td>
                         <a>
-                            <i class="fas fa-file-import"></i>
+                            <i
+                                @click="loadSingleSheet(item.id)"
+                                class="fas fa-file-import"
+                            ></i>
                         </a>
                     </td>
                     <td>
@@ -37,12 +47,13 @@
                     </td>
                     <td>
                         <a disabled>
-                            <i class="fas fa-trash"></i>
+                            <i @click="toggleDeleteDialog(item.alias, item.id)" class="fas fa-trash"></i>
                         </a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        <code></code>
     </div>
 </template>
 
@@ -51,12 +62,49 @@ import moment from "moment";
 
 export default {
     name: "sheetManager",
+    data(){
+        return {
+            deleteDialog: false,
+            currentSheetAlias: null,
+            currentSheetID: null
+        }
+    },
     created() {
         this.fetchQrSheets();
     },
     methods: {
         fetchQrSheets() {
             this.$store.dispatch("fetchQrSheets");
+        },
+
+        toggleDeleteDialog(sheetAlias, currentSheetID){
+            this.currentSheetID = currentSheetID
+            this.currentSheet = sheetAlias
+            this.deleteDialog = !this.deleteDialog
+        },
+
+        destroySheet(currentSheetID){
+            this.$store.dispatch('deleteSheet', {
+                id : currentSheetID
+            })
+
+            this.deleteDialog = false
+
+        },
+
+        cancelDestroy(){
+            this.deleteDialog = false
+            this.currentSheetAlias = null
+            this.currentSheetID = null
+        },
+
+        loadSingleSheet(id) {
+            this.$router.push({
+                name: "qr-config-sheet",
+                params: {
+                    id: id
+                }
+            });
         },
         convertCreatedAt(item) {
             if (this.qrsheets) {
@@ -67,12 +115,12 @@ export default {
             if (this.qrsheets) {
                 return moment(item.updated_at).format("DD-MM-YYYY, HH:mm");
             }
-        },
+        }
     },
     computed: {
         qrsheets() {
             return this.$store.state.qrsheets;
-        }
+        },
     }
 };
 </script>

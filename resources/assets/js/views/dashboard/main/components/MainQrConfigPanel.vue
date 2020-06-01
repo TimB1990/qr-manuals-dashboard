@@ -17,6 +17,7 @@
                 <div>
                     <b>Name/Alias:</b>
                     <input
+                        ref="alias"
                         v-model="alias"
                         type="text"
                         placeholder="new sheet"
@@ -45,7 +46,14 @@
                     </select>
                 </span>
                 <span>
-                    <button class="panel-btn" @click="saveSheet">Save Sheet</button>
+                    <button class="panel-btn" @click="saveSheet">
+                        <span v-if="this.$route.name == 'qr-config-sheet'"
+                            >Update Sheet</span
+                        >
+                        <span v-if="this.$route.name == 'qr-config-panel'"
+                            >Save New Sheet</span
+                        >
+                    </button>
                     <button class="btn" @click="prevPage">&laquo;</button>
                     <button class="btn" @click="nextPage">&raquo;</button>
                     <!-- messages -->
@@ -84,7 +92,8 @@
                 </div>
             </div>
         </div>
-        <code>{{ selectedProducts }}</code>
+        SELECTED: <code>{{ selectedProducts }}</code>
+        <br />
     </div>
 </template>
 
@@ -97,6 +106,13 @@ export default {
     name: "mainQrConfigPanel",
     components: { MainQrItem },
 
+    created(){
+        if(this.$route.params.id){
+            let id = this.$route.params.id
+            this.loadSheetOnCreate(id)
+        }
+    },
+
     data() {
         return {
             alias: "",
@@ -104,15 +120,28 @@ export default {
             cols: 4,
             current_page: 1,
             max_pages: 1,
-            currentPaperFormat: null,
+            currentPaperFormat: "210x297",
 
-            // messages
             success: null,
             error: null
         };
     },
 
     methods: {
+        loadSheetOnCreate(id) {
+            this.$store.dispatch("fetchQrSheet", {
+                sheet_id: id
+            });
+
+            const sheet = this.$store.state.qrsheet
+            this.alias = sheet.alias
+            this.rows = sheet.rows_per_page
+            this.cols = sheet.cols_per_page
+            this.current_page = 1
+            this.max_pages = sheet.pages
+            this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`
+        },
+
         paperSizes(fromAformat, toAformat) {
             let sizesArray = [];
 
@@ -135,22 +164,18 @@ export default {
 
             if (!this.alias || this.alias == "") {
                 this.error = "Alias is required";
-            } 
-            else if (!items || items.length < 1) {
+            } else if (!items || items.length < 1) {
                 this.error = "Select at least one item!";
-            } 
-            else if (!this.currentPaperFormat) {
+            } else if (!this.currentPaperFormat) {
                 this.error = "Please select some paper format!";
-            } 
-            else if (
+            } else if (
                 !(this.rows && this.cols) ||
                 this.rows < 1 ||
                 this.cols < 1
-            ) 
-            {
+            ) {
                 this.error = "At least one row and column are required!";
-            } 
-            else {
+            } else {
+                this.error = null;
                 let data = {
                     alias: this.alias,
                     pages: this.max_pages,
@@ -209,7 +234,7 @@ export default {
                 this.selectedProducts.length / this.page_size
             );
             return paginated[0].items;
-        },
+        }
     },
 
     computed: {
@@ -219,6 +244,10 @@ export default {
 
         page_size() {
             return this.rows * this.cols;
+        },
+
+        qrsheet() {
+            return this.$store.state.qrsheet;
         },
 
         // DYNAMIC STYLING

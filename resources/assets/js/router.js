@@ -68,8 +68,20 @@ const routes = [
                 side: SideMenu,
                 content: MainQrConfigPanel,
                 actionbar: SheetsActionbar
+            },
+        }, 
+
+        {
+            path: 'products/qr-sheet/:id',
+            name: 'qr-config-sheet',
+            components: {
+                side: SideMenu,
+                content: MainQrConfigPanel,
+                actionbar: SheetsActionbar
             }
-        }, {
+        },
+        
+        {
             path: '/sheet-manager',
             name: 'sheet_manager',
             components: {
@@ -146,6 +158,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    store.dispatch("clearSelected")
     const loggedin = localStorage.getItem('user')
     if (to.matched.some(record => record.meta.requiresAuth) && !loggedin) {
         next({ name: 'entry' })

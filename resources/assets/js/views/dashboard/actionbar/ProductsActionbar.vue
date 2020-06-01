@@ -1,21 +1,17 @@
 <template>
     <nav class="actionbar" role="actionbar" aria-label="actionbar">
-        <div class="search">
-            <input
-                v-model="search"
-                @input="updateProductFetch(1)"
-                type="text"
-                placeholder="Search Products..."
-            />
-            <i class="fa fa-search" aria-hidden="true"></i>
+        <div class="actionbar-start">
+            <div class="search">
+                <input
+                    v-model="search"
+                    @input="updateProductFetch(1)"
+                    type="text"
+                    placeholder="Search Products..."
+                />
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
         </div>
-        <div class="actionbar-start"></div>
-        <div class="actionbar-end">
-            <button class="btn" @click.prevent="clearSelected">
-                Clear Selection
-            </button>
-            <span>{{ selectedProductCount }}</span>
-        </div>
+        <div class="actionbar-end"></div>
     </nav>
 </template>
 
@@ -48,17 +44,11 @@ export default {
 
         clearProducts() {
             this.$store.dispatch("clearProducts");
-        },
-
-        clearSelected() {
-            this.$store.dispatch("clearSelected");
         }
     },
 
     computed: {
-        selectedProductCount() {
-            return this.$store.getters.selectedProductCount;
-        },
+
         selectedProducts() {
             return this.$store.state.selectedProducts;
         }

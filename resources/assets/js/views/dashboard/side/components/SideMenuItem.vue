@@ -16,7 +16,7 @@
             <span v-for="(category, i) of categories" :key="i">
                 <b>{{ category.name }} | </b>
             </span>
-            <span>
+            <span v-if="this.$route.name == 'qr-config-sheet' || this.$route.name == 'qr-config-panel'">
                 <i
                     @click="
                         addRemoveSelected(

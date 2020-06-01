@@ -24,12 +24,21 @@ export default new Vuex.Store({
         quoteDetails: {},
         quoteProducts: {},
         quoteCustomer: {},
-        qrsheets: {}
+        qrsheets: {},
+        qrsheet: {}
     },
 
     mutations: {
         SET_QRSHEETS(state, payload) {
             state.qrsheets = payload;
+        },
+
+        CLEAR_QR_SHEET(state){
+            state.qrsheet = null
+        },
+
+        SET_SINGLE_QRSHEET(state, payload) {
+            state.qrsheet = payload;
         },
 
         SET_LOADING_STATUS(state, payload) {
@@ -56,6 +65,11 @@ export default new Vuex.Store({
         DELETE_MANUAL(state, { manual_id }) {
             let index = state.productManuals.findIndex(manual_id);
             state.productManuals.splice(index, 1);
+        },
+
+        DELETE_QRSHEET(state, { id }) {
+            let index = state.qrsheets.findIndex(id);
+            state.qrsheets.splice(index, 1);
         },
 
         ADD_ERROR(state, payload) {
@@ -92,6 +106,10 @@ export default new Vuex.Store({
 
         ADD_SELECTED_PRODUCT(state, data) {
             state.selectedProducts.push(data);
+        },
+
+        SET_SELECTION(state,data){
+            state.selectedProducts = data
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
@@ -161,6 +179,10 @@ export default new Vuex.Store({
             commit("CLEAR_SELECTED");
         },
 
+        clearQrSheet({commit}){
+            commit("CLEAR_QR_SHEET")
+        },
+
         emptyProduct({ commit }, { id }) {
             commit("EMPTY_PRODUCT", id);
         },
@@ -177,10 +199,29 @@ export default new Vuex.Store({
         },
 
         fetchQrSheets({ commit }) {
-            axios.get('api/qrsheets').then(result => {
-                commit('SET_QRSHEETS', result.data)
-            }).catch(err => {
-                console.log(err.response.data.error)
+            axios
+                .get("api/qrsheets")
+                .then(result => {
+                    commit("SET_QRSHEETS", result.data);
+                })
+                .catch(err => {
+                    console.log(err.response.data.error);
+                });
+        },
+
+        fetchQrSheet({commit, dispatch}, {sheet_id}){
+            axios.get(`api/qrsheets/${sheet_id}`).then(result => {
+                commit('SET_SINGLE_QRSHEET', result.data)
+                result.data.items.forEach(item => {
+                    // dispatch('addSelectProduct', {data})
+                    let data = {
+                        id: item.id,
+                        artnr: item.artnr,
+                        kind: item.kind
+                    }
+
+                    dispatch('addSelectedProduct', { data })
+                })
             })
         },
 
@@ -297,6 +338,18 @@ export default new Vuex.Store({
                 });
         },
 
+        deleteSheet({ commit, dispatch, getters }, { id }) {
+            axios
+                .delete(`api/qrsheets/${id}`, {
+                    headers: {
+                        Authorization: "Bearer " + getters.getUserToken
+                    }
+                })
+                .then(() => {
+                    dispatch("fetchQrSheets");
+                });
+        },
+
         deleteManual({ commit, dispatch, getters }, { id, manual_id }) {
             axios
                 .delete(`api/products/${id}/manuals/${manual_id}`, {
@@ -397,6 +450,10 @@ export default new Vuex.Store({
                 }
             }
             return false;
+        },
+
+        getSelection: state => {
+            return state.selectedProducts
         },
 
         selectedProductCount: state => {

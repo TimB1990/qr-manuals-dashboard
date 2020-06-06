@@ -34,11 +34,11 @@
             </thead>
 
             <tr>
-                <td>Amount Of Product</td>
+                <td>Amount</td>
                 <td>{{ quoteDetails.amount }}</td>
             </tr>
             <tr>
-                <td>Total EUR</td>
+                <td>Total</td>
                 <td>&euro; {{ this.quoteTotalPrice }}</td>
             </tr>
         </table>

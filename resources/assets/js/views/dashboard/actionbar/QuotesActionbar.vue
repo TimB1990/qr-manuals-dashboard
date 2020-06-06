@@ -5,9 +5,16 @@
         role="actionbar"
         aria-label="actionbar"
     >
+        <i @click="toggleSide" class="fas fa-bars"></i>
         <div class="panel" v-if="statuses.length">
             <div v-for="(status, index) in statuses" :key="index">
-                <button @click="fetchQuotes(statuses[index])" :class="{'panel-btn' : true, 'active' : statuses[index] == currentStatus }">
+                <button
+                    @click="fetchQuotes(statuses[index])"
+                    :class="{
+                        'panel-btn': true,
+                        active: statuses[index] == currentStatus
+                    }"
+                >
                     {{ statuses[index] }}
                     <span v-if="quotes.count_status">
                         {{ quotes.count_status[statuses[index]] }}
@@ -28,10 +35,18 @@ export default {
 
     methods: {
         fetchQuotes(status) {
-            this.$store.dispatch("fetchQuotes", {
-                status: status
-            }).then(this.currentStatus = status);
+            this.$store
+                .dispatch("fetchQuotes", {
+                    status: status
+                })
+                .then((this.currentStatus = status));
         },
+
+        toggleSide() {
+            this.$store.dispatch("toggleSideMenu", {
+                show: null
+            });
+        }
     },
     data() {
         return {

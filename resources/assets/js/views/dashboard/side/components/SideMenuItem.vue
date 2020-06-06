@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="{ 'menu-item': true, 'item-selected': this.selected }"
+        :class="{ 'side-item': true, 'item-selected': this.selected }"
         ref="item"
     >
         <ul @click="fetchDetails(product_id)">

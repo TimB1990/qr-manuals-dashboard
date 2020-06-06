@@ -1,5 +1,5 @@
 <template>
-    <div class="menu-item">
+    <div class="side-item">
         <div class="item-header">
             <span>#{{ quote_id }}</span>
             <span>{{ this.momentAgo }}</span>

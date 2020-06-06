@@ -16,6 +16,7 @@ export default new Vuex.Store({
         feedbackData: {},
         product: {},
         products: {},
+        productMenu: true,
         errors: [],
         productManuals: [],
         productDetails: [],
@@ -31,6 +32,16 @@ export default new Vuex.Store({
     mutations: {
         SET_QRSHEETS(state, payload) {
             state.qrsheets = payload;
+        },
+
+        TOGGLE_SIDE_MENU(state, show){
+            if(!show){
+                state.productMenu = !state.productMenu;
+            }
+            else{
+                state.productMenu = show
+            }
+            
         },
 
         CLEAR_QR_SHEET(state){
@@ -161,6 +172,16 @@ export default new Vuex.Store({
                     token: data.success.token
                 });
             });
+        },
+
+        toggleSideMenu({commit},{show}){
+            if(!show){
+                commit("TOGGLE_SIDE_MENU", null);
+            }
+            else{
+                commit("TOGGLE_SIDE_MENU", show)
+            }
+            
         },
 
         logoutUser({ commit }) {

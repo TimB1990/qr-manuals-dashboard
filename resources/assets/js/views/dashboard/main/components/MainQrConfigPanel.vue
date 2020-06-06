@@ -1,52 +1,83 @@
 <template>
-    <div class="content-root">
-        <div class="panel-layout">
+    <div>
+        <div class="panel-layout content-root">
+            <!-- layout header -->
             <div class="panel-layout-header">
+                <i @click="toggleProducts" id="popup-products" class="fas fa-bars"></i>
                 <span><b>Layout Blueprint</b> </span>
                 <span>
+                    <button class="btn" @click="prevPage">
+                        &laquo;
+                    </button>
                     page
                     {{
                         this.selectedProducts.length > 1 ? this.current_page : 1
                     }}
                     of {{ this.max_pages ? this.max_pages : 1 }}
+                    <button class="btn" @click="nextPage">
+                        &raquo;
+                    </button>
                 </span>
                 <span>items per page: {{ page_size }}</span>
+                <i
+                    @click="toggleSettings"
+                    style="font-size: 25px"
+                    class="fas fa-cog"
+                ></i>
             </div>
-            <!-- config panel -->
-            <div class="config-panel">
-                <div>
-                    <b>Name/Alias:</b>
-                    <input
-                        ref="alias"
-                        v-model="alias"
-                        type="text"
-                        placeholder="new sheet"
-                    />
-                    <b>Rows:</b>
-                    <input v-model="rows" type="number" />
-                    <b>Columns:</b>
-                    <input v-model="cols" type="number" />
-                </div>
 
-                <span>
-                    <b>Paper Size:</b>
-                    <select
-                        v-model="currentPaperFormat"
-                        name="paper"
-                        id="paper"
-                    >
-                        <option
-                            v-for="format in paperSizes(1, 4)"
-                            :key="format.name"
-                            :value="`${format.width}x${format.height}`"
+            <!-- content -->
+            <div class="panel-content">
+                <!-- configuration panel -->
+                <div v-if="settings" class="config-panel">
+                    <b>Settings</b>
+                    <div>
+                        <b>Alias:</b>
+                        <input
+                            ref="alias"
+                            v-model="alias"
+                            type="text"
+                            placeholder="new sheet"
+                        />
+                    </div>
+
+                    <div>
+                        <b>Rows:</b>
+                        <input v-model="rows" type="number" />
+                    </div>
+
+                    <div>
+                        <b>Columns:</b>
+                        <input v-model="cols" type="number" />
+                    </div>
+
+                    <div>
+                        <b>Paper Size:</b>
+                        <select
+                            v-model="currentPaperFormat"
+                            name="paper"
+                            id="paper"
                         >
-                            {{ format.name }}: {{ format.width }} *
-                            {{ format.height }} mm
-                        </option>
-                    </select>
-                </span>
-                <span>
-                    <button class="panel-btn" @click="saveSheet">
+                            <option
+                                v-for="format in paperSizes(1, 4)"
+                                :key="format.name"
+                                :value="`${format.width}x${format.height}`"
+                            >
+                                {{ format.name }}: {{ format.width }} *
+                                {{ format.height }} mm
+                            </option>
+                        </select>
+                    </div>
+
+                    <span>
+                        <!-- messages -->
+                        <p v-if="success" style="color:green;">
+                            {{ success }}
+                        </p>
+                        <p v-if="error" style="color:red;">{{ error }}</p>
+                    </span>
+
+                    <button @click="saveSheet">
                         <span v-if="this.$route.name == 'qr-config-sheet'"
                             >Update Sheet</span
                         >
@@ -54,46 +85,42 @@
                             >Save New Sheet</span
                         >
                     </button>
-                    <button class="btn" @click="prevPage">&laquo;</button>
-                    <button class="btn" @click="nextPage">&raquo;</button>
-                    <!-- messages -->
-                    <p v-if="success" style="color:green;">{{ success }}</p>
-                    <p v-if="error" style="color:red;">{{ error }}</p>
-                </span>
-            </div>
-            <em
-                >select paper size and toggle one or more products to generate
-                QR-codes on sheet</em
-            >
+                </div>
 
-            <div v-if="this.currentPaperFormat" id="sheet">
-                <div :style="sheetBlueprint">
-                    <div
-                        v-for="n in page_size"
-                        :key="n"
-                        :style="itemBlueprint"
-                        class="sheet__blueprint"
-                    >
-                        <span style="color:hsl(0,0%,80%);">
-                            {{ itemBlueprint.width }} x
-                            {{ itemBlueprint.height }}
-                        </span>
-                    </div>
-                    <div :style="sheetItems">
-                        <main-qr-item
-                            v-for="item in paginated()"
-                            :key="item.id"
-                            :id="item.id"
-                            :artnr="item.artnr"
-                            :kind="item.kind"
-                            :dimensions="dimensions"
-                        ></main-qr-item>
+                <!-- end configuration panel -->
+
+                <!-- sheet preview panel -->
+                <div class="preview-container">
+                    <div v-if="this.currentPaperFormat" id="sheet">
+                        <div :style="sheetBlueprint">
+                            <div
+                                v-for="n in page_size"
+                                :key="n"
+                                :style="itemBlueprint"
+                                class="sheet__blueprint"
+                            >
+                                <span style="color:hsl(0,0%,80%);">
+                                    {{ itemBlueprint.width }} x
+                                    {{ itemBlueprint.height }}
+                                </span>
+                            </div>
+                            <div :style="sheetItems">
+                                <main-qr-item
+                                    v-for="item in paginated()"
+                                    :key="item.id"
+                                    :id="item.id"
+                                    :artnr="item.artnr"
+                                    :kind="item.kind"
+                                    :dimensions="dimensions"
+                                ></main-qr-item>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- end sheet preview panel -->
             </div>
+            <!-- end content-panel -->
         </div>
-        SELECTED: <code>{{ selectedProducts }}</code>
-        <br />
     </div>
 </template>
 
@@ -106,15 +133,18 @@ export default {
     name: "mainQrConfigPanel",
     components: { MainQrItem },
 
-    created(){
-        if(this.$route.params.id){
-            let id = this.$route.params.id
-            this.loadSheetOnCreate(id)
+    created() {
+        if (this.$route.params.id) {
+            let id = this.$route.params.id;
+            this.loadSheetOnCreate(id);
         }
     },
 
     data() {
         return {
+            settings: false,
+
+            // content
             alias: "",
             rows: 4,
             cols: 4,
@@ -122,24 +152,34 @@ export default {
             max_pages: 1,
             currentPaperFormat: "210x297",
 
+            // confirmation messages
             success: null,
             error: null
         };
     },
 
     methods: {
+        toggleSettings() {
+            this.settings = !this.settings;
+        },
+
+        toggleProducts(){
+            this.$store.dispatch("toggleSideMenu", {
+                show: null
+            })
+        },
         loadSheetOnCreate(id) {
             this.$store.dispatch("fetchQrSheet", {
                 sheet_id: id
             });
 
-            const sheet = this.$store.state.qrsheet
-            this.alias = sheet.alias
-            this.rows = sheet.rows_per_page
-            this.cols = sheet.cols_per_page
-            this.current_page = 1
-            this.max_pages = sheet.pages
-            this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`
+            const sheet = this.$store.state.qrsheet;
+            this.alias = sheet.alias;
+            this.rows = sheet.rows_per_page;
+            this.cols = sheet.cols_per_page;
+            this.current_page = 1;
+            this.max_pages = sheet.pages;
+            this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`;
         },
 
         paperSizes(fromAformat, toAformat) {
@@ -250,6 +290,13 @@ export default {
             return this.$store.state.qrsheet;
         },
 
+        sheetDimensions() {
+            return {
+                width: parseInt(this.currentPaperFormat.split("x")[0]),
+                height: parseInt(this.currentPaperFormat.split("x")[1])
+            };
+        },
+
         // DYNAMIC STYLING
         sheetItems() {
             if (this.currentPaperFormat) {
@@ -269,8 +316,8 @@ export default {
                     display: "flex",
                     flexWrap: "wrap",
                     alignContent: "flex-start",
-                    padding: `12mm`,
-                    border: "1px solid red"
+                    padding: `12mm`
+                    // border: "1px solid red"
                 };
             }
         },
@@ -293,7 +340,7 @@ export default {
                     flexWrap: "wrap",
                     alignContent: "flex-start",
                     padding: `12mm`,
-                    border: "1px solid grey"
+                    border: "1px dashed black"
                 };
             }
         },
@@ -333,6 +380,23 @@ export default {
                     width: Math.round((paperWidth - 12) / this.cols) - 2,
                     qrRatio: 0.8
                 };
+            }
+        },
+
+        prevScale() {
+            if (this.sheetDimensions) {
+                let dim = this.sheetDimensions;
+                let paperAreaSize = dim.width * dim.height;
+
+                let scale = (210 * 297) / paperAreaSize;
+
+                if (scale <= 1) {
+                    scale = scale;
+                } else {
+                    scale = 1.0;
+                }
+
+                return scale;
             }
         }
     }

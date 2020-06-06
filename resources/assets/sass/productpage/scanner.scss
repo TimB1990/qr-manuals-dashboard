@@ -1,0 +1,64 @@
+@media (min-width: $sm-min-width) {
+    .scanner {
+        width: 60%;
+        padding: 1rem;
+    }
+}
+
+.scanner {
+    padding: 1rem;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+        0 0px 0 1px rgba(10, 10, 10, 0.02);
+
+    &-head {
+        padding-bottom: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    &-body{
+      padding: 1rem;
+      border: 1px solid $exaltoGrey;
+      border-radius: 0.5rem;
+    }
+
+    &-footer{
+      border: 1px solid $exaltoGrey;
+      margin-top: 1rem;
+      border-radius: 0.5rem;
+
+      .artnr-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        height: 8rem;
+
+        input {
+          height: 2rem;
+          border: 1px solid grey;
+          font-size: 1.5rem;
+          width: 60%;
+          letter-spacing: 0.25rem;
+          text-align: center;
+        }
+
+        button {
+          display: block;
+          height: 3rem;
+          width: 50%;
+          background-color: white;
+          border: 1px solid grey;
+          text-transform: uppercase;
+
+          &:hover{
+            background-color: $exaltoGrey;
+            border: 1px solid black;
+            cursor: pointer;
+          }
+
+        }
+      }
+    }
+}

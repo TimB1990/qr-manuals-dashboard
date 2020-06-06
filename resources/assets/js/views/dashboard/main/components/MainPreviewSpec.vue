@@ -105,6 +105,7 @@
             <button class="btn">Save specification</button>
             <button class="btn">Email customer</button>
         </div>
+        <p><em style="color:red;">Not yet implemented</em></p>
     </div>
 </template>
 
@@ -149,10 +150,14 @@ export default {
 
 <style scoped>
 .preview-root {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     padding: 1rem;
     border-radius: 6px;
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
         0 0px 0 1px rgba(10, 10, 10, 0.02);
+    
 }
 
 .preview-content {
@@ -165,9 +170,7 @@ export default {
 .btn-panel {
     margin-top: 2rem;
     display: flex;
-    justify-content: center;
     padding: 1rem;
-    border: 1px solid black;
 }
 
 .btn {

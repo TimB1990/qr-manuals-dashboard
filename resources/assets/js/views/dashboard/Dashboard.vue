@@ -1,48 +1,34 @@
 <template>
-  <div id="root">
-    <header class="header">
-      <header-root></header-root>
-      <router-view name="actionbar"></router-view>
-    </header>
-    <section class="side-and-main">
-      <router-view name="side" class="side"></router-view>
-      <router-view name="content" class="main"></router-view>
-    </section>
-  </div>
-  
+    <div id="root">
+        <header class="header">
+            <header-root></header-root>
+            <router-view name="actionbar"></router-view>
+        </header>
+        <section class="side-and-main">
+            <div v-if="productMenu" class="side">
+                <router-view name="side"></router-view>
+            </div>
+            <div class="main">
+                <router-view name="content"></router-view>
+            </div>
+        </section>
+    </div>
 </template>
 
 <script>
 import HeaderRoot from "./header/HeaderRoot";
 
 export default {
-  // some comment
-  name: "dashboard",
-  components: {
-    HeaderRoot
-  }
+    // some comment
+    name: "dashboard",
+    components: {
+        HeaderRoot
+    },
+
+    computed: {
+        productMenu() {
+            return this.$store.state.productMenu;
+        }
+    }
 };
 </script>
-
-<style>
-.side-and-main {
-  
-  display: flex;
-  margin-bottom: 18px;
-  margin-top: 18px;
-  align-items: stretch;
-}
-
-.main{
-  width: 100%;
-  margin-left: 18px;
-}
-
-.side{
-  width: auto;
-}
-
-.header{
-  margin-top: 16px;
-}
-</style>

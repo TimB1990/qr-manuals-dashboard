@@ -30,7 +30,7 @@
             </div>
 
             <!-- errors -->
-            <div v-if="error" class="notification is-danger">
+            <div v-if="error">
                 <h3>Error!</h3>
                 <div>{{ errorList }}</div>
             </div>
@@ -45,15 +45,14 @@ import SideMenuPaginator from "./components/SideMenuPaginator";
 export default {
     name: "sideMenu",
     components: { SideMenuItem, SideMenuPaginator },
-    created(){
-        this.fetchProducts(1)
+    created() {
+        this.fetchProducts(1);
     },
     methods: {
         fetchProducts(page) {
             this.$store.dispatch("fetchProducts", {
                 page: page,
                 query: ""
-
             });
         }
     },
@@ -73,7 +72,7 @@ export default {
         },
         selectedProducts() {
             return this.$store.state.selectedProducts;
-        }
+        },
     }
 };
 </script>

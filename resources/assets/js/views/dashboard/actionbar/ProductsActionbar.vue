@@ -1,6 +1,11 @@
 <template>
     <nav class="actionbar" role="actionbar" aria-label="actionbar">
         <div class="actionbar-start">
+            <i @click="toggleProducts" class="fas fa-bars"></i>
+
+
+        </div>
+        <div class="actionbar-end">
             <div class="search">
                 <input
                     v-model="search"
@@ -11,7 +16,6 @@
                 <i class="fa fa-search" aria-hidden="true"></i>
             </div>
         </div>
-        <div class="actionbar-end"></div>
     </nav>
 </template>
 
@@ -30,6 +34,11 @@ export default {
         };
     },
     methods: {
+        toggleProducts(){
+            this.$store.dispatch("toggleSideMenu", {
+                show: null
+            })
+        },
         fetchProducts(page) {
             this.$store.dispatch("fetchProducts", {
                 page: page,
@@ -48,7 +57,6 @@ export default {
     },
 
     computed: {
-
         selectedProducts() {
             return this.$store.state.selectedProducts;
         }

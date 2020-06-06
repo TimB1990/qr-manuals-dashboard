@@ -3,7 +3,6 @@
     padding-top: 8px;
     padding-bottom: 8px;
     justify-content: space-between;
-    align-items: center;
     font-weight: bold;
 }
 
@@ -33,7 +32,7 @@
     }
 }
 
-.menu-item {
+.side-item {
     display: flex;
     flex-direction: column;
     border: 1px solid $borderColor;
@@ -42,6 +41,7 @@
     &:hover {
         border: 1px solid black;
         color: black;
+        cursor: pointer;
     }
 
     ul {

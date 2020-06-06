@@ -13,7 +13,7 @@ export default {
 
 <style>
 #logo {
-  height:100px;
+  height:70px;
   width: auto;
 }
 

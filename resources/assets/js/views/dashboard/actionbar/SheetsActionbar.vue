@@ -5,9 +5,9 @@
         </div>
         <div class="actionbar-end">
             <button class="panel-btn" @click="gotoSheetManager">
-                Import Sheet...
+                Browse Sheets... 
             </button>
-            <button class="btn" @click.prevent="clearSelected">
+            <button class="panel-btn" @click.prevent="clearSelected">
                 Clear Selection
             </button>
             <span>{{ selectedProductCount }}</span>

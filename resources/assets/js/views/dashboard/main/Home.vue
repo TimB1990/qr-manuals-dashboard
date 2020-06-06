@@ -1,9 +1,7 @@
 <template>
-    <div class="container">
-        <div class="flex-container">
-            Select item to view its details...
-        </div>
-        
+    <div>
+        homepage
+
     </div>
 </template>
 
@@ -16,10 +14,8 @@ export default {}
 .flex-container{
     display: flex;
     color: lightgrey;
-    /*border-radius:6px;*/
     font-size: 28px;
     border: 1px solid lightgrey;
-    height: 100%;
     justify-content: center;
     align-items: center;
 }

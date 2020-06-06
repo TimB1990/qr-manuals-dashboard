@@ -1,5 +1,18 @@
+// theme variables
 $exalto: rgb(204, 0, 51);
 $font: tahoma;
 $borderColor: hsl(0,0%,80%);
 $exaltoGrey: hsl(0,0%,90%);
 $btnDisabled: hsl(0,0%,92%);
+
+// screen sizes
+$xsm-max-width: 600px;
+$sm-min-width: 600px;
+$md-min-width: 768px;
+$lg-min-width: 992px;
+$xlg-min-width: 1200px;
+
+// shadow
+
+$shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+        0 0px 0 1px rgba(10, 10, 10, 0.02);

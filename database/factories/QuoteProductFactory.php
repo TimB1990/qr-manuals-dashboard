@@ -3,11 +3,10 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Product;
-use App\Category;
+use App\QuoteProduct;
 use Faker\Generator as Faker;
 
-$factory->define(Product::class, function (Faker $faker) {
-
+$factory->define(QuoteProduct::class, function (Faker $faker) {
 
     $randomArticleWord = strtoupper($faker->bothify('??# ###??'));
     $randomArtnr = $faker->numerify($s="######.##");
@@ -15,11 +14,11 @@ $factory->define(Product::class, function (Faker $faker) {
     $randomWdValue = $faker->numberBetween($min = "20", $max="30");
 
     return [
+        'origin_products_id' => factory(Product::class),
+        'quote_id' => factory(Quote::class),
+        'unit_price' => rand(100,10000),
+        'artnr' => $randomArtnr ,
         'name' => 'EXALTO RW '. $randomArticleWord.' '.'12V '. $randomNmValue .'NM '.'WD '. $randomWdValue.'MM',
-        'artnr' => $randomArtnr,
-        'kind' => $randomArticleWord,
-        'stock' => $faker->numberBetween($min="100", $max = "1000"),
-        'unit_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 200, $max=600)
-        // 'category_id' => Category::select('id')->orderByRaw("random()")->first()->id
+        'kind' => $randomArticleWord
     ];
 });

@@ -102,10 +102,9 @@
         </table>
 
         <div class="btn-panel">
-            <button class="btn">Save specification</button>
-            <button class="btn">Email customer</button>
+            <button @click="save" class="btn">Notify Customer</button>
         </div>
-        <p><em style="color:red;">Not yet implemented</em></p>
+        <p><em v-if="message">{{ message }}</em></p>
     </div>
 </template>
 
@@ -115,12 +114,37 @@ export default {
     name: "mainPreviewPriceSpec",
     created(){
         this.fetchQuoteCustomerOnly()
+        this.message = null
+    },
+    data(){
+        return {
+            message: null
+        }
     },
     methods: {
         fetchQuoteCustomerOnly(){
             this.$store.dispatch('fetchQuoteCustomerOnly', {
                 quote_id: this.$route.params.id
             })
+        },
+
+        save(){
+            let data = {
+                quote_id: this.$route.params.id,
+                subtotal: this.queryObject.subtotal,
+                discount:  -1 * this.queryObject.discount,
+                tax: this.queryObject.tax,
+                shipping: this.queryObject.shipping,
+                shippingtax: this.queryObject.shippingtax,
+                total: this.queryObject.total
+            }
+
+            axios.post(`api/quotations/${data.quote_id}/specification`, data).then(() => {
+                this.message = "This specification has been saved, and an email has been send to the customer"
+
+            }).catch(err => {
+                this.message = err.response.data.message;
+            });
         }
     },
     computed: {

@@ -48,9 +48,6 @@
           <span>amount</span>
           <input v-model="amount" id="amount" type="number" placeholder="..." min="1" max="500" />
         </div>
-        <div>
-          <span>stock: 1000</span>
-        </div>
       </div>
       <p id="input-error" v-if="this.error">{{ this.error }}</p>
       <p id="confirmation" v-if="this.confirmation">{{ this.confirmation }}</p>
@@ -172,11 +169,7 @@ export default {
           .post(`api/quotations`, input)
           .then(response => {
             this.confirmation =
-              "Thank you, your quote is being processed, please check your email for more information, you will be redirect in a few seconds...";
-            var self = this;
-            setTimeout(() => {
-              self.goBackToPanel();
-            }, 2000);
+              "Thank you, your quote is being processed, please check your email for more information";
           })
           .catch(error => console.log(error));
       }

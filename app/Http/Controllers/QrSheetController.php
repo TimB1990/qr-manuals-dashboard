@@ -17,7 +17,7 @@ class QrSheetController extends Controller
 
     {
         // $sheets = QrSheet::select('id','alias','pages','product_amount')->get();
-        $sheets = QrSheet::all();
+        $sheets = QrSheet::select('id','alias','pages','product_amount','created_at','updated_at')->get();
         return response()->json($sheets);
     }
 
@@ -96,6 +96,7 @@ class QrSheetController extends Controller
         $sheet = QrSheet::find($id);
 
         $responseObj = [
+            'id' => $sheet->id,
             'alias' => $sheet->alias,
             'pages' => $sheet->pages,
             'page_width_mm' => $sheet->page_width_mm,

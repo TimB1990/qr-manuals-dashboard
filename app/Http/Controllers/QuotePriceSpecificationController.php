@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\QuotePriceSpecification;
+use App\Quote;
 use Illuminate\Http\Request;
+use App\Mail\PriceSpecMailable;
+use App\QuotePriceSpecification;
+use Illuminate\Support\Facades\Mail;
 
 class QuotePriceSpecificationController extends Controller
 {
@@ -13,37 +16,41 @@ class QuotePriceSpecificationController extends Controller
         //
     }
 
-    public function create()
-    {
-        //
-    }
 
     public function store(Request $request)
     {
         // requires review
         $id = $request->route('id');
-        $inputs = $request->all();
-        $originalUnitPrice = QuoteProduct::where('quote_id',$id)->get()->unit_price;
-        $amount = Quote::where('id',$id)->get()->amount;
+        $quote = Quote::find($id);
+        $input = $request->all();
 
-        $totalPrice = $inputs['new_unit_price'] * $amount;
-        $tax = $totalPrice * $inputs['tax_percentage'];
-        $discount = ($originalUnitPrice * $amount) - $totalPrice;
-        $shippingTax = $inputs['shipping_per_unit'] * $amount * $inputs['shipping_tax_percentage'];
-        $finalTotal = $totalPrice + $tax + ($inputs['shipping_per_unit'] * $amount) + $shippingTax;
+        // save
+        $specification = QuotePriceSpecification::create($input);
 
-        QuotePriceSpecification::create(['quote_id' => $id, 'new_unit_price' => $inputs['new_unit_price'], 'total' => $totalPrice, 'discount' => $discount, 'tax' => $tax, 'shipping_per_unit' => $inputs['shipping_per_unit'], 'shipping_tax' => $shippingTax, 'final_total' => $finalTotal]);
+        // setup data to be sent along with specification
+        $customer = $quote->customer;
+        $productInfo = [
+            'name' => $quote->quoteProducts[0]->name,
+            'artnr' => $quote->quoteProducts[0]->artnr,
+            'amount' => $quote->amount
+        ];
 
+        // assemble complete data to be used in mailable
+        $data = [
+            'id' => $id,
+            'customer' => $customer,
+            'product' => $productInfo,
+            'specification' => $specification
+        ];
+
+
+        // send email
+        Mail::to(Quote::find($id)->customer->email)->send(new PriceSpecMailable($data));
     }
 
     public function show(QuotePriceSpecification $quotePriceSpecification)
     {
-        //
-    }
-
-    public function edit(QuotePriceSpecification $quotePriceSpecification)
-    {
-        //
+        // load specification to add 
     }
 
 

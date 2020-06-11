@@ -230,7 +230,7 @@ export default new Vuex.Store({
                 });
         },
 
-        fetchQrSheet({commit, dispatch}, {sheet_id}){
+        fetchQrSheet({commit}, {sheet_id}){
             axios.get(`api/qrsheets/${sheet_id}`).then(result => {
                 commit('SET_SINGLE_QRSHEET', result.data)
                 result.data.items.forEach(item => {
@@ -240,8 +240,6 @@ export default new Vuex.Store({
                         artnr: item.artnr,
                         kind: item.kind
                     }
-
-                    dispatch('addSelectedProduct', { data })
                 })
             })
         },
@@ -401,8 +399,13 @@ export default new Vuex.Store({
                     }
                 )
                 .then(() => {
-                    dispatch("fetchQuotes");
-                    // dispatch("fetchQuoteDetails", { quote_id: quote_id });
+                    /*dispatch("fetchQuotes", {
+                        status: 
+                    });*/
+                    console.log("status updated")
+                    dispatch("fetchQuotes", {
+                        status: status
+                    })
                 });
         },
 

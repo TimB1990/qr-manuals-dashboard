@@ -4,13 +4,13 @@
             <span>QR sheets</span>
         </div>
         <div class="actionbar-end">
-            <button class="panel-btn" @click="gotoSheetManager">
-                Browse Sheets... 
+            <button @click="createNewSheet" class="panel-btn">
+                New Sheet
             </button>
-            <button class="panel-btn" @click.prevent="clearSelected">
+            <button v-if="this.$route.name == 'qr-sheet-id' || this.$route.name == 'qr-sheet-new'" class="panel-btn" @click.prevent="clearSelected">
                 Clear Selection
             </button>
-            <span>{{ selectedProductCount }}</span>
+            <span v-if="this.$route.name == 'qr-sheet-id' || this.$route.name == 'qr-sheet-new'">{{ selectedProductCount }}</span>
         </div>
     </nav>
 </template>
@@ -19,11 +19,11 @@
 export default {
     name: "sheetsActionbar",
     methods: {
-        gotoSheetManager() {
-            this.$router.push({ name: "sheet_manager" });
-        },
         clearSelected() {
             this.$store.dispatch("clearSelected");
+        },
+        createNewSheet() {
+            this.$router.push({ name: "qr-sheet-new" });
         }
     },
     computed: {

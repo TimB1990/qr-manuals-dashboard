@@ -99,14 +99,30 @@ class QuoteController extends Controller
 
             // retrieve productid
             $productid = $request->input('product_id');
-            // retrieve customer inputs
-            $customer_inputs = $request->only(['company','contact', 'phone','address','post_code','residence']);
+
             // create customer record
-            Customer::firstOrCreate(['email' => $request->input('email')], $customer_inputs);
+            Customer::firstOrCreate([
+                'email' => $request->input('email')], 
+                [
+                    'company' => $request->input('company'),
+                    'contact' => $request->input('contact'),
+                    'phone' => $request->input('phone'),
+                    'address' => $request->input('address'),
+                    'post_code' => $request->input('post_code'),
+                    'residence' => $request->input('residence'),
+                    'token' => bcrypt($request->input('email'))
+                ]
+            );
             // retrieve customer id
             $customer_id = Customer::where('email', $request->input('email'))->first()->id;
 
-            $quote = Quote::create(['customer_id' => $customer_id, 'quotes_products_id' => 0, 'amount' => $request->input('amount'), 'status' => "pending"]);
+            $quote = Quote::create([
+                'customer_id' => $customer_id, 
+                 // 'quotes_products_id' => 0, 
+                'amount' => $request->input('amount'), 
+                'status' => "pending"]
+            );
+
             $quoteId = $quote->id;
 
             $product = Product::find($productid);
@@ -124,7 +140,6 @@ class QuoteController extends Controller
             $quoteProductId = $quoteProduct->id;
 
             // insert quoteProductId into quote record
-            $quote->quotes_products_id = $quoteProductId;
             $quote->save();
 
             // return response

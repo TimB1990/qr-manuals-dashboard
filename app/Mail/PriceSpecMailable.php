@@ -7,19 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class QuoteConfirmationMailable extends Mailable
+class PriceSpecMailable extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $input;
+    public $data;
 
-    public function __construct($input)
+    public function __construct($data)
     {
-        $this->input = $input;
+        $this->data = $data;
     }
+
 
     public function build()
     {
-        return $this->subject('Exalto Quote Request Confirmation')->view('mailable.confirmation-quote');
+        return $this->subject('Exalto - your price specification')->view('mailable.price-specification');
     }
 }

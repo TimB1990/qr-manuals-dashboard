@@ -126,10 +126,6 @@
     }
 
     tr {
-        td:nth-child(2){
-            width: 100%;
-
-        }
 
         td {
             border: 1px solid $borderColor;
@@ -148,6 +144,14 @@
                     color: black;
                 }
             }
+        }
+
+        td:first-child{
+            width: 25%;
+        }
+
+        td:last-child{
+            width: auto;
         }
     }
 }

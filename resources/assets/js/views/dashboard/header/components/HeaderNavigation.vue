@@ -13,8 +13,8 @@
                     >
                 </span>
                 <span>
-                    <router-link :to="{ name: 'qr-config-panel' }"
-                        >New QR sheet</router-link
+                    <router-link :to="{ name: 'sheets' }"
+                        >QR sheets</router-link
                     >
                 </span>
                 <span>

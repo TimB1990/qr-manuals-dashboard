@@ -29,7 +29,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/quotations', 'QuoteController@index');
     Route::get('/quotations/{id}', 'QuoteController@show');
     Route::put('/quotations/{id}', 'QuoteController@update');
-    // Route::post('/quotations/{id}/specification');
+    Route::post('/quotations/{id}/specification', 'QuotePriceSpecificationController@store');
+    Route::get('/quotations/{id}/specification/{spec_id}', 'QuotePriceSpecificationController@show');
 
     // QR SHEETS
     Route::post('/qrsheets','QrSheetController@store');

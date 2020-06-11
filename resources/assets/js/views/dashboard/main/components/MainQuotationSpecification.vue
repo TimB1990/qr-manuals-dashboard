@@ -137,7 +137,7 @@
         </div>
         <div class="btn-panel">
             <button @click="goToPreview" class="attach-btn">
-                Attach to quotation...
+                Show Preview...
             </button>
         </div>
     </div>

@@ -75,7 +75,7 @@ const routes = [
             },
             {
                 path: "sheets/create",
-                name: "qr-sheet-new",
+                name: "sheet-new",
                 components: {
                     side: SideMenu,
                     content: MainQrConfigPanel,
@@ -85,7 +85,7 @@ const routes = [
 
             {
                 path: "sheets/:id/edit",
-                name: "qr-sheet-edit",
+                name: "sheet-edit",
                 components: {
                     side: SideMenu,
                     content: MainQrConfigPanel,
@@ -100,6 +100,15 @@ const routes = [
                     side: SideSheets,
                     actionbar: SheetsActionbar,
                     content: SheetDetails
+                }
+            },
+            {
+                path: "sheets/:id/preview",
+                name: "sheet-preview",
+                components: {
+                    side: SideSheets,
+                    content: MainQrConfigPanel,
+                    actionbar: SheetsActionbar
                 }
             },
 

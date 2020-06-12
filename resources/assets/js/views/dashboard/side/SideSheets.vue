@@ -1,6 +1,8 @@
 <template>
     <div class="content-root">
-        <p>side menu</p>
+        <!-- this should become a modal -->
+
+        <!-- side menu sheets -->
         <div v-for="item in qrsheets" :key="item.id">
             <side-sheet-item
                 :sheet_id="item.id"
@@ -39,7 +41,7 @@ export default {
             if (this.qrsheets) {
                 return moment(item.updated_at).format("DD-MM-YYYY, HH:mm");
             }
-        }
+        },
     },
     computed: {
         qrsheets() {

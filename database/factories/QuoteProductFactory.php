@@ -16,7 +16,7 @@ $factory->define(QuoteProduct::class, function (Faker $faker) {
     return [
         'origin_products_id' => factory(Product::class),
         'quote_id' => factory(Quote::class),
-        'unit_price' => rand(100,10000),
+        'unit_price' => rand(100,1000),
         'artnr' => $randomArtnr ,
         'name' => 'EXALTO RW '. $randomArticleWord.' '.'12V '. $randomNmValue .'NM '.'WD '. $randomWdValue.'MM',
         'kind' => $randomArticleWord

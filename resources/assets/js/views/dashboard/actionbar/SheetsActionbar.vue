@@ -7,10 +7,10 @@
             <button @click="createNewSheet" class="panel-btn">
                 New Sheet
             </button>
-            <button v-if="this.$route.name == 'qr-sheet-id' || this.$route.name == 'qr-sheet-new'" class="panel-btn" @click.prevent="clearSelected">
+            <button v-if="this.$route.name == 'sheet-edit' || this.$route.name == 'sheet-new'" class="panel-btn" @click.prevent="clearSelected">
                 Clear Selection
             </button>
-            <span v-if="this.$route.name == 'qr-sheet-id' || this.$route.name == 'qr-sheet-new'">{{ selectedProductCount }}</span>
+            <span v-if="this.$route.name == 'sheet-edit' || this.$route.name == 'sheet-new'">{{ selectedProductCount }}</span>
         </div>
     </nav>
 </template>
@@ -23,7 +23,11 @@ export default {
             this.$store.dispatch("clearSelected");
         },
         createNewSheet() {
-            this.$router.push({ name: "qr-sheet-new" });
+            // clear selected in anyhow
+            this.$store.dispatch("clearSelected");
+
+            // go to new sheet route
+            this.$router.push({ name: "sheet-new" });
         }
     },
     computed: {

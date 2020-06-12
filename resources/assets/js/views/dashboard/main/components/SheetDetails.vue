@@ -1,15 +1,6 @@
 <template>
     <!-- use only this.object in script -->
     <div class="content-root">
-        <div v-if="deleteDialog" class="warn-dialog">
-            <span>Are you sure you want to delete this sheet permanently?</span>
-            <div>
-                <button @click="cancelDestroy" class="panel-btn">no</button>
-                <button @click="destroySheet(currentSheetID)" class="panel-btn">
-                    yes
-                </button>
-            </div>
-        </div>
         <table class="content-table">
             <thead>
                 <tr>
@@ -25,25 +16,25 @@
                     <td>alias</td>
                     <td>{{ sheet.alias }}</td>
                 </tr>
-                                <tr>
+                <tr>
                     <td>pages</td>
                     <td>{{ sheet.pages }}</td>
                 </tr>
                 <tr>
                     <td>width</td>
-                    <td>{{ sheet.page_width_mm}}mm</td>
+                    <td>{{ sheet.page_width_mm }}mm</td>
                 </tr>
-                                <tr>
+                <tr>
                     <td>height</td>
-                    <td>{{ sheet.page_height_mm}}mm</td>
+                    <td>{{ sheet.page_height_mm }}mm</td>
                 </tr>
                 <tr>
                     <td>rows</td>
-                    <td>{{ sheet.rows_per_page}}</td>
+                    <td>{{ sheet.rows_per_page }}</td>
                 </tr>
-                                <tr>
+                <tr>
                     <td>columns</td>
-                    <td>{{ sheet.cols_per_page}}</td>
+                    <td>{{ sheet.cols_per_page }}</td>
                 </tr>
                 <tr>
                     <td>products</td>
@@ -70,8 +61,19 @@
                     <td>{{ item.kind }}</td>
                 </tr>
             </tbody>
-
         </table>
+        <div class="panel">
+            <button @click="setSheetPreview(sheet.id)" class="panel-btn">
+                Preview
+            </button>
+            <button @click="editSheet(sheet.id)" class="panel-btn">Edit</button>
+            <a :href="`/api/qrsheets/${sheet.id}/download`" class="panel-btn"
+                >Download</a
+            >
+            <button @click="destroySheet(sheet.id)" class="panel-btn">
+                Destroy
+            </button>
+        </div>
     </div>
 </template>
 
@@ -83,6 +85,11 @@ export default {
     created() {
         this.fetchSheet(this.$route.params.id);
     },
+    watch: {
+        $route(to,from){
+            this.fetchSheet(this.$route.params.id);
+        }
+    },
     data() {
         return {
             deleteDialog: false,
@@ -91,29 +98,38 @@ export default {
         };
     },
     methods: {
-        fetchSheet(id) {
+        fetchSheet(sheetId) {
             this.$store.dispatch("fetchQrSheet", {
-                sheet_id: id
+                sheet_id: sheetId
             });
         },
-        toggleDeleteDialog(sheetAlias, currentSheetID) {
-            this.currentSheetID = currentSheetID;
-            this.currentSheet = sheetAlias;
-            this.deleteDialog = !this.deleteDialog;
+        editSheet(sheetId) {
+            this.$router.push({
+                name: "sheet-edit",
+                params: {
+                    id: sheetId
+                }
+            });
         },
 
-        destroySheet(currentSheetID) {
+        setSheetPreview(sheetId) {
+            // navigate to route
+            this.$router.push({
+                name: "sheet-preview",
+                params: {
+                    id: sheetId
+                }
+            });
+        },
+
+        destroySheet(id) {
             this.$store.dispatch("deleteSheet", {
-                id: currentSheetID
+                id: id
             });
 
-            this.deleteDialog = false;
-        },
+            // navigate to sheets
+            this.$route.push({ name: 'sheets'})
 
-        cancelDestroy() {
-            this.deleteDialog = false;
-            this.currentSheetAlias = null;
-            this.currentSheetID = null;
         }
     },
     computed: {

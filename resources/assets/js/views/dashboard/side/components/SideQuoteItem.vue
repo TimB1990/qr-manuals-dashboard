@@ -34,6 +34,7 @@
             >
                 Accept
             </button>
+            <button class="btn" @click="showDetails(quote_id)">Show Details</button>
             <button
                 v-if="quote_status == 'accepted'"
                 @click="addSpecification(quote_id)"
@@ -42,8 +43,6 @@
                 Add Price Specification
             </button>
         </div>
-        <button class="btn" @click="showDetails(quote_id)">Show Details</button>
-
     </div>
 </template>
 

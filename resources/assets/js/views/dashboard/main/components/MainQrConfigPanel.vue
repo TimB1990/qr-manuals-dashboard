@@ -3,7 +3,7 @@
         <div class="panel-layout content-root">
             <!-- layout header -->
             <div class="panel-layout-header">
-                <i @click="toggleProducts" id="popup-products" class="fas fa-bars"></i>
+                <router-link v-if="this.$route.name == 'sheet-preview'" :to="{ name: 'sheet-details', params: { id: qrsheet.id}}">Go Back</router-link>
                 <span><b>Layout Blueprint</b> </span>
                 <span>
                     <button class="btn" @click="prevPage">
@@ -20,6 +20,7 @@
                 </span>
                 <span>items per page: {{ page_size }}</span>
                 <i
+                    v-if="this.$route.name != 'sheet-preview'"
                     @click="toggleSettings"
                     style="font-size: 25px"
                     class="fas fa-cog"
@@ -78,11 +79,11 @@
                     </span>
 
                     <button @click="saveSheet">
-                        <span v-if="this.$route.name == 'qr-config-sheet'"
+                        <span v-if="this.$route.name == 'sheet-edit'"
                             >Update Sheet</span
                         >
-                        <span v-if="this.$route.name == 'qr-config-panel'"
-                            >Save New Sheet</span
+                        <span v-if="this.$route.name == 'sheet-new'"
+                            >Save Sheet</span
                         >
                     </button>
                 </div>
@@ -126,17 +127,14 @@
 
 <script>
 import MainQrItem from "./MainQrItem";
-import jspdf from "jspdf";
-import html2canvas from "html2canvas";
 
 export default {
     name: "mainQrConfigPanel",
     components: { MainQrItem },
 
     created() {
-        if (this.$route.params.id) {
-            let id = this.$route.params.id;
-            this.loadSheetOnCreate(id);
+        if (this.$route.name != "sheet-new") {
+            this.loadSheetOnCreate(this.$route.params.id);
         }
     },
 
@@ -163,23 +161,40 @@ export default {
             this.settings = !this.settings;
         },
 
-        toggleProducts(){
+        toggleProducts() {
             this.$store.dispatch("toggleSideMenu", {
                 show: null
-            })
+            });
         },
         loadSheetOnCreate(id) {
+            // clear current selected products
+            this.$store.dispatch("clearSelected");
+
+            // dispatch action to get qr sheet
             this.$store.dispatch("fetchQrSheet", {
                 sheet_id: id
             });
 
-            const sheet = this.$store.state.qrsheet;
+            // get sheet
+            let sheet = this.qrsheet;
+
+            // set settings according to sheet
             this.alias = sheet.alias;
             this.rows = sheet.rows_per_page;
             this.cols = sheet.cols_per_page;
             this.current_page = 1;
             this.max_pages = sheet.pages;
             this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`;
+
+            // add to selection
+            /*this.$store.dispatch('addSelectedProduct', {
+                data: sheet.items
+            })*/
+            sheet.items.forEach(item => {
+                this.$store.dispatch("addSelectedProduct", {
+                    data: item
+                });
+            });
         },
 
         paperSizes(fromAformat, toAformat) {

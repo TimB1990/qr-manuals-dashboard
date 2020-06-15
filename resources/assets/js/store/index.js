@@ -26,7 +26,9 @@ export default new Vuex.Store({
         quoteProducts: {},
         quoteCustomer: {},
         qrsheets: {},
-        qrsheet: {}
+        qrsheet: {},
+        selectionMode: "single",
+        storedItemCopies: 0
     },
 
     mutations: {
@@ -34,18 +36,16 @@ export default new Vuex.Store({
             state.qrsheets = payload;
         },
 
-        TOGGLE_SIDE_MENU(state, show){
-            if(!show){
+        TOGGLE_SIDE_MENU(state, show) {
+            if (!show) {
                 state.productMenu = !state.productMenu;
+            } else {
+                state.productMenu = show;
             }
-            else{
-                state.productMenu = show
-            }
-            
         },
 
-        CLEAR_QR_SHEET(state){
-            state.qrsheet = null
+        CLEAR_QR_SHEET(state) {
+            state.qrsheet = null;
         },
 
         SET_SINGLE_QRSHEET(state, payload) {
@@ -119,8 +119,12 @@ export default new Vuex.Store({
             state.selectedProducts.push(data);
         },
 
-        SET_SELECTION(state,data){
-            state.selectedProducts = data
+        SET_SELECTION_MODE(state, mode) {
+            state.selectionMode = mode;
+        },
+
+        SET_ITEM_COPIES(state, value){
+            state.storedItemCopies = value
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
@@ -174,19 +178,19 @@ export default new Vuex.Store({
             });
         },
 
-        toggleSideMenu({commit},{show}){
-            if(!show){
+        toggleSideMenu({ commit }, { show }) {
+            if (!show) {
                 commit("TOGGLE_SIDE_MENU", null);
+            } else {
+                commit("TOGGLE_SIDE_MENU", show);
             }
-            else{
-                commit("TOGGLE_SIDE_MENU", show)
-            }
-            
         },
 
         logoutUser({ commit }) {
             commit("CLEAR_USER_DATA");
         },
+
+        // selection
 
         addSelectedProduct({ commit }, { data }) {
             commit("ADD_SELECTED_PRODUCT", data);
@@ -200,9 +204,15 @@ export default new Vuex.Store({
             commit("CLEAR_SELECTED");
         },
 
-        clearQrSheet({commit}){
-            commit("CLEAR_QR_SHEET")
+        setSelectionMode({ commit }, { mode }) {
+            commit("SET_SELECTION_MODE", mode);
         },
+
+        setItemCopies({commit}, {value}){
+            commit('SET_ITEM_COPIES', value)
+        },
+
+        // product
 
         emptyProduct({ commit }, { id }) {
             commit("EMPTY_PRODUCT", id);
@@ -219,6 +229,12 @@ export default new Vuex.Store({
                 });
         },
 
+        // qrsheet
+
+        clearQrSheet({ commit }) {
+            commit("CLEAR_QR_SHEET");
+        },
+
         fetchQrSheets({ commit }) {
             axios
                 .get("api/qrsheets")
@@ -230,18 +246,18 @@ export default new Vuex.Store({
                 });
         },
 
-        fetchQrSheet({commit}, {sheet_id}){
+        fetchQrSheet({ commit }, { sheet_id }) {
             axios.get(`api/qrsheets/${sheet_id}`).then(result => {
-                commit('SET_SINGLE_QRSHEET', result.data)
+                commit("SET_SINGLE_QRSHEET", result.data);
                 result.data.items.forEach(item => {
                     // dispatch('addSelectProduct', {data})
                     let data = {
                         id: item.id,
                         artnr: item.artnr,
                         kind: item.kind
-                    }
-                })
-            })
+                    };
+                });
+            });
         },
 
         // for context.commit, and page parameter
@@ -402,10 +418,10 @@ export default new Vuex.Store({
                     /*dispatch("fetchQuotes", {
                         status: 
                     });*/
-                    console.log("status updated")
+                    console.log("status updated");
                     dispatch("fetchQuotes", {
                         status: status
-                    })
+                    });
                 });
         },
 
@@ -477,7 +493,7 @@ export default new Vuex.Store({
         },
 
         getSelection: state => {
-            return state.selectedProducts
+            return state.selectedProducts;
         },
 
         selectedProductCount: state => {
@@ -497,5 +513,7 @@ export default new Vuex.Store({
 
             return paginated;
         }
+
+        // paginatedReplicas??
     }
 });

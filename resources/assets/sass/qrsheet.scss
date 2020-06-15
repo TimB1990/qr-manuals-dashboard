@@ -19,7 +19,7 @@
     position: absolute;
     right: 1.25rem;
     padding: 1rem;
-    height: 50%;
+    // height: 50%;
     border: 1px solid $exaltoGrey;
     z-index: 1;
     width: 20rem;
@@ -36,9 +36,11 @@
         input {
             text-align: center;
             padding: 0.25rem;
+            width: 130px;
         }
 
         select {
+            text-align: center;
             padding: 0.25rem;
         }
     }

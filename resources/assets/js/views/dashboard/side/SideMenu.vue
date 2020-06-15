@@ -1,8 +1,27 @@
 <template>
     <div>
         <div class="content-root">
+            <div class="panel">
+                <button
+                    @click="setSelectionMode('single')"
+                    :class="{
+                        'panel-btn': true,
+                        active: selectionMode == 'single'
+                    }"
+                >
+                    Single
+                </button>
+                <button
+                    @click="setSelectionMode('multi')"
+                    :class="{
+                        'panel-btn': true,
+                        active: selectionMode == 'multi'
+                    }"
+                >
+                    Multi
+                </button>
+            </div>
             <div class="menu-header">
-                <strong>products</strong>
                 <span v-if="!loading">Loading...</span>
             </div>
 
@@ -35,6 +54,7 @@
                 <div>{{ errorList }}</div>
             </div>
         </div>
+        {{ selectedProducts }}
     </div>
 </template>
 
@@ -53,6 +73,13 @@ export default {
             this.$store.dispatch("fetchProducts", {
                 page: page,
                 query: ""
+            });
+        },
+
+        setSelectionMode(mode) {
+            this.$store.dispatch('clearSelected')
+            this.$store.dispatch("setSelectionMode", {
+                mode: mode
             });
         }
     },
@@ -73,6 +100,10 @@ export default {
         selectedProducts() {
             return this.$store.state.selectedProducts;
         },
+
+        selectionMode() {
+            return this.$store.state.selectionMode;
+        }
     }
 };
 </script>

@@ -3,6 +3,7 @@
         :class="{ 'side-item': true, 'item-selected': this.selected }"
         ref="item"
     >
+        <span>{{ selectionMode }}</span>
         <ul @click="fetchDetails(product_id)">
             <li>
                 <b>{{ product_name }}</b>
@@ -16,15 +17,20 @@
             <span v-for="(category, i) of categories" :key="i">
                 <b>{{ category.name }} | </b>
             </span>
-            <span v-if="this.$route.name == 'sheet-new' || this.$route.name == 'sheet-edit'">
+            <span
+                v-if="
+                    this.$route.name == 'sheet-new' ||
+                        this.$route.name == 'sheet-edit'
+                "
+            >
                 <i
                     @click="
                         addRemoveSelected(
+                            selectionMode,
                             product_id,
                             product_name,
                             product_artnr,
-                            product_kind,
-                            product_stock
+                            product_kind
                         )
                     "
                     :class="{
@@ -62,8 +68,9 @@ export default {
             });
         },
 
-        addRemoveSelected(id, name, artnr, kind) {
-            // first check if id is included in productIsSelected getters from store
+        addRemoveSelected(selectionMode, id, name, artnr, kind) {
+
+            // check if id is included in productIsSelected getters from store
             let data = {
                 id: id,
                 artnr: artnr,
@@ -71,9 +78,26 @@ export default {
             };
 
             if (this.$store.getters.productIsSelected(id)) {
-                this.$store.dispatch("removeSelectedProduct", { id: id });
+                // item is selected
+                if ((this.selectionMode = "single")) {
+                    this.$store.dispatch("clearSelected");
+                    this.$store.dispatch("setItemCopies", {
+                        value: 0
+                    })
+                } else {
+                    this.$store.dispatch("removeSelectedProduct", { id: id });
+                }
             } else {
+
+                // item not selected
+                if (this.selectionMode == "single") {
+                    this.$store.dispatch("clearSelected");
+                }
+
                 this.$store.dispatch("addSelectedProduct", { data: data });
+                this.$store.dispatch("setItemCopies", {
+                    value: 1
+                })
             }
         }
     },
@@ -81,6 +105,10 @@ export default {
     computed: {
         selected() {
             return this.$store.getters.productIsSelected(this.product_id);
+        },
+
+        selectionMode() {
+            return this.$store.state.selectionMode;
         }
     }
 };

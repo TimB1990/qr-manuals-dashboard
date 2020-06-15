@@ -3,7 +3,11 @@
         <div class="panel-layout content-root">
             <!-- layout header -->
             <div class="panel-layout-header">
-                <router-link v-if="this.$route.name == 'sheet-preview'" :to="{ name: 'sheet-details', params: { id: qrsheet.id}}">Go Back</router-link>
+                <router-link
+                    v-if="this.$route.name == 'sheet-preview'"
+                    :to="{ name: 'sheet-details', params: { id: qrsheet.id } }"
+                    >Go Back</router-link
+                >
                 <span><b>Layout Blueprint</b> </span>
                 <span>
                     <button class="btn" @click="prevPage">
@@ -50,6 +54,17 @@
                     <div>
                         <b>Columns:</b>
                         <input v-model="cols" type="number" />
+                    </div>
+
+                    <div v-if="selectionMode == 'single' && selectedProducts.length">
+                        <b>Item Copies</b>
+                        <input 
+                            id="itemCopies" 
+                            min="1" 
+                            max="200" 
+                            @input="updateItemCopies($event, selectedProducts[0])" 
+                            :value="storedItemCopies" 
+                            type="number" />
                     </div>
 
                     <div>
@@ -107,8 +122,8 @@
                             </div>
                             <div :style="sheetItems">
                                 <main-qr-item
-                                    v-for="item in paginated()"
-                                    :key="item.id"
+                                    v-for="(item,index) in paginated()"
+                                    :key="index"
                                     :id="item.id"
                                     :artnr="item.artnr"
                                     :kind="item.kind"
@@ -122,6 +137,7 @@
             </div>
             <!-- end content-panel -->
         </div>
+        <code>stored item copies: {{ storedItemCopies }}</code>
     </div>
 </template>
 
@@ -133,6 +149,10 @@ export default {
     components: { MainQrItem },
 
     created() {
+        this.$store.dispatch('setSelectionMode', {
+            mode: 'single'
+        })
+
         if (this.$route.name != "sheet-new") {
             this.loadSheetOnCreate(this.$route.params.id);
         }
@@ -149,6 +169,7 @@ export default {
             current_page: 1,
             max_pages: 1,
             currentPaperFormat: "210x297",
+            itemCopies: 1,
 
             // confirmation messages
             success: null,
@@ -195,6 +216,26 @@ export default {
                     data: item
                 });
             });
+        },
+
+        updateItemCopies($event, item) {
+            
+            console.log($event)
+
+            if($event.target.value <= 0) return;
+
+            this.itemCopies = $event.target.value;
+
+            this.$store.dispatch('clearSelected')
+            this.$store.dispatch('setItemCopies', {
+                value: this.itemCopies
+            });
+
+            for(var i = 0; i < this.itemCopies; i++){
+                this.$store.dispatch('addSelectedProduct', {
+                    data: item
+                });
+            }
         },
 
         paperSizes(fromAformat, toAformat) {
@@ -295,6 +336,14 @@ export default {
     computed: {
         selectedProducts() {
             return this.$store.state.selectedProducts;
+        },
+
+        selectionMode() {
+            return this.$store.state.selectionMode;
+        },
+
+        storedItemCopies(){
+            return this.$store.state.storedItemCopies
         },
 
         page_size() {

@@ -43,11 +43,10 @@ export default {
         email: this.email,
         password: this.password
       }).then(() => {
-        this.$router.push({name:'dashboard'})
+        this.$router.push({name:'products'})
       }).catch(err => {
         console.log("err from entry: ", err)
         this.error = err
-        
       })
     }
   }
@@ -121,11 +120,6 @@ export default {
   height: 80px;
   width: auto;
 }
-/*.dialog-footer{
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-}*/
 
 .dialog-footer {
   display: flex;

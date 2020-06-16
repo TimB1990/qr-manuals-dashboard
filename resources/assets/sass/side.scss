@@ -50,31 +50,29 @@
         padding: 0.5rem;
     }
 
-    nav {
-        padding: 0.5rem;
-        span {
-            font-size: 12px;
+    &-footer {
+        display: flex;
+        justify-content: space-between;
+        nav {
+            padding: 0.5rem;
+            span {
+                font-size: 12px;
 
-            b {
-                color: hsl(0, 0%, 50%);
-            }
-
-            i {
-                padding: 1px;
-                border: 1px solid hsl(0, 0%, 86%);
-                color: hsl(0, 0%, 86%);
-                font-size: 18px;
-                float: right;
-
-                &:hover {
-                    border: 1px solid black;
-                    color: black;
+                b {
+                    color: hsl(0, 0%, 50%);
                 }
             }
+        }
+        input {
+            width: 2rem;
+            height: 2rem;
+            text-align: center;
+            font-size: 1rem;
 
-            i.item-selected {
-                border: 1px solid black;
-                color: black;
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
             }
         }
     }
@@ -85,10 +83,9 @@
     color: black;
 }
 
-.item-header{
+.item-header {
     display: flex;
     padding: 0.5rem;
     justify-content: space-between;
     font-weight: bold;
-    
 }

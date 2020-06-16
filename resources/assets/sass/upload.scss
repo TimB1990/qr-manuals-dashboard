@@ -1,10 +1,31 @@
 input[type="file"] {
-  position: absolute;
-  top: -500px;
+  display: none
 }
 
 .remove-file {
   font-weight: bolder;
   cursor: pointer;
   float: right;
+}
+
+.upload-table{
+  width: 100%;
+  padding: 0.5rem;
+  thead {
+    background-color: $exalto;
+    color:white;
+    
+  }
+
+  tbody{
+    tr > td:nth-child(2){
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  td{
+    padding: 0.5rem;
+    border: 1px solid hsl(0,0%,80%);
+  }
 }

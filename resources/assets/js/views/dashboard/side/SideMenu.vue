@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="content-root">
-            <div class="panel">
+            <div v-if="this.$route.name == 'sheet-new' || this.$route.name == 'sheet-edit'" class="panel">
                 <button
                     @click="setSelectionMode('single')"
                     :class="{
@@ -37,6 +37,9 @@
                     :product_unit_price="product.unit_price"
                     :categories="product.categories"
                 />
+            </div>
+            <div v-else>
+                <em>There Are No Products In Database</em>
             </div>
 
             <!-- paginator -->

@@ -3,11 +3,11 @@
     <div>
       <label>
         <!-- this element is placed outside screen boundaries -->
-        <input v-show="false" type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()" />
+        <input v-show="true" type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()" />
       </label>
     </div>
 
-    <table class="content-table">
+    <table class="upload-table">
       <thead>
         <tr>
           <td colspan="2">Upload Manual - files: {{ this.files.length }}</td>
@@ -32,8 +32,12 @@
     </table>
 
     <div class="panel">
-        <button :disabled="this.filesPresented" class="panel-btn" v-on:click="submitFiles()">Upload Manuals <i class="fas fa-file-upload"></i></button>
-        <button class="panel-btn" v-on:click="addFiles()">Add Manuals</button>
+        <button :disabled="this.filesPresented" class="panel-btn" v-on:click="submitFiles()">
+          Upload
+        </button>
+        <button class="panel-btn" v-on:click="addFiles()">
+          Add Manuals
+        </button>
     </div>
   </div>
 </template>

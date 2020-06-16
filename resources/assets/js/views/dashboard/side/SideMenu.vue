@@ -1,26 +1,6 @@
 <template>
     <div>
         <div class="content-root">
-            <div v-if="this.$route.name == 'sheet-new' || this.$route.name == 'sheet-edit'" class="panel">
-                <button
-                    @click="setSelectionMode('single')"
-                    :class="{
-                        'panel-btn': true,
-                        active: selectionMode == 'single'
-                    }"
-                >
-                    Single
-                </button>
-                <button
-                    @click="setSelectionMode('multi')"
-                    :class="{
-                        'panel-btn': true,
-                        active: selectionMode == 'multi'
-                    }"
-                >
-                    Multi
-                </button>
-            </div>
             <div class="menu-header">
                 <span v-if="!loading">Loading...</span>
             </div>
@@ -78,13 +58,6 @@ export default {
                 query: ""
             });
         },
-
-        setSelectionMode(mode) {
-            this.$store.dispatch('clearSelected')
-            this.$store.dispatch("setSelectionMode", {
-                mode: mode
-            });
-        }
     },
 
     computed: {
@@ -103,10 +76,6 @@ export default {
         selectedProducts() {
             return this.$store.state.selectedProducts;
         },
-
-        selectionMode() {
-            return this.$store.state.selectionMode;
-        }
     }
 };
 </script>

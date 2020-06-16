@@ -56,17 +56,6 @@
                         <input v-model="cols" type="number" />
                     </div>
 
-                    <div v-if="selectionMode == 'single' && selectedProducts.length">
-                        <b>Item Copies</b>
-                        <input 
-                            id="itemCopies" 
-                            min="1" 
-                            max="200" 
-                            @input="updateItemCopies($event, selectedProducts[0])" 
-                            :value="storedItemCopies" 
-                            type="number" />
-                    </div>
-
                     <div>
                         <b>Paper Size:</b>
                         <select
@@ -207,35 +196,11 @@ export default {
             this.max_pages = sheet.pages;
             this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`;
 
-            // add to selection
-            /*this.$store.dispatch('addSelectedProduct', {
-                data: sheet.items
-            })*/
             sheet.items.forEach(item => {
                 this.$store.dispatch("addSelectedProduct", {
                     data: item
                 });
             });
-        },
-
-        updateItemCopies($event, item) {
-            
-            console.log($event)
-
-            if($event.target.value <= 0) return;
-
-            this.itemCopies = $event.target.value;
-
-            this.$store.dispatch('clearSelected')
-            this.$store.dispatch('setItemCopies', {
-                value: this.itemCopies
-            });
-
-            for(var i = 0; i < this.itemCopies; i++){
-                this.$store.dispatch('addSelectedProduct', {
-                    data: item
-                });
-            }
         },
 
         paperSizes(fromAformat, toAformat) {
@@ -336,10 +301,6 @@ export default {
     computed: {
         selectedProducts() {
             return this.$store.state.selectedProducts;
-        },
-
-        selectionMode() {
-            return this.$store.state.selectionMode;
         },
 
         storedItemCopies(){

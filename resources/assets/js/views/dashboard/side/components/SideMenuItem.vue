@@ -19,7 +19,15 @@
                     <b>{{ category.name }} | </b>
                 </span>
             </nav>
-            <input type="number" value="0" />
+            <input
+                v-if="
+                    this.$route.name == 'sheet-new' ||
+                        this.$route.name == 'sheet-edit'
+                "
+                @input="addSelectedProduct($event.target.value, product_id, product_name, product_kind)"
+                type="number"
+                value="0"
+            />
         </div>
     </div>
 </template>
@@ -48,40 +56,40 @@ export default {
             });
         },
 
-        addRemoveSelected(selectionMode, id, name, artnr, kind) {
-            // check if id is included in productIsSelected getters from store
-            let data = {
-                id: id,
-                artnr: artnr,
-                kind: kind
-            };
+        // not used but persisted for reference
+        updateItemCopies($event, item) {
+            console.log($event);
 
-            var selected = this.$store.getters.productIsSelected(id);
+            if ($event.target.value <= 0) return;
 
-            if (selected && this.selectionMode == "single") {
-                // clear selection
-                this.$store.dispatch("clearSelected");
+            this.itemCopies = $event.target.value;
 
-                // set item copies to zero
-                this.$store.dispatch("setItemCopies", { value: 0 });
+            this.$store.dispatch("clearSelected");
+            this.$store.dispatch("setItemCopies", {
+                value: this.itemCopies
+            });
+
+            for (var i = 0; i < this.itemCopies; i++) {
+                this.$store.dispatch("addSelectedProduct", {
+                    data: item
+                });
+            }
+        },
+
+        // refactor
+        addSelectedProduct(count, id, name, artnr, kind) {
+            let data = [];
+
+            for(let i=0; i<count;i++){
+                data = [...data, {
+                    id: id,
+                    artnr: artnr,
+                    kind: kind
+                }];
             }
 
-            if (selected && this.selectionMode == "multiple") {
-                // remove selected from selection
-                this.$store.dispatch("removeSelectedProduct", { id: id });
-            }
-
-            if (!selected && this.selectionMode == "single") {
-                // add selected product
-                this.$store.dispatch("addSelectedProduct", { data: data });
-                // set item copies to one
-                this.$store.dispatch("setItemCopies", { value: 1 });
-            }
-
-            if (!selected && this.selectionMode == "multi") {
-                // just add to selection
-                this.$store.dispatch("addSelectedProduct", { data: data });
-            }
+            this.$store.dispatch("removeSelectedProduct", { id: id });
+            this.$store.dispatch("addSelectedProduct", { data: data });
         }
     },
 

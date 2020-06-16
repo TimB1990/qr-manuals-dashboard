@@ -116,7 +116,7 @@ export default new Vuex.Store({
         },
 
         ADD_SELECTED_PRODUCT(state, data) {
-            state.selectedProducts.push(data);
+            state.selectedProducts = [...state.selectedProducts, ...data];
         },
 
         SET_SELECTION_MODE(state, mode) {
@@ -128,10 +128,9 @@ export default new Vuex.Store({
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
-            let index = state.selectedProducts.findIndex(
-                index => index.id == id
+            state.selectedProducts = state.selectedProducts.filter(
+                selectedProduct => selectedProduct.id != id
             );
-            state.selectedProducts.splice(index, 1);
         },
 
         CLEAR_SELECTED(state) {
@@ -202,14 +201,6 @@ export default new Vuex.Store({
 
         clearSelected({ commit }) {
             commit("CLEAR_SELECTED");
-        },
-
-        setSelectionMode({ commit }, { mode }) {
-            commit("SET_SELECTION_MODE", mode);
-        },
-
-        setItemCopies({commit}, {value}){
-            commit('SET_ITEM_COPIES', value)
         },
 
         // product

@@ -24,7 +24,14 @@
                     this.$route.name == 'sheet-new' ||
                         this.$route.name == 'sheet-edit'
                 "
-                @input="addSelectedProduct($event.target.value, product_id, product_name, product_kind)"
+                @input="
+                    addSelectedProduct(
+                        $event.target.value,
+                        product_id,
+                        product_artnr,
+                        product_kind
+                    )
+                "
                 type="number"
                 value="0"
             />
@@ -56,36 +63,19 @@ export default {
             });
         },
 
-        // not used but persisted for reference
-        updateItemCopies($event, item) {
-            console.log($event);
-
-            if ($event.target.value <= 0) return;
-
-            this.itemCopies = $event.target.value;
-
-            this.$store.dispatch("clearSelected");
-            this.$store.dispatch("setItemCopies", {
-                value: this.itemCopies
-            });
-
-            for (var i = 0; i < this.itemCopies; i++) {
-                this.$store.dispatch("addSelectedProduct", {
-                    data: item
-                });
-            }
-        },
-
-        // refactor
-        addSelectedProduct(count, id, name, artnr, kind) {
+        // refactored
+        addSelectedProduct(count, id, artnr, kind) {
             let data = [];
 
-            for(let i=0; i<count;i++){
-                data = [...data, {
-                    id: id,
-                    artnr: artnr,
-                    kind: kind
-                }];
+            for (let i = 0; i < count; i++) {
+                data = [
+                    ...data,
+                    {
+                        id: id,
+                        artnr: artnr,
+                        kind: kind
+                    }
+                ];
             }
 
             this.$store.dispatch("removeSelectedProduct", { id: id });

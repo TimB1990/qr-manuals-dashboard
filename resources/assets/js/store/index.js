@@ -27,8 +27,8 @@ export default new Vuex.Store({
         quoteCustomer: {},
         qrsheets: {},
         qrsheet: {},
-        selectionMode: "single",
-        storedItemCopies: 0
+        storedItemCopies: 0,
+        quotesStatus: null
     },
 
     mutations: {
@@ -63,10 +63,6 @@ export default new Vuex.Store({
 
         SET_QUOTES(state, payload) {
             state.quotes = payload;
-        },
-
-        CLEAR_PRODUCTS(state) {
-            state.products = {};
         },
 
         CLEAR_MANUALS(state) {
@@ -123,8 +119,8 @@ export default new Vuex.Store({
             state.selectionMode = mode;
         },
 
-        SET_ITEM_COPIES(state, value){
-            state.storedItemCopies = value
+        SET_ITEM_COPIES(state, value) {
+            state.storedItemCopies = value;
         },
 
         REMOVE_SELECTED_PRODUCT(state, id) {
@@ -159,6 +155,10 @@ export default new Vuex.Store({
             state.user = null;
             localStorage.removeItem("user");
             axios.defaults.headers.common["Authorization"] = null;
+        },
+
+        SET_QUOTES_STATUS(state, status) {
+            state.quotesStatus = status;
         }
     },
 
@@ -267,10 +267,19 @@ export default new Vuex.Store({
                 });
         },
 
-        fetchQuotes({ commit }, { status }) {
+        clearManuals({ commit }) {
+            commit("CLEAR_MANUALS");
+        },
+
+        // quotations
+        fetchQuotes({ state, commit }, {page}) {
+            console.log(state.quotesStatus);
+
             commit("SET_LOADING_STATUS", "loading");
             axios
-                .get(`api/quotations?status=${status}`)
+                .get(
+                    `api/quotations?status=${state.quotesStatus}&page=${page}`
+                )
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QUOTES", result.data);
@@ -280,14 +289,6 @@ export default new Vuex.Store({
                     commit("SET_QUOTES", {});
                     commit("ADD_ERROR", err);
                 });
-        },
-
-        clearProducts({ commit }) {
-            commit("CLEAR_PRODUCTS");
-        },
-
-        clearManuals({ commit }) {
-            commit("CLEAR_MANUALS");
         },
 
         fetchQuoteDetails({ commit }, { quote_id }) {
@@ -305,6 +306,7 @@ export default new Vuex.Store({
         },
 
         fetchQuoteProductsOnly({ commit }, { quote_id }) {
+            commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(`api/quotations/${quote_id}`)
                 .then(result => {
@@ -314,6 +316,7 @@ export default new Vuex.Store({
         },
 
         fetchQuoteCustomerOnly({ commit }, { quote_id }) {
+            commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(`api/quotations/${quote_id}?customer=1`)
                 .then(result => {
@@ -321,6 +324,14 @@ export default new Vuex.Store({
                 })
                 .catch(error => console.log(error));
         },
+
+        setQuotesStatus({ commit, dispatch }, { status }) {
+            commit("SET_QUOTES_STATUS", status);
+
+            dispatch("fetchQuotes", { status });
+        },
+
+        // products
 
         fetchDetails({ commit }, { id }) {
             commit("SET_LOADING_STATUS", "loading");
@@ -406,9 +417,6 @@ export default new Vuex.Store({
                     }
                 )
                 .then(() => {
-                    /*dispatch("fetchQuotes", {
-                        status: 
-                    });*/
                     console.log("status updated");
                     dispatch("fetchQuotes", {
                         status: status
@@ -446,6 +454,10 @@ export default new Vuex.Store({
         //quote detail getters
         getQuoteDetails: state => {
             return state.quoteDetails.quote;
+        },
+
+        getQuotesStatus: state => {
+            return state.quotesStatus;
         },
 
         getQuoteCustomerDetails: state => {

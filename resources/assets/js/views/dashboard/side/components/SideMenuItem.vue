@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="{ 'side-item': true, 'item-selected': this.selected }"
+        :class="{'side-item': true, 'active': false }"
         ref="item"
     >
         <ul @click="fetchDetails(product_id)">
@@ -52,9 +52,14 @@ export default {
         "categories"
     ],
 
+    data(){
+        return {
+            selectedProductID: null
+        }
+    },
+
     methods: {
         fetchDetails(id) {
-            console.log("navigate to details of:", id);
             this.$router.replace({
                 name: "product_details",
                 params: {
@@ -84,9 +89,6 @@ export default {
     },
 
     computed: {
-        selected() {
-            return this.$store.getters.productIsSelected(this.product_id);
-        },
 
         selectionMode() {
             return this.$store.state.selectionMode;

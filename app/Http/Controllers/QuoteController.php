@@ -18,16 +18,18 @@ class QuoteController extends Controller
 
     public function index(Request $request)
     {
+        $q = $request->query('q');
         $quotes = [];
 
         $total_quotes = Quote::all()->count();
-        $filter = $request->query('status');
+        $status = $request->query('status');
 
-        if(!($filter == 'any')){
-            $quotes = Quote::where('status', $filter)->get();
+        if(!($status == 'any')){
+            // CHECK OUT CUSTOMER IS RELATED ETC.
+            $quotes = Quote::where('status', $status)->paginate(5);
         }
         else{
-            $quotes = Quote::all();
+            $quotes = Quote::all()->paginate(5);
         }
 
         $responseObject = [

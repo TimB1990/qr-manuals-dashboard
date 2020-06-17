@@ -5,6 +5,14 @@
     }
 }
 
+.invalid-msg{
+  font-size: 1rem;
+  color: red;
+  text-align: center;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 .scanner {
     padding: 1rem;
     box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
@@ -37,9 +45,9 @@
 
         input {
           height: 2rem;
+          width: 99%;
           border: 1px solid grey;
           font-size: 1.5rem;
-          width: 60%;
           letter-spacing: 0.25rem;
           text-align: center;
         }
@@ -47,7 +55,7 @@
         button {
           display: block;
           height: 3rem;
-          width: 50%;
+          width: 100%;
           background-color: white;
           border: 1px solid grey;
           text-transform: uppercase;

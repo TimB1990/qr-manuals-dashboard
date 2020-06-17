@@ -1,6 +1,9 @@
 <template>
     <div class="content-root">
-        <!-- this should become a modal -->
+        <div v-if="!loading" class="menu-header">
+            <span>Loading...</span>
+            <span class="side-load"></span>
+        </div>
 
         <!-- side menu sheets -->
         <div v-for="item in qrsheets" :key="item.id">
@@ -41,11 +44,19 @@ export default {
             if (this.qrsheets) {
                 return moment(item.updated_at).format("DD-MM-YYYY, HH:mm");
             }
-        },
+        }
     },
     computed: {
         qrsheets() {
             return this.$store.state.qrsheets;
+        },
+
+        selectedProducts() {
+            return this.$store.state.selectedProducts;
+        },
+
+        loading() {
+            return this.$store.state.loadingStatus === "notloading";
         }
     }
 };

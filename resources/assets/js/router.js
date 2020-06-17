@@ -51,8 +51,7 @@ const routes = [
                 name: "products",
                 components: {
                     side: SideMenu,
-                    content: Home,
-                    actionbar: ProductsActionBar
+                    // content: Home,
                 }
             },
             {
@@ -61,7 +60,7 @@ const routes = [
                 components: {
                     side: SideMenu,
                     content: MainProductDetails,
-                    actionbar: ProductsActionBar
+                    // actionbar: ProductsActionBar
                 }
             },
             {
@@ -118,7 +117,6 @@ const routes = [
                 name: "quotations",
                 components: {
                     side: SideQuotations,
-                    content: MainQuotationsHome,
                     actionbar: QuotesActionBar
                 }
             },

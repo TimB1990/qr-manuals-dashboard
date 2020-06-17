@@ -5,7 +5,10 @@
         </div>
 
         <div v-if="this.notFound && !this.isLoading" class="notfound">
-            <p>No product found</p>
+            <p>No Product Found</p>
+            <div class="panel">
+                <router-link :to="{name: 'scanner'}" class="panel-btn">Return To Scanner</router-link>
+            </div>
         </div>
 
         <table class="panel-table" v-if="this.product.length > 0">

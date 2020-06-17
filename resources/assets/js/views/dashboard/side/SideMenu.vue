@@ -1,8 +1,21 @@
 <template>
     <div>
         <div class="content-root">
-            <div class="menu-header">
-                <span v-if="!loading">Loading...</span>
+            <div class="menu-header-2">
+                <div class="search">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input
+                        v-model="query"
+                        @input="updateProductFetch(1)"
+                        type="text"
+                        placeholder="Search Products..."
+                    />
+                </div>
+            </div>
+
+            <div v-if="!loading" class="menu-header">
+                <span>loading...</span>
+                <span class="side-load"></span>
             </div>
 
             <div v-if="products.data && products.data.length">
@@ -19,7 +32,7 @@
                 />
             </div>
             <div v-else>
-                <em>There Are No Products In Database</em>
+                <em>No Results Found</em>
             </div>
 
             <!-- paginator -->
@@ -37,7 +50,6 @@
                 <div>{{ errorList }}</div>
             </div>
         </div>
-        {{ selectedProducts }}
     </div>
 </template>
 
@@ -48,16 +60,32 @@ import SideMenuPaginator from "./components/SideMenuPaginator";
 export default {
     name: "sideMenu",
     components: { SideMenuItem, SideMenuPaginator },
+    data() {
+        return {
+            query: ""
+        };
+    },
     created() {
         this.fetchProducts(1);
     },
     methods: {
+        toggleProducts() {
+            this.$store.dispatch("toggleSideMenu", {
+                show: null
+            });
+        },
+
         fetchProducts(page) {
             this.$store.dispatch("fetchProducts", {
                 page: page,
-                query: ""
+                query: this.query
             });
         },
+
+        updateProductFetch: _.debounce(function(page) {
+            console.log("fetchProducts called");
+            this.fetchProducts(1);
+        }, 800)
     },
 
     computed: {
@@ -75,7 +103,7 @@ export default {
         },
         selectedProducts() {
             return this.$store.state.selectedProducts;
-        },
+        }
     }
 };
 </script>

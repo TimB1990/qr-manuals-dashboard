@@ -1,8 +1,36 @@
 .menu-header {
-    display: flex;
-    justify-content: space-between;
     font-weight: bold;
-    border: 1px solid red;
+
+    &-2 {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: 0.75rem;
+
+        i {
+            padding: 6px;
+            font-size: 1rem;
+        }
+
+        .search {
+            display: flex;
+            border: 1px solid hsl(0, 0%, 80%);
+            align-items: baseline;
+            padding: 6px;
+            border-radius: 6px;
+            width: 100%;
+
+            i {
+                padding: 6px;
+            }
+
+            input {
+                padding: 6px;
+                border: none;
+                outline: transparent;
+            }
+        }
+    }
 }
 
 .paginator {
@@ -87,4 +115,24 @@
     padding: 0.5rem;
     justify-content: space-between;
     font-weight: bold;
+}
+
+.side-load {
+    position: absolute;
+    left: 21%;
+    border: 0.5rem solid #f3f3f3;
+    border-top: 0.5rem solid grey;
+    border-radius: 50%;
+    width: 0.75rem;
+    height: 0.75rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

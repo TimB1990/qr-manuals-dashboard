@@ -10,7 +10,9 @@ const app = new Vue({
     el: '#app',
     router: router,
     store: store,
+
     created(){
+
         const userString = localStorage.getItem('user')
         if(userString){
             const userData = JSON.parse(userString)
@@ -22,6 +24,8 @@ const app = new Vue({
             }
             return Promise.reject(error)
         })
+
+        router.push({ name: "products" });
 
     }
 });

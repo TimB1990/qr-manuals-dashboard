@@ -111,7 +111,7 @@
                             </div>
                             <div :style="sheetItems">
                                 <main-qr-item
-                                    v-for="(item,index) in paginated()"
+                                    v-for="(item, index) in paginated()"
                                     :key="index"
                                     :id="item.id"
                                     :artnr="item.artnr"
@@ -126,7 +126,6 @@
             </div>
             <!-- end content-panel -->
         </div>
-        <code>stored item copies: {{ storedItemCopies }}</code>
     </div>
 </template>
 
@@ -138,12 +137,9 @@ export default {
     components: { MainQrItem },
 
     created() {
-        this.$store.dispatch('setSelectionMode', {
-            mode: 'single'
-        })
 
         if (this.$route.name != "sheet-new") {
-            this.loadSheetOnCreate(this.$route.params.id);
+            this.loadSheetContents(this.$route.params.id);
         }
     },
 
@@ -176,14 +172,15 @@ export default {
                 show: null
             });
         },
-        loadSheetOnCreate(id) {
-            // clear current selected products
-            this.$store.dispatch("clearSelected");
 
+        loadSheetContents(id) {
             // dispatch action to get qr sheet
             this.$store.dispatch("fetchQrSheet", {
                 sheet_id: id
             });
+
+            // clear current selected products
+            this.$store.dispatch("clearSelected");
 
             // get sheet
             let sheet = this.qrsheet;
@@ -196,11 +193,21 @@ export default {
             this.max_pages = sheet.pages;
             this.currentPaperFormat = `${sheet.page_width_mm}x${sheet.page_height_mm}`;
 
-            sheet.items.forEach(item => {
-                this.$store.dispatch("addSelectedProduct", {
-                    data: item
-                });
-            });
+            // add items from sheet model to selection
+            let data = [];
+
+            for (let i = 0; i < sheet.items.length; i++) {
+                data = [
+                    ...data,
+                    {
+                        id: sheet.items[i].id,
+                        artnr: sheet.items[i].artnr,
+                        kind: sheet.items[i].kind
+                    }
+                ];
+            }
+
+            this.$store.dispatch("addSelectedProduct", { data: data });
         },
 
         paperSizes(fromAformat, toAformat) {
@@ -287,12 +294,13 @@ export default {
         },
 
         paginated() {
+            let page_size = this.rows * this.cols;
             let paginated = this.$store.getters.paginatedSelection(
                 this.current_page,
-                this.page_size
+                page_size
             );
             this.max_pages = Math.ceil(
-                this.selectedProducts.length / this.page_size
+                this.selectedProducts.length / page_size
             );
             return paginated[0].items;
         }
@@ -303,8 +311,8 @@ export default {
             return this.$store.state.selectedProducts;
         },
 
-        storedItemCopies(){
-            return this.$store.state.storedItemCopies
+        storedItemCopies() {
+            return this.$store.state.storedItemCopies;
         },
 
         page_size() {

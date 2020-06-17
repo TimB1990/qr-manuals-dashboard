@@ -1,9 +1,10 @@
 <template>
     <div class="content-root">
-
-        <div class="menu-header">
-            <span>Quotations</span>
+        <div v-if="!loading" class="menu-header">
+            <span>Loading...</span>
+            <span class="side-load"></span>
         </div>
+
         <div>
             <div v-if="quotes">
                 <side-quote-item
@@ -32,11 +33,36 @@ import moment from "moment";
 export default {
     name: "sideQuotations",
     components: { SideQuoteItem },
+    created() {
+        // this.fetchQuotes(this.quotesStatus);
+    },
+
+    methods: {
+        fetchQuotes(status, page) {
+            this.$store.dispatch("fetchQuotes", {
+                status: status,
+                page: 1
+            });
+        },
+
+        updateQuoteFetch: _.debounce(function(page) {
+            // this.fetchProducts(1);
+        }, 800)
+    },
+
     computed: {
         quotes() {
-            let data = this.$store.state.quotes;
-            if (data) return data;
+            return this.$store.state.quotes;
+            //if (data) return data;
+        },
+        loading() {
+            return this.$store.state.loadingStatus === "notloading";
+        },
+
+        quotesStatus() {
+            return this.$store.state.quotesStatus;
         }
-    }
+    },
+
 };
 </script>

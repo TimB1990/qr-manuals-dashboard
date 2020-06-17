@@ -11,7 +11,7 @@
 
         <div class="artnr-panel">
                   <em>
-          Or instead provide the product code
+          Or instead provide the 8 digit product code
         </em>
           <input
             v-model="artnr"
@@ -23,7 +23,7 @@
           />
           <button @click="submitProductcode">Submit Productcode</button>
         </div>
-        <p class="error-msg">
+        <p class="invalid-msg">
           <em>{{ error }}</em>
         </p>
       </div>
@@ -62,7 +62,7 @@ export default {
         this.error = "";
         this.$router.push({ path: `/view/${this.artnr}` });
       } else {
-        this.error = "The productcode is not valid";
+        this.error = "This productcode is not valid, make sure you are using the right format: 8 digits total seperated by '.' before the last 2 digits"
       }
     }
   }

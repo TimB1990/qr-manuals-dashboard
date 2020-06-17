@@ -55,7 +55,7 @@
                     <td><b>Productcode</b></td>
                     <td><b>kind</b></td>
                 </tr>
-                <tr v-for="item in sheet.items" :key="item.id">
+                <tr v-for="(item,index) in sheet.items" :key="index">
                     <td>{{ item.id }}</td>
                     <td>{{ item.artnr }}</td>
                     <td>{{ item.kind }}</td>

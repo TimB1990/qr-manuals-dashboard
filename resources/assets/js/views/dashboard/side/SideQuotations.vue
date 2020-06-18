@@ -5,6 +5,8 @@
             <span class="side-load"></span>
         </div>
 
+        <div class="page-count"><b>List:</b> {{ page }} of {{ quotes.pages }}</div>
+
         <div>
             <div v-if="quotes">
                 <side-quote-item
@@ -23,28 +25,54 @@
             <div v-if="!quotes.items || !quotes.items.length">
                 There are currently no items pending or with this status
             </div>
+            <hr />
+            <div class="panel">
+                <button
+                    @click="fetchQuotes(quotesStatus, page - 1)"
+                    class="panel-btn"
+                    :disabled="page == 1"
+                >
+                    Previous
+                </button>
+                <button
+                    @click="fetchQuotes(quotesStatus, page + 1)"
+                    class="panel-btn"
+                    :disabled="page == quotes.pages"
+                >
+                    Next
+                </button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import SideQuoteItem from "./components/SideQuoteItem";
+import SideMenuPaginator from "./components/SideMenuPaginator";
 import moment from "moment";
+
 export default {
     name: "sideQuotations",
-    components: { SideQuoteItem },
+    components: { SideQuoteItem, SideMenuPaginator },
+    data() {
+        return {
+            page: 1
+        };
+    },
     created() {
-        // this.fetchQuotes(this.quotesStatus);
+        // this.fetchQuotes(this.quotesStatus, 2);
     },
 
     methods: {
         fetchQuotes(status, page) {
+            this.page = page;
             this.$store.dispatch("fetchQuotes", {
                 status: status,
-                page: 1
+                page: page
             });
         },
 
+        // search debounce
         updateQuoteFetch: _.debounce(function(page) {
             // this.fetchProducts(1);
         }, 800)
@@ -62,7 +90,6 @@ export default {
         quotesStatus() {
             return this.$store.state.quotesStatus;
         }
-    },
-
+    }
 };
 </script>

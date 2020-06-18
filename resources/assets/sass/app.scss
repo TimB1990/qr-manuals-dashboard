@@ -16,7 +16,8 @@
 
 .active{
     border: 1px solid black;
-    background-color: whitesmoke;
+
+
 }
 
 .warn-dialog {
@@ -83,6 +84,7 @@
 
     &:disabled {
         background-color: $btnDisabled;
+        cursor: not-allowed;
     }
 }
 

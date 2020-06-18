@@ -1,5 +1,5 @@
 <template>
-    <div class="side-item">
+    <div :class="{'side-item' : true, 'active' : quote_id == this.$route.params.id}">
         <div class="item-header">
             <span>#{{ quote_id }}</span>
             <span>{{ this.momentAgo }}</span>
@@ -97,7 +97,7 @@ export default {
         },
         updatedAt() {
             return moment(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
-        }
+        },
     }
 };
 </script>

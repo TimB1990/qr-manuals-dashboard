@@ -23,6 +23,5 @@ class Quote extends Model
     public function quoteCredential(){
         return $this->belongsTo('App\QuoteCredential');
     }
-
 }
 

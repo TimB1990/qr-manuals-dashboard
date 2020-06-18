@@ -9,7 +9,9 @@ use App\QuoteProduct;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\QuoteResource;
 use Illuminate\Support\Facades\Crypt;
+use App\Http\Resources\QuoteCollection;
 use App\Mail\QuoteConfirmationMailable;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,22 +20,30 @@ class QuoteController extends Controller
 
     public function index(Request $request)
     {
-        $q = $request->query('q');
+         $perPage = 5;
+        // $q = $request->query('q');
         $quotes = [];
 
         $total_quotes = Quote::all()->count();
         $status = $request->query('status');
 
         if(!($status == 'any')){
-            // CHECK OUT CUSTOMER IS RELATED ETC.
-            $quotes = Quote::where('status', $status)->paginate(5);
+            $quotes = Quote::where('status', $status)->paginate($perPage);
         }
         else{
-            $quotes = Quote::all()->paginate(5);
+            $quotes = Quote::all()->paginate($perPage);
         }
+
+        // total products of status
+        $totalOfStatus = Quote::where('status', $status)->count();
+        
+        // calculate pages total
+        $pages = ceil($totalOfStatus / $perPage);
+
 
         $responseObject = [
             'items' => [],
+            'pages' => $pages,
             'count_status' => [
                 'pending' => Quote::where('status','pending')->count(),
                 'accepted' => Quote::where('status','accepted')->count(),
@@ -63,11 +73,10 @@ class QuoteController extends Controller
 
             array_push($responseObject['items'], $responseItem);  
         }
-
-
         return response()->json($responseObject);
     }
 
+    // STORE
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[

@@ -45,8 +45,6 @@
         </tr>
       </tbody>
     </table>
-
-    <p v-if="error" style="color:red;">error: {{ error }}</p>
     <main-product-manuals-upload :id="parseInt(this.$route.params.id)" />
   </div>
 </template>

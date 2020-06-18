@@ -59,6 +59,12 @@
     }
 }
 
+.page-count {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
 .side-item {
     display: flex;
     flex-direction: column;

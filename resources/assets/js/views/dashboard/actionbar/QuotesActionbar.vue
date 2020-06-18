@@ -13,10 +13,11 @@
                         active: statuses[index] == quotesStatus
                     }"
                 >
-                    {{ statuses[index] }}
+                    {{ statuses[index] }} {{ quotes.count_status[statuses[index]]}} 
                 </button>
             </div>
         </div>
+        <span><b>Total:</b> {{ quotes.count_all}}</span>
     </nav>
 </template>
 
@@ -30,7 +31,8 @@ export default {
     methods: {
         setQuotesStatus(status) {
             this.$store.dispatch("setQuotesStatus", {
-                status: status
+                status: status,
+                page: 1
             });
         }
     },
@@ -51,6 +53,9 @@ export default {
     computed: {
         quotesStatus() {
             return this.$store.state.quotesStatus;
+        },
+        quotes(){
+            return this.$store.state.quotes
         }
     }
 };

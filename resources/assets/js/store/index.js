@@ -274,6 +274,7 @@ export default new Vuex.Store({
         // quotations
         fetchQuotes({ state, commit }, {page}) {
             console.log(state.quotesStatus);
+            console.log(page)
 
             commit("SET_LOADING_STATUS", "loading");
             axios
@@ -325,10 +326,10 @@ export default new Vuex.Store({
                 .catch(error => console.log(error));
         },
 
-        setQuotesStatus({ commit, dispatch }, { status }) {
+        setQuotesStatus({ commit, dispatch }, { status, page }) {
             commit("SET_QUOTES_STATUS", status);
 
-            dispatch("fetchQuotes", { status });
+            dispatch("fetchQuotes", { page });
         },
 
         // products

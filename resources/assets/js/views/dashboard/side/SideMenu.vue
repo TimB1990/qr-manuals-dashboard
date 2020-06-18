@@ -43,12 +43,6 @@
                     @paginate="fetchProducts"
                 ></side-menu-paginator>
             </div>
-
-            <!-- errors -->
-            <div v-if="error">
-                <h3>Error!</h3>
-                <div>{{ errorList }}</div>
-            </div>
         </div>
     </div>
 </template>

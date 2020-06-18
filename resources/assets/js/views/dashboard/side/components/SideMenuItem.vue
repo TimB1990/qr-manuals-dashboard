@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="{'side-item': true, 'active': false }"
+        :class="{'side-item': true, 'active': product_id == this.$route.params.id && (this.$route.params.name != 'sheet-new' || this.$route.params.name != 'sheet-edit') }"
         ref="item"
     >
         <ul @click="fetchDetails(product_id)">
@@ -33,7 +33,7 @@
                     )
                 "
                 type="number"
-                value="0"
+                :value="countItems(product_id)"
             />
         </div>
     </div>
@@ -52,13 +52,10 @@ export default {
         "categories"
     ],
 
-    data(){
-        return {
-            selectedProductID: null
-        }
-    },
-
     methods: {
+        countItems(id) {
+            return this.selectionArray.filter(item => item[1].id == id).length;
+        },
         fetchDetails(id) {
             this.$router.replace({
                 name: "product_details",
@@ -78,7 +75,7 @@ export default {
                     {
                         id: id,
                         artnr: artnr,
-                        kind: kind
+                        kind: kind,
                     }
                 ];
             }
@@ -89,9 +86,13 @@ export default {
     },
 
     computed: {
-
         selectionMode() {
             return this.$store.state.selectionMode;
+        },
+
+        selectionArray(){
+            let selection = this.$store.state.selectedProducts;
+            return Object.entries(selection);
         }
     }
 };

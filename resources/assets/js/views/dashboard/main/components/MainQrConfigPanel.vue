@@ -202,7 +202,7 @@ export default {
                     {
                         id: sheet.items[i].id,
                         artnr: sheet.items[i].artnr,
-                        kind: sheet.items[i].kind
+                        kind: sheet.items[i].kind,
                     }
                 ];
             }

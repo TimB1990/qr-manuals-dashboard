@@ -12,7 +12,7 @@ $factory->define(Customer::class, function (Faker $faker) {
         'email' => $email,
         'company' => $faker->company,
         'contact' => $faker->name,
-        'phone' => $faker->phone_number,
+        'phone' => null,
         'address' => $faker->streetAddress,
         'post_code' => $faker->postcode,
         'residence' => $faker->cityName,

@@ -226,9 +226,9 @@ export default new Vuex.Store({
             commit("CLEAR_QR_SHEET");
         },
 
-        fetchQrSheets({ commit }) {
+        fetchQrSheets({ commit }, {page, query}) {
             axios
-                .get("api/qrsheets")
+                .get(`api/qrsheets?page=${page}&q=${query}`)
                 .then(result => {
                     commit("SET_QRSHEETS", result.data);
                 })

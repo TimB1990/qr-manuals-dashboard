@@ -1,7 +1,7 @@
 <template>
     <div @click="gotoSheetDetails(sheet_id)" :class="{'side-item':true, 'active':sheet_id == this.$route.params.id}">
         <div class="item-header">
-            <span>Sheet ID</span>
+            <span>ID</span>
             <span>#{{ sheet_id }}</span>
         </div>
         <table>

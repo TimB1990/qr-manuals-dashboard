@@ -5,9 +5,22 @@
             <span class="side-load"></span>
         </div>
 
+        <div class="menu-header-2">
+            <div class="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input
+                    @input="updateSheetFetch($event.target.value, 1)"
+                    type="text"
+                    placeholder="Search Sheet Alias..."
+                />
+            </div>
+        </div>
+
         <!-- side menu sheets -->
-        <div v-for="item in qrsheets" :key="item.id">
+        <div v-if="qrsheets">
             <side-sheet-item
+                :key="item.id"
+                v-for="item in qrsheets.data"
                 :sheet_id="item.id"
                 :alias="item.alias"
                 :product_amount="item.product_amount"
@@ -17,23 +30,49 @@
             >
             </side-sheet-item>
         </div>
+        <div>
+            <side-menu-paginator
+                :pagination="qrsheets"
+                :offset="2"
+                @paginate="fetchQrSheets(query)"
+            ></side-menu-paginator>
+        </div>
     </div>
 </template>
 <script>
 import moment from "moment";
 import SideSheetItem from "./components/SideSheetItem";
+import SideMenuPaginator from "./components/SideMenuPaginator";
 
 export default {
     name: "sideSheets",
-    components: { SideSheetItem },
+    components: { SideSheetItem, SideMenuPaginator },
 
     created() {
-        this.fetchQrSheets();
+        this.fetchQrSheets("", 1);
+    },
+
+    data() {
+        return {
+            page: 1,
+            query: ""
+        };
     },
     methods: {
-        fetchQrSheets() {
-            this.$store.dispatch("fetchQrSheets");
+        fetchQrSheets(query, page) {
+            this.query = query;
+            this.page = page;
+
+            this.$store.dispatch("fetchQrSheets", {
+                page: page,
+                query: this.query,
+            });
         },
+
+        updateSheetFetch: _.debounce(function(query, page) {
+            this.query = query;
+            this.fetchQrSheets(query, page);
+        }, 800),
 
         convertCreatedAt(item) {
             if (this.qrsheets) {

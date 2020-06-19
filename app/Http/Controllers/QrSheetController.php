@@ -13,17 +13,13 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class QrSheetController extends Controller
 {
 
-    public function index()
+    public function index(Request $request){
+        $perPage = 5;
+        $q = $request->query('q');
+        
+        $sheets = QrSheet::select('id','alias','pages','product_amount','created_at','updated_at')->where('alias','like','%'.$q.'%')->paginate($perPage);
 
-    {
-        // $sheets = QrSheet::select('id','alias','pages','product_amount')->get();
-        $sheets = QrSheet::select('id','alias','pages','product_amount','created_at','updated_at')->get();
         return response()->json($sheets);
-    }
-
-    public function create()
-    {
-        //
     }
 
     public function store(Request $request)

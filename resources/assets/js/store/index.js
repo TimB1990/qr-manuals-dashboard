@@ -272,14 +272,19 @@ export default new Vuex.Store({
         },
 
         // quotations
-        fetchQuotes({ state, commit }, {page}) {
+        setQuotesStatus({ commit, dispatch }, { status, page, query }) {
+            commit("SET_QUOTES_STATUS", status);
+            dispatch("fetchQuotes", { page, query });
+        },
+
+        fetchQuotes({ state, commit }, { page, query }) {
             console.log(state.quotesStatus);
-            console.log(page)
+            console.log(page);
 
             commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(
-                    `api/quotations?status=${state.quotesStatus}&page=${page}`
+                    `api/quotations?status=${state.quotesStatus}&page=${page}&q=${query}`
                 )
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
@@ -324,12 +329,6 @@ export default new Vuex.Store({
                     commit("SET_QUOTE_CUSTOMER", result.data);
                 })
                 .catch(error => console.log(error));
-        },
-
-        setQuotesStatus({ commit, dispatch }, { status, page }) {
-            commit("SET_QUOTES_STATUS", status);
-
-            dispatch("fetchQuotes", { page });
         },
 
         // products

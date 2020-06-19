@@ -5,7 +5,18 @@
             <span class="side-load"></span>
         </div>
 
-        <div class="page-count"><b>List:</b> {{ page }} of {{ quotes.pages }}</div>
+        <!-- menu pagination -->
+                <div class="page-count">
+            <b>List:</b> {{ page }} of {{ quotes.pages }}
+        </div>
+
+        <!-- searchbar -->
+        <div class="menu-header-2">
+            <div class="search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input @input="updateQuoteFetch($event.target.value, 1)" type="text" :placeholder="'search ' +  quotesStatus + ' quotations'" />
+            </div>
+        </div>
 
         <div>
             <div v-if="quotes">
@@ -28,14 +39,14 @@
             <hr />
             <div class="panel">
                 <button
-                    @click="fetchQuotes(quotesStatus, page - 1)"
+                    @click="fetchQuotes(query, page - 1)"
                     class="panel-btn"
                     :disabled="page == 1"
                 >
                     Previous
                 </button>
                 <button
-                    @click="fetchQuotes(quotesStatus, page + 1)"
+                    @click="fetchQuotes(query, page + 1)"
                     class="panel-btn"
                     :disabled="page == quotes.pages"
                 >
@@ -56,25 +67,26 @@ export default {
     components: { SideQuoteItem, SideMenuPaginator },
     data() {
         return {
-            page: 1
+            page: 1,
+            query: ""
         };
-    },
-    created() {
-        // this.fetchQuotes(this.quotesStatus, 2);
     },
 
     methods: {
-        fetchQuotes(status, page) {
+        fetchQuotes(query, page) {
+            this.query = query
             this.page = page;
+
             this.$store.dispatch("fetchQuotes", {
-                status: status,
+                query: query,
                 page: page
             });
         },
 
         // search debounce
-        updateQuoteFetch: _.debounce(function(page) {
-            // this.fetchProducts(1);
+        updateQuoteFetch: _.debounce(function(query, page) {
+            this.query = query
+            this.fetchQuotes(query,page)
         }, 800)
     },
 

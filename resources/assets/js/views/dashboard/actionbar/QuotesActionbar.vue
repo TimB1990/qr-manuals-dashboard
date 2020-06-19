@@ -32,7 +32,8 @@ export default {
         setQuotesStatus(status) {
             this.$store.dispatch("setQuotesStatus", {
                 status: status,
-                page: 1
+                page: 1,
+                query: ""
             });
         }
     },

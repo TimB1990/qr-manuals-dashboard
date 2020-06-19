@@ -13,6 +13,7 @@ use App\Http\Resources\QuoteResource;
 use Illuminate\Support\Facades\Crypt;
 use App\Http\Resources\QuoteCollection;
 use App\Mail\QuoteConfirmationMailable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 
 class QuoteController extends Controller
@@ -20,30 +21,40 @@ class QuoteController extends Controller
 
     public function index(Request $request)
     {
-         $perPage = 5;
-        // $q = $request->query('q');
+        $perPage = 5;
         $quotes = [];
-
+        
         $total_quotes = Quote::all()->count();
         $status = $request->query('status');
+        $q = $request->query('q');
 
-        if(!($status == 'any')){
-            $quotes = Quote::where('status', $status)->paginate($perPage);
-        }
-        else{
-            $quotes = Quote::all()->paginate($perPage);
-        }
-
-        // total products of status
-        $totalOfStatus = Quote::where('status', $status)->count();
+        $total = 0;
         
-        // calculate pages total
-        $pages = ceil($totalOfStatus / $perPage);
+        // retrieve quotations
+        if($status == 'any'){
 
+            $quotes = Quote::whereHas('customer', function (Builder $query) use ($q) {
+                $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
+            })->paginate($perPage);
+
+            $total = Quote::whereHas('customer', function (Builder $query) use ($q) {
+                $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
+            })->count();
+
+        } else {
+
+            $quotes = Quote::where('status', $status)->whereHas('customer', function (Builder $query) use ($q) {
+                $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
+            })->paginate($perPage);
+            
+            $total =  Quote::where('status', $status)->whereHas('customer', function (Builder $query) use ($q) {
+                $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
+            })->count();
+        }
 
         $responseObject = [
             'items' => [],
-            'pages' => $pages,
+            'pages' => ceil($total / $perPage ),
             'count_status' => [
                 'pending' => Quote::where('status','pending')->count(),
                 'accepted' => Quote::where('status','accepted')->count(),
@@ -73,6 +84,8 @@ class QuoteController extends Controller
 
             array_push($responseObject['items'], $responseItem);  
         }
+
+        // dd($responseObject);
         return response()->json($responseObject);
     }
 

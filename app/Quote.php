@@ -23,5 +23,9 @@ class Quote extends Model
     public function quoteCredential(){
         return $this->belongsTo('App\QuoteCredential');
     }
+
+        public function feedMessage(){
+        return $this->morphMany('App\FeedMessage', 'reference');
+    }
 }
 

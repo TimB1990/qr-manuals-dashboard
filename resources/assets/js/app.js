@@ -1,31 +1,35 @@
-import './bootstrap'
-import store from './store'
-import router from './router'
-import Root from './views/Root'
-import axios from 'axios'
+import "./bootstrap";
+import store from "./store";
+import router from "./router";
+import Root from "./views/Root";
+import axios from "axios";
 
-Vue.component('root', Root);
+Vue.component("root", Root);
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     router: router,
     store: store,
 
-    created(){
+    created() {
+        const userString = localStorage.getItem("user");
+        if (userString) {
+            const userData = JSON.parse(userString);
+            this.$store.commit("SET_USER_DATA", userData);
 
-        const userString = localStorage.getItem('user')
-        if(userString){
-            const userData = JSON.parse(userString)
-            this.$store.commit('SET_USER_DATA', userData)
-        }
-        axios.interceptors.response.use(response => response, error => {
-            if(error.response.status === 401){
-                this.$store.dispatch('logoutUser')
+            if(userData){
+                router.push({ name: "products" });
             }
-            return Promise.reject(error)
-        })
+        }
 
-        router.push({ name: "products" });
-
+        axios.interceptors.response.use(
+            response => response,
+            error => {
+                if (error.response.status === 401) {
+                    this.$store.dispatch("logoutUser");
+                }
+                return Promise.reject(error);
+            }
+        );
     }
 });

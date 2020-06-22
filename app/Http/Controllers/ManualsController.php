@@ -51,7 +51,10 @@ class ManualsController extends Controller
             ]);
 
             $manual->file_url = route('products.manuals.show', [$product->id, $manual->id]);
-            $manual->save();     
+            $manual->save();
+            
+            // store feedmessage
+            $fm = FeedMessage()->save(new FeedMessage());
 
         }
 

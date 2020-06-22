@@ -1,7 +1,6 @@
 <template>
-    <div>
-        homepage
-
+    <div class="content-root">
+        Here goes feedchannel
     </div>
 </template>
 

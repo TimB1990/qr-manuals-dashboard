@@ -51,7 +51,7 @@ const routes = [
                 name: "products",
                 components: {
                     side: SideMenu,
-                    // content: Home,
+                    content: Home,
                 }
             },
             {

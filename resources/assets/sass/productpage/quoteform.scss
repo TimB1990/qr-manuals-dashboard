@@ -1,0 +1,83 @@
+@media (min-width: $sm-min-width) {
+    .quote-panel {
+        width: 600px;
+        padding: 1rem;
+    }
+}
+.quote-panel {
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: white;
+  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0px 0 1px rgba(10, 10, 10, 0.02);
+}
+
+.quote-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-content {
+  border: 1px solid hsl(0, 0%, 80%);
+  padding: 12px;
+}
+
+.quote-head {
+  border: 1px solid hsl(0, 0%, 80%);
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.amount-panel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border: 1px solid hsl(0, 0%, 80%);
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.message-panel{
+  p{
+    display: flex;
+    justify-content: space-between;
+  }
+
+
+}
+
+#amount {
+  margin: 3px 6px 3px 6px;
+  border: 1px solid hsl(0, 0%, 76%);
+  text-align: center;
+  color: black;
+  /*border-radius: 6px;*/
+  padding: 6px 12px 6px 12px;
+  width: 60px;
+  font-size: 14px;
+  outline: none;
+}
+
+#confirm:disabled {
+  color: hsl(0, 0%, 70%);
+  background-color: hsl(0, 0%, 98%);
+  pointer-events: none;
+}
+
+.field-container > input {
+  font-size: 16px;
+}
+
+#required {
+  font-size: 10px;
+  padding: 4px;
+}
+
+#input-error {
+  padding: 12px;
+  color: red;
+}
+#confirmation {
+  padding: 12px;
+  color: green;
+}

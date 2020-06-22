@@ -12,4 +12,8 @@ class Manual extends Model
     public function products(){
         return $this->belongsTo('App\Product');
     }
+
+    public function feedMessage(){
+        return $this->morphMany('App\FeedMessage', 'reference');
+    }
 }

@@ -6,7 +6,6 @@ import Entry from './views/entry/Entry';
 import ForgotPassword from './views/entry/components/ForgotPassword'
 
 // actionbar route imports
-import ProductsActionBar from './views/dashboard/actionbar/ProductsActionbar'
 import QuotesActionBar from './views/dashboard/actionbar/QuotesActionbar'
 import SheetsActionbar from './views/dashboard/actionbar/SheetsActionbar'
 
@@ -20,11 +19,9 @@ import SideQuotations from "./views/dashboard/side/SideQuotations";
 import SideSheets from "./views/dashboard/side/SideSheets"
 
 // main view route imports
-import Home from './views/dashboard/main/Home';
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
 import MainQrConfigPanel from './views/dashboard/main/components/MainQrConfigPanel';
 import MainQuotationDetails from './views/dashboard/main/components/MainQuotationDetails';
-import MainQuotationsHome from './views/dashboard/main/components/MainQuotationsHome'
 import MainQuotationSpecification from './views/dashboard/main/components/MainQuotationSpecification'
 import MainPreviewSpec from './views/dashboard/main/components/MainPreviewSpec'
 import SheetDetails from './views/dashboard/main/components/SheetDetails'
@@ -33,6 +30,11 @@ import SheetDetails from './views/dashboard/main/components/SheetDetails'
 import Scanner from './views/productpage/components/Scanner';
 import ViewPanel from './views/productpage/components/ViewPanel';
 import QuoteForm from './views/productpage/components/QuoteForm';
+
+// feed imports
+import QuoteFeeds from './views/dashboard/main/components/QuoteFeeds'
+import SheetFeeds from "./views/dashboard/main/components/SheetFeeds";
+import ProductFeeds from "./views/dashboard/main/components/ProductFeeds";
 
 const routes = [
     {
@@ -51,7 +53,7 @@ const routes = [
                 name: "products",
                 components: {
                     side: SideMenu,
-                    content: Home,
+                    content: ProductFeeds,
                 }
             },
             {
@@ -60,7 +62,6 @@ const routes = [
                 components: {
                     side: SideMenu,
                     content: MainProductDetails,
-                    // actionbar: ProductsActionBar
                 }
             },
             {
@@ -68,7 +69,7 @@ const routes = [
                 name: "sheets",
                 components: {
                     side: SideSheets,
-                    // content: Home,
+                    content: SheetFeeds,
                     actionbar: SheetsActionbar
                 }
             },
@@ -117,7 +118,8 @@ const routes = [
                 name: "quotations",
                 components: {
                     side: SideQuotations,
-                    actionbar: QuotesActionBar
+                    actionbar: QuotesActionBar,
+                    content: QuoteFeeds,
                 }
             },
             {

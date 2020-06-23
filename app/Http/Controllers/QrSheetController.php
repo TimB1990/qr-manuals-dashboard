@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\QrSheet;
+use App\FeedMessage;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
+use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class QrSheetController extends Controller
@@ -53,10 +54,8 @@ class QrSheetController extends Controller
             $items = $params['items'];
             $amount = $params['product_amount'];
 
-            // dd($items);
-
             // create
-            $record = QrSheet::updateOrCreate([
+            $sheet = QrSheet::updateOrCreate([
                 'alias' => $alias
             ],[
                 'pages' => $pages,
@@ -67,7 +66,8 @@ class QrSheetController extends Controller
                 'product_amount' => $amount
             ]);
 
-            $sheetId = $record->id;
+            // retrieve sheet id
+            $sheetId = $sheet->id;
 
             // delete all previous items in sheet
             DB::table('product_qr_sheet')->where('qr_sheet_id', $sheetId)->delete();
@@ -77,9 +77,24 @@ class QrSheetController extends Controller
 
                 DB::table('product_qr_sheet')->insert(
                     ['qr_sheet_id' => $sheetId, 'product_id' => $item['id']],
-                    ['product_id' => $item['id']]);
-                // array_push($itemRefs, $itemRef);   
+                    ['product_id' => $item['id']]); 
             }
+
+            $action = "";
+
+            // create new feedmessage using $action to indicate 'created' or 'updated'
+            if($sheet->updated_at != $sheet->created_at){
+                $action = "updated";
+            }
+            else{
+                $action = "created";
+            }
+            
+            $feedMessage = $sheet->feedMessages()->save(new FeedMessage([
+                'user_id' => auth()->id(),
+                'message' => auth()->user()->name . " " . $action . " sheet: " . $sheet->alias . " at " . $sheet->updated_at 
+            ]));    
+
 
             return response()->json(['success' => "sheet: ". $alias." has been saved"],201);
         }

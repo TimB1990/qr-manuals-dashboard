@@ -14,7 +14,7 @@ class QrSheet extends Model
         return $this->belongsToMany('App\Product');
     }
 
-        public function feedMessage(){
+        public function feedMessages(){
         return $this->morphMany('App\FeedMessage', 'reference');
     }
 }

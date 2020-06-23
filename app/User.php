@@ -29,6 +29,6 @@ class User extends Authenticatable
     }
 
     public function feedMessage(){
-        return $this->morphMany('App\FeedMessage', 'reference');
+        return $this->hasMany('App\FeedMessage');
     }
 }

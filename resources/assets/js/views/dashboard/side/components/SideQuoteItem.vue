@@ -2,7 +2,7 @@
     <div :class="{'side-item' : true, 'active' : quote_id == this.$route.params.id}">
         <div class="item-header">
             <span>#{{ quote_id }}</span>
-            <span>{{ this.momentAgo }}</span>
+            <span>{{ momentAgo }}</span>
         </div>
         <ul>
             <li><b>email:</b> {{ quote_email }}</li>

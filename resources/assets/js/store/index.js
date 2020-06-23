@@ -27,7 +27,8 @@ export default new Vuex.Store({
         qrsheets: {},
         qrsheet: {},
         storedItemCopies: 0,
-        quotesStatus: null
+        quotesStatus: null,
+        feedMessages: {}
     },
 
     mutations: {
@@ -158,6 +159,10 @@ export default new Vuex.Store({
 
         SET_QUOTES_STATUS(state, status) {
             state.quotesStatus = status;
+        },
+
+        SET_FEED_MESSAGES(state, payload) {
+            state.feedMessages = payload
         }
     },
 
@@ -176,6 +181,16 @@ export default new Vuex.Store({
             });
         },
 
+        // feeds
+        fetchFeedMessages({commit}, { subject }){
+            axios.get(`api/feeds/${subject}`).then(result => {
+                commit('SET_FEED_MESSAGES', result.data)
+            }).catch(err => {
+                console.log(err.response.data.message)
+            })
+
+        },
+
         toggleSideMenu({ commit }, { show }) {
             if (!show) {
                 commit("TOGGLE_SIDE_MENU", null);
@@ -183,6 +198,8 @@ export default new Vuex.Store({
                 commit("TOGGLE_SIDE_MENU", show);
             }
         },
+
+        // users
 
         logoutUser({ commit }) {
             commit("CLEAR_USER_DATA");
@@ -225,7 +242,7 @@ export default new Vuex.Store({
             commit("CLEAR_QR_SHEET");
         },
 
-        fetchQrSheets({ commit }, {page, query}) {
+        fetchQrSheets({ commit }, { page, query }) {
             axios
                 .get(`api/qrsheets?page=${page}&q=${query}`)
                 .then(result => {

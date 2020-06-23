@@ -32,6 +32,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/quotations/{id}/specification', 'QuotePriceSpecificationController@store');
     Route::get('/quotations/{id}/specification/{spec_id}', 'QuotePriceSpecificationController@show');
 
+    // FEED
+    Route::get('/feeds/manuals', 'FeedMessageController@manuals');
+    Route::get('/feeds/quotes', 'FeedMessageController@quotes');
+    Route::get('/feeds/qrsheets', 'FeedMessageController@qrsheets');
+
     // QR SHEETS
     Route::post('/qrsheets','QrSheetController@store');
     Route::get('/qrsheets', 'QrSheetController@index');

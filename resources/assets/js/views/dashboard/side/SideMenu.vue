@@ -50,6 +50,7 @@
 <script>
 import SideMenuItem from "./components/SideMenuItem";
 import SideMenuPaginator from "./components/SideMenuPaginator";
+import { debounce } from "lodash"; 
 
 export default {
     name: "sideMenu",
@@ -76,7 +77,7 @@ export default {
             });
         },
 
-        updateProductFetch: _.debounce(function(page) {
+        updateProductFetch: debounce(function(page) {
             console.log("fetchProducts called");
             this.fetchProducts(1);
         }, 800)

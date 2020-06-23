@@ -13,7 +13,7 @@ class Manual extends Model
         return $this->belongsTo('App\Product');
     }
 
-    public function feedMessage(){
+    public function feedMessages(){
         return $this->morphMany('App\FeedMessage', 'reference');
     }
 }

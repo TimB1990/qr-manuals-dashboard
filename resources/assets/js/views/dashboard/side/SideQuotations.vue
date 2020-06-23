@@ -61,6 +61,7 @@
 import SideQuoteItem from "./components/SideQuoteItem";
 import SideMenuPaginator from "./components/SideMenuPaginator";
 import moment from "moment";
+import { debounce } from "lodash"; 
 
 export default {
     name: "sideQuotations",
@@ -84,7 +85,7 @@ export default {
         },
 
         // search debounce
-        updateQuoteFetch: _.debounce(function(query, page) {
+        updateQuoteFetch: debounce(function(query, page) {
             this.query = query
             this.fetchQuotes(query,page)
         }, 800)

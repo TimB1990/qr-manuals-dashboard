@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Quote;
 use App\Product;
 use App\Customer;
+use App\FeedMessage;
 use App\QuoteProduct;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -224,10 +225,21 @@ class QuoteController extends Controller
     public function update(Request $request)
     {
         $id = $request->route('id');
-        $status = $request->input('status');
+        $newStatus = $request->input('status');
 
         $quote = Quote::find($id);
-        $quote->status = $status;
+
+        // old status
+        $oldStatus = $quote->status;
+
+        // set new status
+        $quote->status = $newStatus;
+        
+        $feedMessage = $quote->feedMessages()->save(new FeedMessage([
+            'user_id' => auth()->id(),
+            'message' => auth()->user()->name . ' changed status of quotation: ' . $quote->customer->company.  ' from ' . $oldStatus. ' to ' . $newStatus
+        ]));
+        
         $quote->save();
     }
 

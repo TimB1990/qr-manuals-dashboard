@@ -11,4 +11,8 @@ class FeedMessage extends Model
     public function reference(){
         return $this->morphTo();
     }
+
+    public function user(){
+        $this->belongsTo('App\User');
+    }
 }

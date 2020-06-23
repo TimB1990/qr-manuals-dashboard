@@ -15,9 +15,11 @@ class CreateFeedMessagesTable extends Migration
     {
         Schema::create('feed_messages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('reference_id');
             $table->string('reference_type');
-            // $table->timestamps();
+            $table->string('message');
+            $table->timestamps();
         });
     }
 

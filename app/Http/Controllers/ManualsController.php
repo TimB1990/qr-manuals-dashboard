@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Manual;
 use App\Product;
+use App\FeedMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -52,10 +53,12 @@ class ManualsController extends Controller
 
             $manual->file_url = route('products.manuals.show', [$product->id, $manual->id]);
             $manual->save();
-            
-            // store feedmessage
-            $fm = FeedMessage()->save(new FeedMessage());
 
+                    // store feedmessage
+             $feedMessage = $manual->feedMessages()->save(new FeedMessage([
+                'user_id' => auth()->id(),
+                'message' => auth()->user()->name . 'added attachment: ' . $manual->file_name . ' to product artnr: ' . Product::find($manual->product_id)->artnr
+            ]));      
         }
 
         return response()->json(['success'=>'upload successful']);

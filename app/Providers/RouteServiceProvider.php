@@ -30,7 +30,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /*URL::temporarySignedRoute(
+            'downloadpdf', now()->addMinutes(30), ['user' => 1]
+        );*/
 
         parent::boot();
     }

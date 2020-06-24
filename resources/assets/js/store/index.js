@@ -157,19 +157,19 @@ export default new Vuex.Store({
             axios.defaults.headers.common["Authorization"] = null;
         },
 
-        SET_QUOTES_STATUS(state, status) {
-            state.quotesStatus = status;
+        SET_FEED_MESSAGES(state, payload) {
+            state.feedMessages = payload;
         },
 
-        SET_FEED_MESSAGES(state, payload) {
-            state.feedMessages = payload
+        SET_QUOTES_STATUS(state, status) {
+            state.quotesStatus = status;
         }
     },
 
     actions: {
-        setUser({ commit }, { data }) {
+        /*setUser({ commit }, { data }) {
             commit("SET_USER_DATA", data);
-        },
+        },*/
 
         login({ commit }, credentials) {
             console.log("credentials from login action store: ", credentials);
@@ -182,13 +182,15 @@ export default new Vuex.Store({
         },
 
         // feeds
-        fetchFeedMessages({commit}, { subject }){
-            axios.get(`api/feeds/${subject}`).then(result => {
-                commit('SET_FEED_MESSAGES', result.data)
-            }).catch(err => {
-                console.log(err.response.data.message)
-            })
-
+        fetchFeedMessages({ commit }, { subject, page }) {
+            axios
+                .get(`api/feeds/${subject}?page=${page}`)
+                .then(result => {
+                    commit("SET_FEED_MESSAGES", result.data);
+                })
+                .catch(err => {
+                    console.log(err.response.data.message);
+                });
         },
 
         toggleSideMenu({ commit }, { show }) {
@@ -242,11 +244,15 @@ export default new Vuex.Store({
             commit("CLEAR_QR_SHEET");
         },
 
-        fetchQrSheets({ commit }, { page, query }) {
+        fetchQrSheets({ commit, dispatch }, { page, query }) {
             axios
                 .get(`api/qrsheets?page=${page}&q=${query}`)
                 .then(result => {
                     commit("SET_QRSHEETS", result.data);
+                    dispatch("fetchFeedMessages", {
+                        subject: "qrsheets",
+                        page: page
+                    });
                 })
                 .catch(err => {
                     console.log(err.response.data.error);
@@ -268,13 +274,17 @@ export default new Vuex.Store({
         },
 
         // for context.commit, and page parameter
-        fetchProducts({ commit }, { page, query }) {
+        fetchProducts({ commit, dispatch }, { page, query }) {
             commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(`api/products?page=${page}&q=${query}`)
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_PRODUCTS", result);
+                    dispatch("fetchFeedMessages", {
+                        subject: "manuals",
+                        page: page
+                    });
                 })
                 .catch(err => {
                     commit("SET_LOADING_STATUS", "notloading");
@@ -288,15 +298,8 @@ export default new Vuex.Store({
         },
 
         // quotations
-        setQuotesStatus({ commit, dispatch }, { status, page, query }) {
-            commit("SET_QUOTES_STATUS", status);
-            dispatch("fetchQuotes", { page, query });
-        },
 
-        fetchQuotes({ state, commit }, { page, query }) {
-            console.log(state.quotesStatus);
-            console.log(page);
-
+        fetchQuotes({ state, commit, dispatch }, { page, query }) {
             commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(
@@ -305,6 +308,10 @@ export default new Vuex.Store({
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QUOTES", result.data);
+                    dispatch("fetchFeedMessages", {
+                        subject: "quotes",
+                        page: page
+                    });
                 })
                 .catch(err => {
                     commit("SET_LOADING_STATUS", "notloading");
@@ -418,10 +425,14 @@ export default new Vuex.Store({
             dispatch("fetchManuals", { id: id });
         },
 
-        updateQuoteStatus({ dispatch, getters }, { quote_id, status }) {
-            console.log("id from store: ", quote_id);
-            console.log("id from store: ", status);
+        // ??
 
+        setQuotesStatus({ commit, dispatch }, { status, page, query }) {
+            commit("SET_QUOTES_STATUS", status);
+            dispatch("fetchQuotes", { page, query });
+        },
+
+        updateQuoteStatus({ dispatch, getters }, { quote_id, status }) {
             axios
                 .put(
                     `api/quotations/${quote_id}`,
@@ -433,12 +444,16 @@ export default new Vuex.Store({
                     }
                 )
                 .then(() => {
-                    console.log("status updated");
-                    dispatch("fetchQuotes", {
-                        status: status
+                    // dispatch setQuoteStatus
+                    dispatch("setQuotesStatus", {
+                        page: 1,
+                        status: status,
+                        query: ""
                     });
                 });
         },
+
+        //
 
         uploadManual({ commit, dispatch, getters }, { id, formData }) {
             axios

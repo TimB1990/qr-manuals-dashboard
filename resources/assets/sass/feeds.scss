@@ -1,8 +1,25 @@
-.feed{
-  border: 1px solid black;
-  padding: 1rem;
+.feed {
+    &-msg {
+        &-header {
+            display: flex;
+            font-weight: bold;
+            background-color: $exaltoGrey;
+            height: 2rem;
+            padding: 0.25rem;
+            // vertical alignment text
+            align-items: center;
+            border: 1px solid black;
+        }
 
-  &-header{
-    font-weight: bold;
-  }
+        &-content {
+            display: flex;
+            padding: 0.75rem;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        margin-bottom: 1rem;
+        border-bottom: 1px dashed grey;
+        padding-bottom: 1rem;
+    }
 }

@@ -90,13 +90,13 @@ export default {
     },
     computed: {
         momentAgo() {
-            return moment(this.quote_updated_at).fromNow();
+            return moment.utc(this.quote_updated_at).fromNow();
         },
         createdAt() {
-            return moment(this.quote_created_at).format("DD-MM-YYYY, HH:mm");
+            return moment.utc(this.quote_created_at).format("DD-MM-YYYY, HH:mm");
         },
         updatedAt() {
-            return moment(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
+            return moment.utc(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
         },
     }
 };

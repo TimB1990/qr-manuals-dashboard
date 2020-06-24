@@ -1,25 +1,35 @@
 <template>
     <div class="content-root">
-      <div v-if="feeds && feeds.length">
-              <feed-item v-for="feed in feeds" :key="feed.id" :message="feed.message" :updatedAt="feed.updated_at" />
-      </div>
-      <div v-else>
-        <p>There are currently no updates</p>
-      </div>
+        <div class="feed">
+            <div v-if="feeds && feeds.length">
+                <feed-item
+                    v-for="feed in feeds"
+                    :key="feed.id"
+                    :message="feed.message"
+                    :ref_id="feed.reference_id"
+                    :subject="'sheets'"
+                    :updatedAt="feed.updated_at"
+                />
+            </div>
+            <div v-else>
+                <p>There are currently no updates to notify</p>
+            </div>
+        </div>
     </div>
 </template>
 <script>
-import FeedItem from "./FeedItem"
+import FeedItem from "./FeedItem";
 export default {
     name: "sheetFeeds",
     components: { FeedItem },
     created() {
-        this.fetchFeed("qrsheets");
+        this.fetchFeed("qrsheets", 1);
     },
     methods: {
-        fetchFeed(subject) {
+        fetchFeed(subject, page) {
             this.$store.dispatch("fetchFeedMessages", {
-                subject: subject
+                subject: subject,
+                page: page
             });
         }
     },

@@ -45,6 +45,7 @@
                 <i class="fas fa-sign-out-alt"></i>
             </div>
         </div>
+        <code>{{ user }}</code>
     </section>
 </template>
 

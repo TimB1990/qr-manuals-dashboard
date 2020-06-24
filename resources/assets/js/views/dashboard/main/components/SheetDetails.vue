@@ -67,7 +67,7 @@
                 Preview
             </button>
             <button @click="editSheet(sheet.id)" class="panel-btn">Edit</button>
-            <a :href="`/api/qrsheets/${sheet.id}/download`" class="panel-btn"
+            <a :href="`/api/qrsheets/${sheet.id}/download?token=sdghfhdfhjkldfkl`" class="panel-btn"
                 >Download</a
             >
             <button @click="destroySheet(sheet.id)" class="panel-btn">

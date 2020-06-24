@@ -43,14 +43,14 @@
                     class="panel-btn"
                     :disabled="page == 1"
                 >
-                    Previous
+                    &laquo;
                 </button>
                 <button
                     @click="fetchQuotes(query, page + 1)"
                     class="panel-btn"
                     :disabled="page == quotes.pages"
                 >
-                    Next
+                    &raquo;
                 </button>
             </div>
         </div>

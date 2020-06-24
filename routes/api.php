@@ -42,12 +42,11 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/qrsheets', 'QrSheetController@index');
     Route::get('/qrsheets/{id}', 'QrSheetController@show');
     Route::put('/qrsheets/{id}', 'QrSheetController@delete');
-    Route::delete('/qrsheets/{id}', 'QrSheetController@destroy');
-    
+    Route::delete('/qrsheets/{id}', 'QrSheetController@destroy'); 
 });
 
 // ONLY TESTING, AUTH ACCESS CURRENTLY NOT WORKING!
-Route::get('/qrsheets/{id}/download', 'QrSheetController@downloadPDF')->name('qrsheets.download');
+Route::get('/qrsheets/{id}/download', 'QrSheetController@downloadPDF');
 
 // quotations
 Route::post('/quotations', 'QuoteController@store');

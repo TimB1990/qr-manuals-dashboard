@@ -237,7 +237,7 @@ class QuoteController extends Controller
         
         $feedMessage = $quote->feedMessages()->save(new FeedMessage([
             'user_id' => auth()->id(),
-            'message' => auth()->user()->name . ' changed status of quotation: ' . $quote->customer->company.  ' from ' . $oldStatus. ' to ' . $newStatus
+            'message' => auth()->user()->name . ' changed quotation status of: ' . $quote->customer->company.  ' from ' . $oldStatus. ' to ' . $newStatus
         ]));
         
         $quote->save();

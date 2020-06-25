@@ -137,16 +137,17 @@ class QrSheetController extends Controller
         $id = $request->route('id');
         $sheet = QrSheet::find($id);
 
-
+        // set papaer width and height for pdf
         $paperWidthPt = $sheet->page_width_mm * (72 / 25.4);
         $paperHeightPt = $sheet->page_height_mm * (72 / 25.4);
-        
+
+        // set dimensions as paperformat
         $paperFormat = array(0,0,$paperWidthPt,$paperHeightPt);
 
+        // create and download pdf
         $pdf = PDF::loadView('qrsheet.pdf-sheet', compact('sheet'))->setPaper($paperFormat, 'portrait');
         $filename = $sheet->alias . ".pdf";
         return $pdf->download($filename);
-
     }
 
 

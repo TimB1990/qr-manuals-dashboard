@@ -17,8 +17,11 @@ const app = new Vue({
             const userData = JSON.parse(userString);
             this.$store.commit("SET_USER_DATA", userData);
 
-            if(userData){
+            if(userData && store.state.user){
                 router.push({ name: "products" });
+            }
+            else{
+                router.push({ name: 'entry'});
             }
         }
 

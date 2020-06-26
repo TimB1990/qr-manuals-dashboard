@@ -1,10 +1,10 @@
-<<<<<<< HEAD
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
+<p> This project is an alpha, current version: 1.0.1 </p>
 
 ## test login data
-Email: admin-6c949c@inbox.mailtrap.io, 
-Password admin
+Email: admin@unfolded.nl, 
+Password admin1
 
 ## Issues & temporary bugs
 <p><strong>Known issues</strong><p>
@@ -15,7 +15,6 @@ Password admin
 <p><strong>Temporary Bugs</strong></p>
 <ul>
     <li>No responsive layout<li>
-    <li>Lacking CSS reset password screen</li>
 </ul>
 
 ## note
@@ -25,14 +24,10 @@ Password admin
 <code>composer update</code>
 <code> npm i </code>
 <code>php artisan passport:install --force</code>
-<code> php artisan tinker -> factory(App\Product::class,7)->create();</code>
+<code> php artisan migrate:refresh --seed </code>
 
 ## serve on laravel's localhost
 <code> php artisan serve</code>
-=======
 
 
 
-
-
->>>>>>> ac3843c4739c4197424de2871e38070ea12a4384

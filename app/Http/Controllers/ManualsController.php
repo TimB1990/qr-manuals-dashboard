@@ -57,7 +57,7 @@ class ManualsController extends Controller
                     // store feedmessage
              $feedMessage = $manual->feedMessages()->save(new FeedMessage([
                 'user_id' => auth()->id(),
-                'message' => auth()->user()->name . 'added attachment: ' . $manual->file_name . ' to product artnr: ' . Product::find($manual->product_id)->artnr
+                'message' => auth()->user()->name . ' added attachment: ' . $manual->file_name . ' to product artnr: ' . Product::find($manual->product_id)->artnr
             ]));      
         }
 

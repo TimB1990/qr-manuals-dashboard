@@ -1,5 +1,10 @@
 <template>
-    <div :class="{'side-item' : true, 'active' : quote_id == this.$route.params.id}">
+    <div
+        :class="{
+            'side-item': true,
+            active: quote_id == this.$route.params.id
+        }"
+    >
         <div class="item-header">
             <span>#{{ quote_id }}</span>
             <span>{{ momentAgo }}</span>
@@ -8,14 +13,12 @@
             <li><b>email:</b> {{ quote_email }}</li>
             <li><b>company:</b> {{ quote_company }}</li>
             <li><b>created:</b> {{ this.createdAt }}</li>
-            <li
-                ><b>status:</b> {{ quote_status }} at {{ this.updatedAt }}</li
-            >
+            <li><b>status:</b> {{ quote_status }} at {{ this.updatedAt }}</li>
         </ul>
         <div class="panel">
             <button
-                v-if="quote_status == 'denied'"
-                class="btn"
+                v-if="quote_status == 'denied' || quote_status == 'processed'"
+                class="panel-btn"
                 @click="updateQuoteStatus('review')"
             >
                 Review
@@ -23,26 +26,34 @@
             <button
                 v-if="quote_status == 'accepted' || quote_status == 'pending'"
                 @click="updateQuoteStatus('denied')"
-                class="btn"
+                class="panel-btn"
+                
             >
                 Decline
             </button>
             <button
-                v-if="quote_status == 'pending'"
+                v-if="quote_status == 'pending' || quote_status == 'review'"
                 @click="updateQuoteStatus('accepted')"
-                class="btn"
+                class="panel-btn"
+                
             >
                 Accept
             </button>
-            <button class="btn" @click="showDetails(quote_id)">Show Details</button>
             <button
                 v-if="quote_status == 'accepted'"
                 @click="addSpecification(quote_id)"
-                class="btn"
+                class="panel-btn"
+                
             >
                 Add Price Specification
             </button>
+            <button v-if="quote_status == 'processed'" class="panel-btn">
+                Convert To Order
+            </button>
         </div>
+        <button class="btn" @click="showDetails(quote_id)">
+            Show Details
+        </button>
     </div>
 </template>
 
@@ -93,11 +104,15 @@ export default {
             return moment.utc(this.quote_updated_at).fromNow();
         },
         createdAt() {
-            return moment.utc(this.quote_created_at).format("DD-MM-YYYY, HH:mm");
+            return moment
+                .utc(this.quote_created_at)
+                .format("DD-MM-YYYY, HH:mm");
         },
         updatedAt() {
-            return moment.utc(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
-        },
+            return moment
+                .utc(this.quote_updated_at)
+                .format("DD-MM-YYYY, HH:mm");
+        }
     }
 };
 </script>
@@ -117,7 +132,6 @@ export default {
   animation-iteration-count: infinite;
   backface-visibility: hidden;*/
 }
-
 
 @keyframes blinkPending {
     0% {

@@ -140,7 +140,11 @@ export default {
             }
 
             axios.post(`api/quotations/${data.quote_id}/specification`, data).then(() => {
-                this.message = "This specification has been saved, and an email has been send to the customer"
+                this.message = "This specification has been saved, an email has been send to the customer. Meanwhile the quotation status has been changed to processed"
+                this.$store.dispatch('updateQuoteStatus', {
+                    quote_id: data.quote_id,
+                    status: "processed"
+                })
 
             }).catch(err => {
                 this.message = err.response.data.message;

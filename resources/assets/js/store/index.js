@@ -11,7 +11,7 @@ export default new Vuex.Store({
 
     state: {
         user: null,
-        loadingStatus: "notloading",
+        loadingStatus: "",
         feedbackData: {},
         product: {},
         products: {},
@@ -179,6 +179,10 @@ export default new Vuex.Store({
                     token: data.success.token
                 });
             });
+        },
+
+        setLoadingStatus({commit}, {loading}){
+            commit('SET_LOADING_STATUS', loading)
         },
 
         // feeds

@@ -180,6 +180,7 @@ const routes = [
 
 const router = new VueRouter({
 
+    // mode: 'history',
     routes: routes,
     linkActiveClass: 'is-active',
     scrollBehavior (to, from, savedPosition){

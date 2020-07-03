@@ -10,6 +10,10 @@
 @import "productpage/quoteform";
 @import "feeds";
 
+body{
+    font-family: tahoma;
+}
+
 .panel-btn.active {
     background-color: $exaltoGrey;
     border: 1px solid black;
@@ -18,8 +22,6 @@
 
 .active{
     border: 1px solid black;
-
-
 }
 
 .warn-dialog {

@@ -147,6 +147,10 @@
 export default {
     name: "mainQuotationSpecification",
     created() {
+        this.$store.dispatch('setLoadingStatus', {
+            loading: "notloading"
+        })
+        
         this.fetchQuoteProductsOnly(this.$route.params.id);
     },
 

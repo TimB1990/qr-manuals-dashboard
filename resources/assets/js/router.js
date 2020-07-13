@@ -155,17 +155,17 @@ const routes = [
         component: ProductPage,
         children: [
             {
-                path: "",
+                path: "scanner",
                 name: "scanner",
                 component: Scanner
             },
             {
-                path: "/view/:artnr",
+                path: "view/:artnr",
                 name: "view",
                 component: ViewPanel
             },
             {
-                path: "/quote",
+                path: "quote",
                 name: "quote",
                 component: QuoteForm
             }

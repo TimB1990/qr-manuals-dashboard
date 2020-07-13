@@ -3,7 +3,7 @@
     <div>
       <label>
         <!-- this element is placed outside screen boundaries -->
-        <input v-show="true" type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()" />
+        <input v-show="true" type="file" id="files" ref="files" multiple v-on:change="handleFilesUpload()" accept="application/pdf" />
       </label>
     </div>
 

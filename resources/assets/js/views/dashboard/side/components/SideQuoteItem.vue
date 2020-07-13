@@ -101,47 +101,14 @@ export default {
     },
     computed: {
         momentAgo() {
-            return moment.utc(this.quote_updated_at).fromNow();
+            return moment(this.quote_updated_at).fromNow();
         },
         createdAt() {
-            return moment
-                .utc(this.quote_created_at)
-                .format("DD-MM-YYYY, HH:mm");
+            return moment(this.quote_created_at).format("DD-MM-YYYY, HH:mm");
         },
         updatedAt() {
-            return moment
-                .utc(this.quote_updated_at)
-                .format("DD-MM-YYYY, HH:mm");
+            return moment(this.quote_updated_at).format("DD-MM-YYYY, HH:mm");
         }
     }
 };
 </script>
-
-<style scoped>
-.quote-item {
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    border: 1px solid hsl(0, 0%, 92%);
-    margin-bottom: 14px;
-    font-size: 14px;
-    box-shadow: 0 0.5em 0.5em -0.125em rgba(10, 10, 10, 0.1),
-        0 0px 0 1px rgba(10, 10, 10, 0.02);
-
-    /*animation: blinkPending 1s ease-in;
-  animation-iteration-count: infinite;
-  backface-visibility: hidden;*/
-}
-
-@keyframes blinkPending {
-    0% {
-        border: 1px solid hsl(0, 0%, 86%);
-    }
-    50% {
-        border: 1.5px solid #cc0033;
-    }
-    100% {
-        border: 1px solid hsl(0, 0%, 86%);
-    }
-}
-</style>

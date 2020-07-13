@@ -22,9 +22,7 @@ import FeedItem from "./FeedItem";
 export default {
     name: "productFeeds",
     components: { FeedItem },
-    created() {
-        this.fetchFeed("manuals", 1);
-    },
+
     methods: {
         fetchFeed(subject, page) {
             this.$store.dispatch("fetchFeedMessages", {

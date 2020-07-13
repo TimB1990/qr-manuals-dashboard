@@ -112,6 +112,7 @@ export default new Vuex.Store({
         },
 
         ADD_SELECTED_PRODUCT(state, data) {
+            // ...state.selected, ...data => array.push(data.push(data))
             state.selectedProducts = [...state.selectedProducts, ...data];
         },
 
@@ -142,6 +143,7 @@ export default new Vuex.Store({
             state.product.splice(index, 1);
         },
 
+        // sets up auth header
         SET_USER_DATA(state, data) {
             state.user = data;
             console.log("SET_USER_DATA: ", data);
@@ -167,12 +169,11 @@ export default new Vuex.Store({
     },
 
     actions: {
-        /*setUser({ commit }, { data }) {
+        setUser({ commit }, { data }) {
             commit("SET_USER_DATA", data);
-        },*/
+        },
 
         login({ commit }, credentials) {
-            console.log("credentials from login action store: ", credentials);
             return axios.post("/api/login", credentials).then(({ data }) => {
                 commit("SET_USER_DATA", {
                     email: credentials.email,
@@ -181,8 +182,8 @@ export default new Vuex.Store({
             });
         },
 
-        setLoadingStatus({commit}, {loading}){
-            commit('SET_LOADING_STATUS', loading)
+        setLoadingStatus({ commit }, { loading }) {
+            commit("SET_LOADING_STATUS", loading);
         },
 
         // feeds
@@ -249,9 +250,11 @@ export default new Vuex.Store({
         },
 
         fetchQrSheets({ commit, dispatch }, { page, query }) {
+            commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(`api/qrsheets?page=${page}&q=${query}`)
                 .then(result => {
+                    commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QRSHEETS", result.data);
                     dispatch("fetchFeedMessages", {
                         subject: "qrsheets",
@@ -259,22 +262,33 @@ export default new Vuex.Store({
                     });
                 })
                 .catch(err => {
+                    commit("SET_LOADING_STATUS", "notloading");
+                    commit("SET_QRSHEETS", {});
                     console.log(err.response.data.error);
                 });
         },
 
         fetchQrSheet({ commit }, { sheet_id }) {
-            axios.get(`api/qrsheets/${sheet_id}`).then(result => {
-                commit("SET_SINGLE_QRSHEET", result.data);
-                result.data.items.forEach(item => {
-                    // dispatch('addSelectProduct', {data})
-                    let data = {
-                        id: item.id,
-                        artnr: item.artnr,
-                        kind: item.kind
-                    };
+            commit("SET_LOADING_STATUS", "loading");
+            axios
+                .get(`api/qrsheets/${sheet_id}`)
+                .then(result => {
+                    commit("SET_LOADING_STATUS", "notloading");
+                    commit("SET_SINGLE_QRSHEET", result.data);
+                    result.data.items.forEach(item => {
+                        // dispatch('addSelectProduct', {data})
+                        let data = {
+                            id: item.id,
+                            artnr: item.artnr,
+                            kind: item.kind
+                        };
+                    });
+                })
+                .catch(err => {
+                    commit("SET_LOADING_STATUS", "notloading");
+                    commit("SET_SINGLE_QRSHEET", {});
+                    console.log(err.response.data.error);
                 });
-            });
         },
 
         // for context.commit, and page parameter
@@ -292,8 +306,8 @@ export default new Vuex.Store({
                 })
                 .catch(err => {
                     commit("SET_LOADING_STATUS", "notloading");
-                    commit("SET_PRODUCTS", []);
-                    commit("ADD_ERROR", err);
+                    commit("SET_PRODUCTS", {});
+                    console.log(err.response.data.error);
                 });
         },
 
@@ -343,6 +357,7 @@ export default new Vuex.Store({
             axios
                 .get(`api/quotations/${quote_id}`)
                 .then(result => {
+                    commit("SET_LOADING_STATUS","notloading")
                     commit("SET_QUOTE_PRODUCTS", result.data);
                 })
                 .catch(error => console.log(error));
@@ -353,6 +368,7 @@ export default new Vuex.Store({
             axios
                 .get(`api/quotations/${quote_id}?customer=1`)
                 .then(result => {
+                    commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QUOTE_CUSTOMER", result.data);
                 })
                 .catch(error => console.log(error));

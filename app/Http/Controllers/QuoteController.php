@@ -36,7 +36,7 @@ class QuoteController extends Controller
 
             $quotes = Quote::whereHas('customer', function (Builder $query) use ($q) {
                 $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
-            })->paginate($perPage);
+            })->orderBy('updated_at', 'desc')->paginate($perPage);
 
             $total = Quote::whereHas('customer', function (Builder $query) use ($q) {
                 $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
@@ -46,7 +46,7 @@ class QuoteController extends Controller
 
             $quotes = Quote::where('status', $status)->whereHas('customer', function (Builder $query) use ($q) {
                 $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');
-            })->paginate($perPage);
+            })->orderBy('updated_at', 'desc')->paginate($perPage);
             
             $total =  Quote::where('status', $status)->whereHas('customer', function (Builder $query) use ($q) {
                 $query->where('email', 'like', '%'.$q.'%')->orWhere('company','like','%'.$q.'%');

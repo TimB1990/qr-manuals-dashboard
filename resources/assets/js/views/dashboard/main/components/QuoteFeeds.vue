@@ -25,9 +25,7 @@ import FeedItem from "./FeedItem";
 export default {
     name: "quoteFeeds",
     components: { FeedItem },
-    created() {
-        this.fetchFeed("quotes", 1);
-    },
+
     methods: {
         fetchFeed(subject, page) {
             this.$store.dispatch("fetchFeedMessages", {

@@ -4,13 +4,15 @@ use Illuminate\Database\Seeder;
 
 class ProductsTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
-        factory(App\Product::class,7)->create();
+        factory(App\Product::class,7)->create()->each(function($product){
+            factory(App\ProductDetails::class)->create([
+                'product_id' => $product->id,
+                'artnr' => $product->artnr,
+                'kind' => $product->kind
+            ]);
+        });
     }
 }

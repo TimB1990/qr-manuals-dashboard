@@ -216,9 +216,13 @@ export default {
                     status: "pending"
                 };
 
+                this.processing = true
+
                 axios
                     .post(`api/quotations`, input)
                     .then(response => {
+                        this.processing = false
+                        this.submitDisabled = true
                         this.confirmation =
                             "Thank you, your quote is being processed, please check your email for more information";
                     })

@@ -16,6 +16,7 @@ Route::get('/products/{artnr}', 'ProductController@showByArtnr');
 Route::get('/products/{id}/details', 'ProductDetailsController@show');
 Route::get('/products/{id}/manuals', 'ManualsController@index');
 Route::get('/products/{id}/manuals/{manual_id}', 'ManualsController@show')->name('products.manuals.show');
+Route::get('/qrsheets/{id}/download', 'QrSheetController@downloadPDF')->name('qrsheets.download'); 
 
 Route::group(['middleware' => 'auth:api'], function(){
 
@@ -43,7 +44,6 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/qrsheets/{id}', 'QrSheetController@show');
     Route::put('/qrsheets/{id}', 'QrSheetController@delete');
     Route::delete('/qrsheets/{id}', 'QrSheetController@destroy');
-    Route::get('/qrsheets/{id}/download', 'QrSheetController@downloadPDF')->name('qrsheets.download'); 
 });
 
 Route::post('/quotations', 'QuoteController@store');

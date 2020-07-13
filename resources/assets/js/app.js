@@ -12,17 +12,22 @@ const app = new Vue({
     store: store,
 
     created() {
-        const userString = localStorage.getItem("user");
-        if (userString) {
-            const userData = JSON.parse(userString);
-            this.$store.commit("SET_USER_DATA", userData);
 
-            if(userData && store.state.user){
-                router.push({ name: "products" });
+        const userString = localStorage.getItem("user");
+
+        if (!userString) {
+            router.push({ name: "entry" });
+        } 
+        else {
+            // set as user
+            store.dispatch("setUser", {
+                data: JSON.parse(userString)
+            })
+
+            if(store.state.user){
+                router.push({name: "products"})
             }
-            else{
-                router.push({ name: 'entry'});
-            }
+            
         }
 
         axios.interceptors.response.use(

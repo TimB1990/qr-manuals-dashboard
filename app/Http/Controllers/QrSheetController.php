@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Validator;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -131,7 +132,7 @@ class QrSheetController extends Controller
 
     }
 
-    public function downloadPDF(Request $request){
+    public function preparePDF(Request $request){
 
         // find sheet by id
         $id = $request->route('id');
@@ -141,12 +142,45 @@ class QrSheetController extends Controller
         $paperWidthPt = $sheet->page_width_mm * (72 / 25.4);
         $paperHeightPt = $sheet->page_height_mm * (72 / 25.4);
 
+        // set redirect link
+        $url = 'api/qrsheets/download?id=' . $id . '&pw='.$paperWidthPt . '&ph='.$paperHeightPt;
+
+        $url = URL::temporarySignedRoute(
+            'qrsheets.download', now()->addMinutes(10), [
+                'id' => $id,
+                'pw' => $paperWidthPt,
+                'ph' => $paperHeightPt
+            ]
+        );
+
+        // return redirect
+        // return ['download_url' => $url];
+        return response()->json([
+            'download_url' => $url
+        ]);
+    }
+
+    public function downloadPDF(Request $request){
+
+        if (! $request->hasValidSignature()) {
+            abort(401);
+        }
+
+        // retrieve paper format from query string
+        $id = $request->query('id');
+        $paperWidthPt = $request->query('pw');
+        $paperHeightPt = $request->query('ph');
+
+        $sheet = QrSheet::find($id);
+
         // set dimensions as paperformat
         $paperFormat = array(0,0,$paperWidthPt,$paperHeightPt);
 
         // create and download pdf
         $pdf = PDF::loadView('qrsheet.pdf-sheet', compact('sheet'))->setPaper($paperFormat, 'portrait');
         $filename = $sheet->alias . ".pdf";
+
+        // return pdf download
         return $pdf->download($filename);
     }
 

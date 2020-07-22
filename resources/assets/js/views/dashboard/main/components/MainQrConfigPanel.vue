@@ -82,7 +82,7 @@
                         <p v-if="error" style="color:red;">{{ error }}</p>
                     </span>
 
-                    <button @click="saveSheet">
+                    <button @click="saveSheet" :disabled="!allowPlotting(dimensions.width, dimensions.height)">
                         <span v-if="this.$route.name == 'sheet-edit'"
                             >Update Sheet</span
                         >
@@ -97,7 +97,7 @@
                 <!-- sheet preview panel -->
                 <div class="preview-container">
                     <div v-if="this.currentPaperFormat" id="sheet">
-                        <div :style="sheetBlueprint">
+                        <div v-if="allowPlotting(dimensions.width, dimensions.height)" :style="sheetBlueprint">
                             <div
                                 v-for="n in page_size"
                                 :key="n"
@@ -119,6 +119,12 @@
                                     :dimensions="dimensions"
                                 ></main-qr-item>
                             </div>
+                        </div>
+                        <!-- if aspectratio is invalid -->
+                        <div v-else>
+                            <p style="color:red;">
+                                The current aspect ratio is not between 0.5 and 2.0 or the dimensions are smaller than 30x45mm or height exceeds 100mm
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -163,6 +169,7 @@ export default {
     },
 
     methods: {
+
         toggleSettings() {
             this.settings = !this.settings;
         },
@@ -225,6 +232,14 @@ export default {
             }
 
             return sizesArray;
+        },
+
+        // allow plotting conditions
+
+        allowPlotting(itemWidth, itemHeight)
+        {
+            let aspectRatio = itemHeight / itemWidth
+            return (aspectRatio >= 0.5 && aspectRatio <= 2.0) && (itemHeight > 45 && itemHeight < 100 && itemWidth > 30)
         },
 
         saveSheet() {
@@ -415,23 +430,6 @@ export default {
                 };
             }
         },
-
-        prevScale() {
-            if (this.sheetDimensions) {
-                let dim = this.sheetDimensions;
-                let paperAreaSize = dim.width * dim.height;
-
-                let scale = (210 * 297) / paperAreaSize;
-
-                if (scale <= 1) {
-                    scale = scale;
-                } else {
-                    scale = 1.0;
-                }
-
-                return scale;
-            }
-        }
     }
 };
 </script>

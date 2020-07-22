@@ -16,7 +16,8 @@ import Dashboard from './views/dashboard/Dashboard';
 // side view route imports
 import SideMenu from "./views/dashboard/side/SideMenu";
 import SideQuotations from "./views/dashboard/side/SideQuotations";
-import SideSheets from "./views/dashboard/side/SideSheets"
+import SideSheets from "./views/dashboard/side/SideSheets";
+import SideSheetProducts from "./views/dashboard/side/SideSheetProducts";
 
 // main view route imports
 import MainProductDetails from './views/dashboard/main/components/MainProductDetails';
@@ -77,7 +78,7 @@ const routes = [
                 path: "sheets/create",
                 name: "sheet-new",
                 components: {
-                    side: SideMenu,
+                    side: SideSheetProducts,
                     content: MainQrConfigPanel,
                     actionbar: SheetsActionbar
                 }
@@ -87,7 +88,7 @@ const routes = [
                 path: "sheets/:id/edit",
                 name: "sheet-edit",
                 components: {
-                    side: SideMenu,
+                    side: SideSheetProducts,
                     content: MainQrConfigPanel,
                     actionbar: SheetsActionbar
                 }

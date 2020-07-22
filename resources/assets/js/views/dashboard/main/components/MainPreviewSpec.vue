@@ -102,9 +102,10 @@
         </table>
 
         <div class="btn-panel">
-            <button @click="save" class="btn">Notify Customer</button>
+            <button @click="save" class="btn" :disabled="disabled">Notify Customer</button>
         </div>
         <p><em v-if="message">{{ message }}</em></p>
+        <router-link :to="{ name: 'quotations' }">Go Back</router-link>
     </div>
 </template>
 
@@ -118,7 +119,8 @@ export default {
     },
     data(){
         return {
-            message: null
+            message: null,
+            disabled: false
         }
     },
     methods: {
@@ -129,6 +131,8 @@ export default {
         },
 
         save(){
+            this.disabled = true
+
             let data = {
                 quote_id: this.$route.params.id,
                 subtotal: this.queryObject.subtotal,
@@ -145,8 +149,8 @@ export default {
                     quote_id: data.quote_id,
                     status: "processed"
                 })
-
             }).catch(err => {
+                this.disabled = true
                 this.message = err.response.data.message;
             });
         }

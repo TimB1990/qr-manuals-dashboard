@@ -9,6 +9,7 @@ use App\FeedMessage;
 use App\QuoteProduct;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Mail\QuoteApproveMailable;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\QuoteResource;
 use Illuminate\Support\Facades\Crypt;
@@ -241,6 +242,49 @@ class QuoteController extends Controller
         ]));
         
         $quote->save();
+    }
+
+    public function updateByCustomer(Request $request){
+        // '/quotations/{id}/{token}'
+        $qid = $request->route('id');
+        $token = $request->route('token');
+
+        // find quote
+        $quote = Quote::find($qid);
+        $customerToken = $quote->customer->token;
+
+        if(isset($customerToken) && $customerToken == $token){
+            $quote->status = 'approved';
+            $quote->save();
+
+            $productInfo = [
+                'name' => $quote->quoteProducts[0]->name,
+                'artnr' => $quote->quoteProducts[0]->artnr,
+                'amount' => $quote->amount
+            ];
+
+            $data = [
+                'id' => $qid,
+                'customer' => $quote->customer,
+                'product' => $productInfo,
+                'specification' => $quote->quotePriceSpecification
+            ];
+
+            // send mail
+            if($quote->status == 'processed'){
+                Mail::to($quote->customer->email)->send(new QuoteApproveMailable($data));
+                return view('approved', ['approved' => false]);
+            }
+
+            if($quote->status == 'approved'){
+                return view('approved', ['approved' => true]);
+            }             
+        }
+
+        else{
+            return abort(401);
+        }
+
     }
 
     public function destroy(Quote $quote)

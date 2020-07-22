@@ -292,17 +292,21 @@ export default new Vuex.Store({
         },
 
         // for context.commit, and page parameter
-        fetchProducts({ commit, dispatch }, { page, query }) {
+        fetchProducts({ commit, dispatch }, { page, query, feed }) {
+            console.log("feed", feed);
             commit("SET_LOADING_STATUS", "loading");
             axios
                 .get(`api/products?page=${page}&q=${query}`)
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_PRODUCTS", result);
-                    dispatch("fetchFeedMessages", {
-                        subject: "manuals",
-                        page: page
-                    });
+
+                    if (feed) {
+                        dispatch("fetchFeedMessages", {
+                            subject: "manuals",
+                            page: page
+                        });
+                    }
                 })
                 .catch(err => {
                     commit("SET_LOADING_STATUS", "notloading");
@@ -326,6 +330,7 @@ export default new Vuex.Store({
                 .then(result => {
                     commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QUOTES", result.data);
+
                     dispatch("fetchFeedMessages", {
                         subject: "quotes",
                         page: page
@@ -357,7 +362,7 @@ export default new Vuex.Store({
             axios
                 .get(`api/quotations/${quote_id}`)
                 .then(result => {
-                    commit("SET_LOADING_STATUS","notloading")
+                    commit("SET_LOADING_STATUS", "notloading");
                     commit("SET_QUOTE_PRODUCTS", result.data);
                 })
                 .catch(error => console.log(error));

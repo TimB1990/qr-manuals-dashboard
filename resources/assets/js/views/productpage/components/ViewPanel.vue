@@ -97,13 +97,13 @@ export default {
 
     methods: {
         gotoScanner() {
-            this.$router.push({ path: "/productpage" });
+            this.$router.push({ path: "/productpage/scanner" });
         },
 
         async setProductManuals(artnr) {
             // axios.get(`/api/products/${artnr}`)
             try {
-                const product = await axios.get(`api/products/${artnr}`);
+                const product = await axios.get(`/products/${artnr}`);
 
                 const manuals = await axios.get(
                     `/api/products/${product.data[0].id}/manuals`

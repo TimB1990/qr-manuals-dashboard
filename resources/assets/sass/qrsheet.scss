@@ -58,6 +58,10 @@
             background-color: $exaltoGrey;
             cursor: pointer;
         }
+
+        &:disabled{
+            cursor: not-allowed;
+        }
     }
 }
 

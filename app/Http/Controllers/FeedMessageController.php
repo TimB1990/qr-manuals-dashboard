@@ -17,7 +17,9 @@ class FeedMessageController extends Controller
     }
 
     public function quotes(Request $request){
-        $feedMessages = FeedMessage::where('reference_type', Quote::class)->orderBy('updated_at', 'desc')->paginate(10);
+
+        $conditions = [['reference_type',Quote::class]];
+        $feedMessages = FeedMessage::where($conditions)->orderBy('updated_at','desc')->paginate(10);
         return response()->json($feedMessages);
     }
 

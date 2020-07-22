@@ -52,7 +52,7 @@ import SideMenuPaginator from "./components/SideMenuPaginator";
 import { debounce } from "lodash"; 
 
 export default {
-    name: "sideMenu",
+    name: "sideSheetProducts",
     components: { SideMenuItem, SideMenuPaginator },
 
     data() {
@@ -61,21 +61,19 @@ export default {
         };
     },
     created() {
-        this.fetchProducts(1)   
+        this.fetchProducts(1)        
     },
 
     methods: {
         fetchProducts(page) {
-         
             this.$store.dispatch("fetchProducts", {
                 page: page,
                 query: this.query,
-                feed: true
+                feed: false
             });
         },
 
         updateProductFetch: debounce(function(page) {
-            console.log("fetchProducts called");
             this.fetchProducts(1);
         }, 800)
     },

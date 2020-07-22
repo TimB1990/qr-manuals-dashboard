@@ -67,9 +67,12 @@
                 Preview
             </button>
             <button @click="editSheet(sheet.id)" class="panel-btn">Edit</button>
-            <a :href="`/api/qrsheets/${sheet.id}/download`" class="panel-btn"
-                >Download</a
-            >
+            
+            <a v-if="tempDownloadUrl" :href="tempDownloadUrl" class="panel-btn"
+                >Click for download</a>
+            
+            <a v-else @click="downloadSheet(sheet.id)" class="panel-btn">fetch download</a>
+
             <button @click="destroySheet(sheet.id)" class="panel-btn">
                 Destroy
             </button>
@@ -94,7 +97,8 @@ export default {
         return {
             deleteDialog: false,
             currentSheetAlias: null,
-            currentSheetID: null
+            currentSheetID: null,
+            tempDownloadUrl: null
         };
     },
     methods: {
@@ -110,6 +114,14 @@ export default {
                     id: sheetId
                 }
             });
+        },
+
+        downloadSheet(sheetId){
+            axios.get(`api/qrsheets/${sheetId}/prepare`).then(response => {
+                this.tempDownloadUrl = response.data.download_url
+            }).catch(error => {
+                error.response.data.message
+            })
         },
 
         setSheetPreview(sheetId) {

@@ -23,14 +23,6 @@ export default {
     name: "productFeeds",
     components: { FeedItem },
 
-    methods: {
-        fetchFeed(subject, page) {
-            this.$store.dispatch("fetchFeedMessages", {
-                subject: subject,
-                page: page
-            });
-        }
-    },
     computed: {
         feeds() {
             return this.$store.state.feedMessages.data;

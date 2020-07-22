@@ -28,6 +28,10 @@
       <td>{{$data['customer']->phone}}</td>
     </tr>
     <tr>
+          <td>address</td>
+      <td>{{$data['customer']->address}}</td>
+    </tr>
+    <tr>
       <td>Postcode</td>
       <td>{{$data['customer']->post_code}}</td>
     </tr>
@@ -83,7 +87,9 @@
     In case you agree to make an order from this offer, please click the link below. Once clicked your order will be processed and an confirmation email on this email-address will be sent.
   </p>
   <p>
-    <a href="#">Yes, I want to convert my request into an order</a>
+    <a href="http://localhost:8000/quotations/{{$data['id']}}/{{$data['customer']->token}}">
+      Yes, I want to approve this quotation as order
+    </a>
   </p>
 </body>
 </html>

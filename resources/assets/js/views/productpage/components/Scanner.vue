@@ -42,7 +42,9 @@ export default {
     },
     methods: {
         onDecode(result) {
-            this.$router.push({ path: `/view/${result}` });
+            this.$router.push({ name: 'view', params: {
+                artnr: result
+            } });
         },
 
         async onInit(promise) {

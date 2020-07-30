@@ -39,19 +39,21 @@ export default {
     },
     data() {
         return {
-            statuses: [
+            currentStatus: ""
+        };
+    },
+
+    computed: {
+        statuses(){
+            return [
                 "pending",
                 "accepted",
                 "processed",
                 "approved",
                 "denied",
                 "review"
-            ],
-            currentStatus: ""
-        };
-    },
-
-    computed: {
+            ]
+        },
         quotesStatus() {
             return this.$store.state.quotesStatus;
         },

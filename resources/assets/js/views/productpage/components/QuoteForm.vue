@@ -105,10 +105,10 @@
                 class="panel-btn
                 "
                 @click="processRequest"
-                :disabled="this.submitDisabled"
+                :disabled="submitDisabled"
             >
                 <span>Confirm Request</span>
-                <span v-if="this.processing">Processing request...</span>
+                <span v-if="processing">Processing request...</span>
             </button>
         </div>
     </div>
@@ -231,7 +231,7 @@ export default {
         },
 
         goBackToPanel() {
-            this.$router.push({ path: `/view/${this.artnr}` });
+            this.$router.push({ name: 'view', params: {artnr:this.artnr} });
         }
     },
 

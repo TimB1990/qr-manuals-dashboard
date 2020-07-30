@@ -15,7 +15,7 @@ const app = new Vue({
 
         const userString = localStorage.getItem("user");
 
-        if (!userString) {
+        if (!store.state.user) {
             router.push({ name: "entry" });
         } 
         else {

@@ -35,7 +35,7 @@
    $pagemargin = 12;
    $itemWidth = (($sheet->page_width_mm - $pagemargin) / $sheet->cols_per_page) - 4;
    $itemHeight = (($sheet->page_height_mm - $pagemargin) / $sheet->rows_per_page) - 4;
-   $qrsize = sqrt(($itemWidth * $itemHeight) * 0.8 * 3.75);
+   $qrsize = sqrt(($itemWidth * $itemHeight * 0.8 ) * 3.78);
 
    // dynamic rows
    $rowCount = 1;
@@ -48,7 +48,7 @@
          @for($r = 0; $r < $sheet->rows_per_page; $r++)
             <tr>
                @for($c = 0; $c < $sheet->cols_per_page; $c++)
-                  <td style="width:{{$itemWidth}}mm;height:{{$itemHeight}}mm;border:1px solid black; text-align:center;vertical-align:top;border-radius:1rem">
+                  <td style="width:{{$itemWidth}}mm;height:{{$itemHeight}}mm;border:1px solid black; text-align:center;vertical-align:top;border-radius:1rem;">
                      @if($colCount <= $sheet->product_amount )
                         <p>{{ $sheet->products[$c]->kind}}</p>
                         <p>{{ $sheet->products[$c]->artnr}}</p>

@@ -7,7 +7,7 @@
         <div>
             <qrcode-vue
                 :value="qrValue"
-                :size="Math.sqrt((dimensions.width * dimensions.height) * dimensions.qrRatio *3.78 )"
+                :size="Math.sqrt((dimensions.width * dimensions.height * 0.8 ) * 3.78)"
                 level="H"
             ></qrcode-vue>
         </div>

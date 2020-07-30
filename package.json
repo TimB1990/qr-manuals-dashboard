@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.14.0",
         "moment": "^2.24.0",
         "qrcode.vue": "^1.7.0",
         "vue-crypt": "^1.0.0",

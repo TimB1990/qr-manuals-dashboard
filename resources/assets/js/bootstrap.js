@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueQrcodeReader from "vue-qrcode-reader";
 import vueCrypt from 'vue-crypt'
+// import "@fortawesome/fontawesome-free/js/all.js";
 
 window.Vue = Vue;
 Vue.use(VueRouter);

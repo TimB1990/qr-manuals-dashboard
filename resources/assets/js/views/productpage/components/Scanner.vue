@@ -3,7 +3,8 @@
         <div class="scanner-head">qr scanner</div>
 
         <div class="scanner-body">
-            <qrcode-stream @decode="onDecode" @init="onInit"> </qrcode-stream>
+            <qrcode-stream :track="true" @decode="onDecode" @init="onInit">
+            </qrcode-stream>
         </div>
 
         <div class="scanner-footer">
@@ -16,8 +17,8 @@
                     id="artnr"
                     type="text"
                     maxlength="9"
-                    pattern="[0-9]{4}\.[0-9]{2}"
-                    placeholder="000000.00"
+                    pattern="[0-9]{8}"
+                    placeholder="12345678"
                 />
                 <button @click="submitProductcode">Submit Productcode</button>
             </div>
@@ -42,22 +43,39 @@ export default {
     },
     methods: {
         onDecode(result) {
-            this.$router.push({ name: 'view', params: {
-                artnr: result
-            } });
+            this.$router.push({
+                name: "view",
+                params: {
+                    artnr: result
+                }
+            });
         },
 
         async onInit(promise) {
             try {
                 await promise;
             } catch (error) {
-                this.error = error.name;
+                // in production gives insecure context error
+                if (error.name === "NotAllowedError") {
+                    // user denied camera access permisson
+                    this.error = "You need to accept camera access in order to scan a qrcode"
+                } else if (error.name === "NotFoundError") {
+                    this.error = "There is no working camera installed"
+                } else if (error.name === "NotSupportedError") {
+                    this.error = "This page is not served over HTTPS (or localhost)"
+                } else if (error.name === "NotReadableError") {
+                    this.error = "cannot read code, maybe camera is already in use"
+                } else if (error.name === "OverconstrainedError") {
+                    this.error = "Cannot use camera, did you requested the front camera although there is none?"
+                } else if (error.name === "StreamApiNotSupportedError") {
+                    this.error ="The stream api is not supported, the browser seems to be lacking features"
+                }
             }
         },
 
         submitProductcode() {
             // check for valid code format
-            const regex = /^[0-9]{6}\.[0-9]{2}/g;
+            const regex = /^[0-9]{8}/g;
             if (regex.test(this.artnr)) {
                 this.error = "";
                 this.$router.push({
@@ -68,7 +86,7 @@ export default {
                 });
             } else {
                 this.error =
-                    "This productcode is not valid, make sure you are using the right format: 8 digits total seperated by '.' before the last 2 digits";
+                    "This productcode is not valid, make sure you are using the right format, make sure the length is exactly 8 digits";
             }
         }
     }

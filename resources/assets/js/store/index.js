@@ -177,7 +177,8 @@ export default new Vuex.Store({
             return axios.post("/api/login", credentials).then(({ data }) => {
                 commit("SET_USER_DATA", {
                     email: credentials.email,
-                    token: data.success.token
+                    token: data.success.token,
+                    name: data.success.name
                 });
             });
         },
@@ -538,6 +539,10 @@ export default new Vuex.Store({
 
         getUserToken: state => {
             return state.user.token;
+        },
+
+        getUserName: state => {
+            return state.user.name;
         },
 
         productIsSelected: state => id => {

@@ -10,7 +10,7 @@ $factory->define(Product::class, function (Faker $faker) {
 
 
     $randomArticleWord = strtoupper($faker->bothify('??#-###??'));
-    $randomArtnr = $faker->numerify($s="######.##");
+    $randomArtnr = $faker->numerify($s="########");
     $randomNmValue = $faker->numberBetween($min="20", $max="50");
     $randomWdValue = $faker->numberBetween($min = "20", $max="30");
 

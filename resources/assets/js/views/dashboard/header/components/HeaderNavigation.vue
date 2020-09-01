@@ -28,6 +28,7 @@
             </div>
             <div>
                 <span>
+                    <a>{{ userName }}</a>
                     <a><i @click="toggleProfilePopup" class="fas fa-user"></i></a>
                 </span>
             </div>
@@ -73,6 +74,10 @@ export default {
     computed: {
         userEmail() {
             return this.$store.getters.getUserEmail;
+        },
+
+        userName(){
+            return this.$store.getters.getUserName;
         }
     }
 };

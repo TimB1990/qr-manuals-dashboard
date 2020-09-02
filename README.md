@@ -1,6 +1,6 @@
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
-<p> This project is an alpha, current version: 1.0.1 </p>
+<p> This project is an alpha
 
 ## test login data
 Email: admin@unfolded.nl, 

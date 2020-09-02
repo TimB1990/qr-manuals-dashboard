@@ -1,6 +1,6 @@
 ## description
 <p> This project runs Vue.js in the frontend, with a Laravel 6 backend</p>
-<p> This project is an alpha, current version: 1.0.1 </p>
+<p> This project is an alpha
 
 ## test login data
 Email: admin@unfolded.nl, 
@@ -10,10 +10,9 @@ Password admin
 the database dump file is optional. It may not work because PDF files may not be included with the package, or due to passport issues.
 Therefore it is recommended (in case you just want test data) to run php artisan migrate:refresh --seed. The database will then be populated
 
-## Issues & temporary bugs
-<p><strong>Known issues</strong><p>
+## Issues known
 <ul>
-    <li>Stock functionality productpage not yet implemented<li>
+    <li>No responsive layout. only for desktop<li>
 </ul>
 
 <p><strong>Temporary Bugs</strong></p>

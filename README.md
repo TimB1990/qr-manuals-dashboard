@@ -4,21 +4,12 @@
 
 ## test login data
 Email: admin@unfolded.nl, 
-Password admin1
+Password admin
 
-## Issues & temporary bugs
-<p><strong>Known issues</strong><p>
+## Issues known
 <ul>
-    <li>Stock functionality productpage not yet implemented<li>
+    <li>No responsive layout. only for desktop<li>
 </ul>
-
-<p><strong>Temporary Bugs</strong></p>
-<ul>
-    <li>No responsive layout<li>
-</ul>
-
-## note
-<p>The most recent version is on branch 'V2'. Make sure you pull from this branche</p>
 
 ## installation
 <code>composer update</code>

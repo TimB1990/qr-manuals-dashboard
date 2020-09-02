@@ -4,7 +4,11 @@
 
 ## test login data
 Email: admin@unfolded.nl, 
-Password admin1
+Password admin
+
+## database
+the database dump file is optional. It may not work because PDF files may not be included with the package, or due to passport issues.
+Therefore it is recommended (in case you just want test data) to run php artisan migrate:refresh --seed. The database will then be populated
 
 ## Issues & temporary bugs
 <p><strong>Known issues</strong><p>
@@ -13,9 +17,7 @@ Password admin1
 </ul>
 
 <p><strong>Temporary Bugs</strong></p>
-<ul>
-    <li>No responsive layout<li>
-</ul>
+<b>no responsive layout</b>
 
 ## note
 <p>The most recent version is on branch 'V2'. Make sure you pull from this branche</p>

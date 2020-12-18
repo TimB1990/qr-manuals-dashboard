@@ -27,6 +27,10 @@ Therefore it is recommended (in case you just want test data) to run php artisan
 <code>php artisan passport:install --force</code>
 <code> php artisan migrate:refresh --seed </code>
 
+## create user
+Use postman en send a post request to localhost:8000/register
+Fill in 'name', 'email', 'password', 'c-password' in request body and click 'send'
+
 ## serve on laravel's localhost
 <code> php artisan serve</code>
 
